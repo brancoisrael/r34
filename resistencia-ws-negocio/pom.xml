@@ -5,18 +5,16 @@
   <parent>
     <groupId>br.com.r34</groupId>
     <artifactId>resistencia-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${version-project}</version>
   </parent>
   
   <artifactId>resistencia-ws-negocio</artifactId>
   <name>resistencia-ws-negocio</name>
   <url>http://maven.apache.org</url>
   
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  
   <dependencies>
+  
+	  
   
   </dependencies>
   

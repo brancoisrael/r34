@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>br.com.r34</groupId>
 		<artifactId>resistencia-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${version-project}</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -14,8 +14,42 @@
 	<packaging>war</packaging>
 	<name>resistencia-ws</name>
 
-	<dependencies>
+	<dependencies>		
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tomcat.embed</groupId>
+					<artifactId>tomcat-embed-websocket</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		
+		
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>	
+		
+		<dependency>
+			<groupId>br.com.r34</groupId>
+			<artifactId>resistencia-ws-negocio</artifactId>		
+			<version>${version-project}</version>	
+		</dependency>
 
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -34,6 +68,29 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${springfox-swagger-ui.version}</version>
 		</dependency>
+		
+		 <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>com.fasterxml.jackson.jaxrs</groupId>
+        <artifactId>jackson-jaxrs-json-provider</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>com.fasterxml.jackson.datatype</groupId>
+        <artifactId>jackson-datatype-jsr310</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>com.fasterxml.jackson.datatype</groupId>
+        <artifactId>jackson-datatype-jdk8</artifactId>
+        <version>2.6.3</version>
+    </dependency>
+		
+		
 	</dependencies>
 
 	<build>
