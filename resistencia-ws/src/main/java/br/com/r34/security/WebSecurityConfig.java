@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import br.com.r34.filter.JWTAuthenticationFilter;
 import br.com.r34.filter.JWTLoginFilter;
@@ -23,13 +25,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			.anyRequest().authenticated()
 			.and()
 			
+			//logout (nao funciona ainda)
+			.logout()
+			.clearAuthentication(true)
+	        .invalidateHttpSession(true)
+	        .logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
+	        .logoutSuccessUrl("/teste")
+			.logoutUrl("/logout")
+			
+			.and()
 			// filtra requisições de logins
 			.addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
 	                UsernamePasswordAuthenticationFilter.class)
 			
 			// filtra outras requisições para verificar a presença do JWT no header
 			.addFilterBefore(new JWTAuthenticationFilter(),
-	                UsernamePasswordAuthenticationFilter.class);
+	                UsernamePasswordAuthenticationFilter.class)
+		
+			;
 	}
 	
 	@Override
