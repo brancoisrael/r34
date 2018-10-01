@@ -44,7 +44,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>	
-		
+				
 		<dependency>
 			<groupId>br.com.r34</groupId>
 			<artifactId>resistencia-ws-negocio</artifactId>		

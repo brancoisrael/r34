@@ -7,7 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @EnableAutoConfiguration
-@SpringBootApplication(scanBasePackages= {"br.com.r34.negocio.service"})
+@SpringBootApplication(scanBasePackages= {"br.com.r34"})
 public class Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

@@ -1,12 +1,16 @@
 package br.com.r34.negocio.service.membro.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.r34.negocio.dao.membro.MembroDAO;
 import br.com.r34.negocio.domain.dto.membro.MembroDTO;
 import br.com.r34.negocio.domain.vo.membro.Membro;
 import br.com.r34.negocio.service.membro.ServiceMembro;
 
+@Service
+@Transactional
 public class ServiceMembroImpl implements ServiceMembro{
 
 	@Autowired

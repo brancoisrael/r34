@@ -20,7 +20,7 @@ public class Login {
 	@ApiOperation(value = "login", notes = "Login.", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
 	@RequestMapping(value="/teste",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
 	public String teste() {
 		return "teste";
 	}
