@@ -20,7 +20,7 @@ public class SwaggerConfig {
 	@Bean
 	public Docket apiLOC() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("br.com.r34.services"))
+				.apis(RequestHandlerSelectors.basePackage("br.com.r34.controller"))
 				.paths(PathSelectors.any())
 				.build().apiInfo(apiLOCInfo());
 	}

@@ -1,0 +1,3 @@
+<jboss-web>
+	<context-root>resistencia-ws</context-root>
+</jboss-web>

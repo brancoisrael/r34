@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import br.com.r34.filter.JWTAuthenticationFilter;
 import br.com.r34.filter.JWTLoginFilter;
@@ -20,8 +19,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/login").permitAll()
 			.antMatchers(HttpMethod.GET, "/teste").permitAll()
+			.antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			
