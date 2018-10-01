@@ -1,4 +1,4 @@
-package br.com.r34.conf;
+package br.com.r34.api.conf;
 
 import java.util.Properties;
 
@@ -19,7 +19,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"br.com.r34.dao" }, 
+@EnableJpaRepositories(basePackages = {"br.com.r34.negocio.dao" }, 
 entityManagerFactoryRef = "resistenciaEntityManagerFactory", 
 transactionManagerRef = "resistenciaTransactionManager")
 

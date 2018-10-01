@@ -1,4 +1,4 @@
-package br.com.r34.filter;
+package br.com.r34.api.filter;
 
 
 import java.io.IOException;
@@ -18,8 +18,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.r34.security.AccountCredentials;
-import br.com.r34.security.TokenAuthenticationService;
+import br.com.r34.api.security.AccountCredentials;
+import br.com.r34.api.security.TokenAuthenticationService;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 

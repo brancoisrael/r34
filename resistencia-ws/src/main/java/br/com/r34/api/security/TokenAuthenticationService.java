@@ -1,4 +1,4 @@
-package br.com.r34.security;
+package br.com.r34.api.security;
 
 import java.util.Collections;
 import java.util.Date;

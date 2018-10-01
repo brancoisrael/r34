@@ -1,4 +1,4 @@
-package br.com.r34.controller;
+package br.com.r34.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

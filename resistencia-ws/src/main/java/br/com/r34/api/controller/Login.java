@@ -1,4 +1,4 @@
-package br.com.r34.controller;
+package br.com.r34.api.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

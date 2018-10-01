@@ -1,4 +1,4 @@
-package br.com.r34.security;
+package br.com.r34.api.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,8 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
-import br.com.r34.filter.JWTAuthenticationFilter;
-import br.com.r34.filter.JWTLoginFilter;
+import br.com.r34.api.filter.JWTAuthenticationFilter;
+import br.com.r34.api.filter.JWTLoginFilter;
 
 @Configuration
 @EnableWebSecurity

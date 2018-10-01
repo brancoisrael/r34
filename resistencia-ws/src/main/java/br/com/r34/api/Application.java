@@ -1,4 +1,4 @@
-package br.com.r34;
+package br.com.r34.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
