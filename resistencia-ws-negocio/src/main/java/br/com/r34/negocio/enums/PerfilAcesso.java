@@ -1,13 +1,13 @@
 package br.com.r34.negocio.enums;
 
-public enum RulesAcesso {
+public enum PerfilAcesso {
 
 	DESENVOLVEDOR("Desenvolvedor"),TESOURARIA("Tesouraria"),SECRETARIA("Secretaria")
 	,CAPITANIA("Capitania"), ESCUDADO("Escudado"), NAO_ESCUDADO("Nao escudado");
 	
 	private String descricao;
 	
-	private RulesAcesso(String descricao) {
+	private PerfilAcesso(String descricao) {
 		this.descricao = descricao; 
 	}
 	

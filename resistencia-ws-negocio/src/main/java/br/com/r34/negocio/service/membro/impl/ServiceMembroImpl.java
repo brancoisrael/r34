@@ -21,11 +21,12 @@ public class ServiceMembroImpl implements ServiceMembro{
 	@Override
 	public MembroDTO inserir(Membro membro) {
 		membroDTO = new MembroDTO();
+		membroDTO.setMessage("Erro ao inserir membro");
 		
 		Membro m = membroDAO.save(membro);
 		if(m!=null) {
 			membroDTO.setSucesso(true);
-			membroDTO.setMessage("Inserido com sucesso");
+			membroDTO.setMessage("Membro inserido com sucesso");
 		}
 		
 		return membroDTO;
@@ -52,11 +53,12 @@ public class ServiceMembroImpl implements ServiceMembro{
 	@Override
 	public MembroDTO atualizar(Membro membro) {
 		membroDTO = new MembroDTO();
+		membroDTO.setMessage("Erro ao inserir membro");
 		
 		Membro m = membroDAO.save(membro);
 		if(m!=null) {
 			membroDTO.setSucesso(true);
-			membroDTO.setMessage("Atualizado com sucesso");
+			membroDTO.setMessage("Memro atualizado com sucesso");
 		}
 		
 		return membroDTO;

@@ -12,17 +12,20 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.r34.negocio.domain.vo.ValueObject;
+import br.com.r34.negocio.domain.vo.acesso.RegraAcesso;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 import br.com.r34.negocio.domain.vo.lancamento.TemplateLancamento;
 import br.com.r34.negocio.enums.Cargo;
 import br.com.r34.negocio.enums.Patente;
-import br.com.r34.negocio.enums.RulesAcesso;
 import br.com.r34.negocio.enums.SituacaoMembro;
 
 @Entity
@@ -78,23 +81,24 @@ public class Membro implements ValueObject {
 	@Column(name="cargo",nullable=false)
 	@Enumerated(EnumType.ORDINAL)
 	private Cargo cargo;
-	
-	@NotNull(message="Informe o perfil de acesso ao sistema")
-	@Column(name="rules_acesso",nullable=false)
-	@Enumerated(EnumType.ORDINAL)
-	private RulesAcesso rulesAcesso;
-	
-	@OneToMany(mappedBy = "membro", targetEntity = Lancamento.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+		
+	@OneToMany(mappedBy = "membro", targetEntity = Lancamento.class, fetch = FetchType.LAZY)
 	private Set<Lancamento> lancamentos;
 	
-	@OneToMany(mappedBy = "membro", targetEntity = Lancamento.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "membro", targetEntity = Lancamento.class, fetch = FetchType.LAZY)
 	private Set<Lancamento> responsavelLancamentos;
 
-	@OneToMany(mappedBy = "membro", targetEntity = TemplateLancamento.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "membro", targetEntity = TemplateLancamento.class, fetch = FetchType.LAZY)
 	private Set<TemplateLancamento> templateLancamentos;
 
-	@OneToMany(mappedBy = "membro", targetEntity = Lancamento.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "membro", targetEntity = Lancamento.class, fetch = FetchType.LAZY)
 	private Set<Lancamento> templateResponsavelLancamentos;
+	
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="tb_membro_regra_acesso",
+	joinColumns={@JoinColumn(name="id_regra_acesso")},
+	inverseJoinColumns={@JoinColumn(name="id_membro")})
+	private Set<RegraAcesso> regrasAcesso;
 	
 	public long getId() {
 		return id;
@@ -184,14 +188,6 @@ public class Membro implements ValueObject {
 		this.cargo = cargo;
 	}
 
-	public RulesAcesso getRulesAcesso() {
-		return rulesAcesso;
-	}
-
-	public void setRulesAcesso(RulesAcesso rulesAcesso) {
-		this.rulesAcesso = rulesAcesso;
-	}
-
 	public Set<Lancamento> getLancamentos() {
 		return lancamentos;
 	}
@@ -214,6 +210,14 @@ public class Membro implements ValueObject {
 
 	public void setTemplateResponsavelLancamentos(Set<Lancamento> templateResponsavelLancamentos) {
 		this.templateResponsavelLancamentos = templateResponsavelLancamentos;
+	}
+
+	public Set<RegraAcesso> getRegrasAcesso() {
+		return regrasAcesso;
+	}
+
+	public void setRegrasAcesso(Set<RegraAcesso> regrasAcesso) {
+		this.regrasAcesso = regrasAcesso;
 	}
 
 }

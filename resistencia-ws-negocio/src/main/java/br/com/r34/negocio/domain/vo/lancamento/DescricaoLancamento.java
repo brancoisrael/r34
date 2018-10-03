@@ -26,7 +26,7 @@ public class DescricaoLancamento implements ValueObject{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@NotNull(message="Informe a descirção")
+	@NotNull(message="Informe a descrição")
 	@Size(min=5,message="Descrição deve conter no mínimo 5 caracteres")
 	@Column(name="descricao",length=255,nullable=false)
 	private String descricao;
