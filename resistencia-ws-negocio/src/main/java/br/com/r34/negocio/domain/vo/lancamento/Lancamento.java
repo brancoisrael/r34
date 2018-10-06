@@ -31,11 +31,11 @@ public class Lancamento implements ValueObject {
 	private long id;
 	
 	@NotNull(message="Data do lançamento é obrigatória")
-	@Column(name="data_lancamento",nullable=false,precision=2)
+	@Column(name="data_lancamento",nullable=false)
 	private Date dataLancamento;
 	
 	@NotNull(message="Valor do lançamento é obrigatório")
-	@Column(name="valor_lancamento",nullable=false)
+	@Column(name="valor_lancamento",nullable=false,precision=2)
 	private double valorLancamento;
 	
 	@NotNull(message="Tipo do lançamento é obrigatório")

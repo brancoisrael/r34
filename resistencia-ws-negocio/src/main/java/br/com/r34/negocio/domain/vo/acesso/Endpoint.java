@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -27,18 +25,16 @@ public class Endpoint implements ValueObject{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@Size(max=255,message="URL deve conter no máximo 255 caracteres")
 	@Column(name="descricao",length=255)
 	private String descricao;
 	
 	@NotNull(message="Informe a url")
-	@Size(min=5,message="Descrição deve conter no mínimo 5 caracteres")
-	@Column(name="url",length=255,nullable=false)
+	@Size(min=5, max=255,message="URL deve conter no mínimo 5 e no máximo 255 caracteres")
+	@Column(name="url",length=255,nullable=false,unique=true)
 	private String url;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="tb_endpoint_regra_acesso",
-	joinColumns={@JoinColumn(name="id_regra_acesso")},
-	inverseJoinColumns={@JoinColumn(name="id_endpoint")})
+	@ManyToMany(mappedBy="endpoints",cascade=CascadeType.PERSIST)
 	private Set<RegraAcesso> regrasAcesso;
 	
 	public long getId() {

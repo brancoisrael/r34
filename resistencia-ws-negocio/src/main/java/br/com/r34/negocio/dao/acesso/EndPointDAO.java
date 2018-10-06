@@ -10,5 +10,5 @@ public interface EndPointDAO extends CrudRepository<Endpoint, Long>{
 
 	List<Endpoint> findAll();
 	
-	List<Endpoint> findByDescricao(String descricao);
+	List<Endpoint> findByDescricaoContainingIgnoreCase(String descricao);
 }

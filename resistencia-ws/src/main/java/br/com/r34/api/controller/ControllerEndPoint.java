@@ -41,7 +41,7 @@ public class ControllerEndPoint {
 	
 	@ApiOperation(value = "atualzar", notes = "atualzar", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
-	@RequestMapping(value="/atualzarendpoint",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/atualizarendpoint",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public EndPointDTO atualizar(@RequestBody Endpoint endpoint) {
@@ -52,10 +52,10 @@ public class ControllerEndPoint {
 	
 	@ApiOperation(value = "excluir", notes = "excluir", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
-	@RequestMapping(value="/excluirendpoint",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/excluirendpoint/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public EndPointDTO excluir(@RequestBody long id) {
+	public EndPointDTO excluir(@PathVariable long id) {
 		EndPointDTO endPointDTO = serviceEndPointImpl.deletar(id);
 		
 		return endPointDTO;

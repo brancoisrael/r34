@@ -11,5 +11,5 @@ import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 public interface LancamentoDAO extends CrudRepository<Lancamento, Long> {
 	
 	@Query("select lancamento from Lancamento lancamento inner join fetch lancamento.membro m where m.id =:idMembro order by lancamento.dataLancamento desc ")
-	List<Lancamento> buscarPorMembro(@Param("idMembro") long idMembro);
+	List<Lancamento> perquisarPorMembro(@Param("idMembro") long idMembro);
 }

@@ -3,12 +3,10 @@ package br.com.r34.negocio.service.acesso.impl;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
 
-import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import br.com.r34.negocio.dao.acesso.EndPointDAO;
 import br.com.r34.negocio.domain.dto.acesso.EndPointDTO;
@@ -16,7 +14,6 @@ import br.com.r34.negocio.domain.vo.acesso.Endpoint;
 import br.com.r34.negocio.service.acesso.ServiceEndPoint;
 
 @Service
-@Transactional(transactionManager="resistenciaTransactionManager", rollbackFor=Exception.class , noRollbackFor=Exception.class)
 public class ServiceEndPointImpl implements ServiceEndPoint {
 
 	@Autowired
@@ -27,17 +24,15 @@ public class ServiceEndPointImpl implements ServiceEndPoint {
 		EndPointDTO endPointDTO = new EndPointDTO();
 
 		try {
-			Endpoint e = endPointDAO.save(endpoint);
-			if (e != null) {
-				endPointDTO.setMessage("Endpoint inserido com sucesso.");
-				endPointDTO.setSucesso(true);
-			}
+			endpoint = endPointDAO.save(endpoint);
+			endPointDTO.setMessage("Endpoint inserido com sucesso.");
+			endPointDTO.setSucesso(true);			
 		} 
 		catch (ConstraintViolationException e) {
-			endPointDTO.setMessage(e.getMessage());
+			endPointDTO.setMessage(e.getConstraintViolations().iterator().next().getMessageTemplate());
 		}
-		catch (Exception e) {
-			endPointDTO.setMessage(e.getMessage());
+		catch(DataIntegrityViolationException e) {
+			endPointDTO.setMessage("Campo único no banco de dados: "+ e.getMostSpecificCause());
 		}
 		
 		return endPointDTO;
@@ -53,8 +48,12 @@ public class ServiceEndPointImpl implements ServiceEndPoint {
 			endPointDAO.delete(endpoint);
 			endPointDTO.setSucesso(true);
 			endPointDTO.setMessage("EndPoint excluído com sucesso");
-		} catch (IllegalArgumentException e) {
+		} 
+		catch (IllegalArgumentException e) {
 			endPointDTO.setMessage("EndPoint não pode ser excluído");
+		}
+		catch (ConstraintViolationException e) {
+			endPointDTO.setMessage(e.getConstraintViolations().iterator().next().getMessageTemplate());
 		}
 
 		return endPointDTO;
@@ -65,10 +64,16 @@ public class ServiceEndPointImpl implements ServiceEndPoint {
 		EndPointDTO endPointDTO = new EndPointDTO();
 		endPointDTO.setMessage("Erro ao inserir endpoint");
 
-		Endpoint e = endPointDAO.save(endpoint);
-		if (e != null) {
+		try {
+			endpoint = endPointDAO.save(endpoint);
 			endPointDTO.setMessage("Endpoint inserido com sucesso.");
 			endPointDTO.setSucesso(true);
+		}
+		catch (ConstraintViolationException e) {
+			endPointDTO.setMessage(e.getConstraintViolations().iterator().next().getMessageTemplate());
+		}
+		catch(DataIntegrityViolationException e) {
+			endPointDTO.setMessage("Campo único no banco de dados: "+ e.getMostSpecificCause());
 		}
 
 		return endPointDTO;
@@ -81,7 +86,7 @@ public class ServiceEndPointImpl implements ServiceEndPoint {
 
 	@Override
 	public List<Endpoint> pesquisarDescricao(String descricao) {
-		return endPointDAO.findByDescricao(descricao);
+		return endPointDAO.findByDescricaoContainingIgnoreCase(descricao);
 	}
 
 }

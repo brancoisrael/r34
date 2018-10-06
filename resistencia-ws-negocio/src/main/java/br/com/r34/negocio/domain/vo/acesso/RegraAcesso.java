@@ -10,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -33,10 +35,14 @@ public class RegraAcesso implements ValueObject {
 	@Enumerated(EnumType.ORDINAL)
 	private PerfilAcesso perfilAcesso;
 	
-	@ManyToMany(mappedBy="regrasAcesso",cascade=CascadeType.ALL)
+	@NotNull(message="Informe ao menos um endpoint")
+	@ManyToMany(cascade=CascadeType.REMOVE)
+	@JoinTable(name="tb_endpoint_regra_acesso",
+	joinColumns={@JoinColumn(name="id_endpoint")},
+	inverseJoinColumns={@JoinColumn(name="id_regra_acesso")})
 	private Set<Endpoint> endpoints;
 	
-	@ManyToMany(mappedBy="regrasAcesso",cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy="regrasAcesso",cascade=CascadeType.REMOVE)
 	private Set<Membro> membros;
 
 	public long getId() {
