@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,13 +37,13 @@ public class RegraAcesso implements ValueObject {
 	private PerfilAcesso perfilAcesso;
 	
 	@NotNull(message="Informe ao menos um endpoint")
-	@ManyToMany(cascade=CascadeType.REMOVE)
+	@ManyToMany(cascade=CascadeType.REMOVE,fetch=FetchType.EAGER)
 	@JoinTable(name="tb_endpoint_regra_acesso",
 	joinColumns={@JoinColumn(name="id_endpoint")},
 	inverseJoinColumns={@JoinColumn(name="id_regra_acesso")})
 	private Set<Endpoint> endpoints;
 	
-	@ManyToMany(mappedBy="regrasAcesso",cascade=CascadeType.REMOVE)
+	@ManyToMany(mappedBy="regrasAcesso",cascade=CascadeType.REMOVE,fetch=FetchType.LAZY)
 	private Set<Membro> membros;
 
 	public long getId() {
