@@ -2,16 +2,13 @@ package br.com.r34.negocio.service.lancamento;
 
 import java.util.List;
 
-import br.com.r34.negocio.domain.dto.lancamento.LancamentoDTO;
-import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
+public interface ServiceLancamento<T,Z> {
 
-public interface ServiceLancamento {
-
-	LancamentoDTO inserir(Lancamento lancamento);	
+	Z inserir(T t);	
 	
-	LancamentoDTO deletar(long id);
+	Z deletar(long id);
 	
-	LancamentoDTO atualizar(Lancamento lancamento);
+	Z atualizar(T t);
 	
-	List<Lancamento> pesquisarPorMembro(long idMembro);
+	List<T> pesquisarPorMembro(long idMembro);
 }

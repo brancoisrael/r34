@@ -11,5 +11,5 @@ import br.com.r34.negocio.domain.vo.lancamento.TemplateLancamento;
 public interface TemplateLancamentoDAO extends CrudRepository<TemplateLancamento, Long> {
 	
 	@Query("select tempLancamento from TemplateLancamento tempLancamento inner join fetch tempLancamento.membro m where m.id =:idMembro order by tempLancamento.diaLancamento desc")
-	List<TemplateLancamento> buscarPorMembro(@Param("idMembro") long idMembro);
+	List<TemplateLancamento> perquisarPorMembro(@Param("idMembro") long idMembro);
 }

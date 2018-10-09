@@ -14,7 +14,7 @@ import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 import br.com.r34.negocio.service.lancamento.ServiceLancamento;
 
 @Service
-public class ServiceLancamentoImpl implements ServiceLancamento {
+public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,LancamentoDTO> {
 
 	@Autowired
 	private LancamentoDAO lancamentoDAO;
