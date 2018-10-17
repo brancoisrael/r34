@@ -37,6 +37,10 @@ public class Membro implements ValueObject {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+
+	@NotNull(message="Informe o status")
+	@Column(name="status",nullable=false)
+	private boolean status;
 	
 	@NotNull(message="Informe o nome do infeliz")
 	@Size(min=2,max=255,message="No mínimo 2 e no máximo 255 caracteres")
@@ -218,6 +222,14 @@ public class Membro implements ValueObject {
 
 	public void setRegrasAcesso(Set<RegraAcesso> regrasAcesso) {
 		this.regrasAcesso = regrasAcesso;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 }
