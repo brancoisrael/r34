@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable().authorizeRequests()
 		.antMatchers("/home").permitAll()
 		.antMatchers(HttpMethod.POST, "/login").permitAll()
-		.anyRequest().authenticated()
+		.anyRequest().permitAll()// authenticated()
 		.and()
 		
 		// filtra requisições de login
@@ -55,14 +55,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		/*auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-		.withUser("admin")
-		.password("$2a$10$1iLQge/irBBIDHb8scvPxOKVmFlgBWX1Br7owYR52w.IZvNJh2oWe")		
-		.roles("ADMIN");*/
 		auth.jdbcAuthentication().dataSource(dataSource)
 		.passwordEncoder(new BCryptPasswordEncoder())
-        .usersByUsernameQuery("select email , senha, status from tb_membro where email=?")
-        .authoritiesByUsernameQuery("select email, nome from tb_membro where email=?");
+        .usersByUsernameQuery("select email, senha, status from tb_membro where email=?")
+        .authoritiesByUsernameQuery("select membro.email, membro.nome from tb_membro membro "
+        		+ "inner join tb_membro_regra_acesso regra on regra.id_membro = membro.id "
+        		+ "where membro.email=? and membro.situacao_membro=1");
         
 	}
 	
