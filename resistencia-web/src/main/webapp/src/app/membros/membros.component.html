@@ -8,18 +8,23 @@
                       <p class="card-category"></p>
                   </div>
                   <div class="card-body">
-                      <form>
+                      <form [formGroup]="orderForm" novalidate >
                           <div class="row">
                               <!--<div class="col-md-5">
                                 <mat-form-field class="example-full-width">
                                     <input matInput placeholder="Company (disabled)" disabled>
                                   </mat-form-field>
                               </div>-->
-                              <div class="col-md-3">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Nome">
-                                  </mat-form-field>
+                              <div class="col-md-6">
+                                <p>Nome</p>
+                                <input size="50"  type="text" required formControlName="nome" ngModel/>
                               </div>
+
+                              <div class="col-md-6">
+                                <p>Patente</p>
+                                <p-dropdown [options]="patentes" required formControlName="patente" ngModel></p-dropdown>
+                                
+                            </div>
                           </div>
 
                           <div class="row">
@@ -37,7 +42,7 @@
                                   </div> -->
                               </div>
                           </div>
-                          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
+                          <button [disabled]="!orderForm.valid" type="submit" class="btn btn-danger pull-right">Update Profile</button>
                           <div class="clearfix"></div>
                       </form>
                   </div>

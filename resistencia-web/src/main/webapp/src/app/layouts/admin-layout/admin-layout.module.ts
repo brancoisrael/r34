@@ -14,6 +14,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 
 import { MembrosComponent } from '../../membros/membros.component';
 
+import {DropdownModule} from 'primeng/dropdown';
+
 import {
   MatButtonModule,
   MatInputModule,
@@ -27,12 +29,14 @@ import {
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatRippleModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    DropdownModule
   ],
   declarations: [
     DashboardComponent,
@@ -45,7 +49,11 @@ import {
     UpgradeComponent,
 
     MembrosComponent
-  ]
+  ],
+  exports:[
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule]  
 })
 
 export class AdminLayoutModule {}
