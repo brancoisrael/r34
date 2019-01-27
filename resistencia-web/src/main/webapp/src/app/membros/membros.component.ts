@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 import {SelectOptions} from '../components/select/select-options';
 
 import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms'
@@ -27,12 +26,14 @@ export class MembrosComponent implements OnInit {
   ];
 
   situacoes:SelectOptions[]=[
+    {label:'Selecione',value:null},
     {value:'ATIVO', label:'Ativo'},
     {value:'LICENCA',label:'Em licencao'},
     {value:'DESLIGADO', label:'Desligado'}
   ]
 
   cargos:SelectOptions[]=[
+    {label:'Selecione',value:null},
     {value:'PRESIDENTE',label:'Presidente'},
     {value:'VICE_PRESIDENTE',label:'Vice Presidente'},
     {value:'SARGENTO_ARMAS',label:'Sargento de armas'},
@@ -56,6 +57,7 @@ export class MembrosComponent implements OnInit {
       dataSaida:this.formBuilder.control('') ,
       patente:this.formBuilder.control('',[Validators.required]),
       cargo:this.formBuilder.control('',Validators.required) ,
+      situacao:this.formBuilder.control('',Validators.required) ,
     }),{validator:MembrosComponent.emailIgual}
   }
 

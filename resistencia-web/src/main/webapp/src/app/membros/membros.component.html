@@ -10,21 +10,55 @@
                   <div class="card-body">
                       <form [formGroup]="orderForm" novalidate >
                           <div class="row">
-                              <!--<div class="col-md-5">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Company (disabled)" disabled>
-                                  </mat-form-field>
-                              </div>-->
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <p>Nome</p>
-                                <input size="50"  type="text" required formControlName="nome" ngModel/>
+                                <input size="30"  type="text" required formControlName="nome" ngModel/>
                               </div>
 
-                              <div class="col-md-6">
+                              <div class="col-md-4">
+                                <p>E-mail</p>
+                                <input size="30"  type="text" required formControlName="email" ngModel/>
+                              </div>
+
+                              <div class="col-md-3">
+                                  <p>Senha</p>
+                                  <input size="20"  type="password" required formControlName="senha" ngModel/>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              
+                              <div class="col-md-4">
+                                  <p>Data de nascimento</p>
+                                  <p-calendar required formControlName="dataNascimento" ngModel [showIcon]="true" dateFormat="dd/mm/yyyy"></p-calendar>                    
+                              </div>
+
+                              <div class="col-md-4">
+                                  <p>Data de entrada</p>
+                                  <p-calendar required formControlName="dataEntrada" ngModel [showIcon]="true"></p-calendar>                                       
+                              </div>
+
+                              <div class="col-md-4">
+                                  <p>Data de saída</p>
+                                  <p-calendar formControlName="dataSaida" ngModel [showIcon]="true"></p-calendar>                                       
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <p>Situação</p>
+                                  <p-dropdown [options]="situacoes" required formControlName="situacao" ngModel></p-dropdown>
+                              </div>
+
+                              <div class="col-md-4">
+                                  <p>Cargo</p>
+                                  <p-dropdown [options]="cargos" required formControlName="cargo" ngModel></p-dropdown>
+                              </div>
+
+                              <div class="col-md-4">
                                 <p>Patente</p>
                                 <p-dropdown [options]="patentes" required formControlName="patente" ngModel></p-dropdown>
-                                
-                            </div>
+                              </div>
                           </div>
 
                           <div class="row">

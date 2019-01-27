@@ -15,6 +15,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { MembrosComponent } from '../../membros/membros.component';
 
 import {DropdownModule} from 'primeng/dropdown';
+import {CalendarModule} from 'primeng/calendar';
+
 
 import {
   MatButtonModule,
@@ -36,7 +38,8 @@ import {
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
-    DropdownModule
+    DropdownModule,
+    CalendarModule,
   ],
   declarations: [
     DashboardComponent,
@@ -56,4 +59,6 @@ import {
     ReactiveFormsModule]  
 })
 
-export class AdminLayoutModule {}
+export class AdminLayoutModule {
+  
+}
