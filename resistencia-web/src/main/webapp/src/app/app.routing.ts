@@ -15,10 +15,8 @@ const routes: Routes =[
     path: '',
     component: AdminLayoutComponent,
     children: [
-        {
-      path: '',
-      loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
-  }]}
+        { path: '',  loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'}
+      ]}
     // { path: 'dashboard',      component: DashboardComponent },
     // { path: 'user-profile',   component: UserProfileComponent },
     // { path: 'table-list',     component: TableListComponent },
