@@ -9,6 +9,9 @@ export class MembroModel{
         public senha: string,
         public dataNascimento: Date,
         public dataEntrada: Date,
-        public dataSaida: Date
+        public dataSaida: Date,
+        public patente: string,
+        public cargo: string ,
+        public situacao: string
     ){}
 }

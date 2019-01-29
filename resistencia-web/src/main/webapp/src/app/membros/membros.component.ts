@@ -5,12 +5,16 @@ import {SelectOptions} from '../components/select/select-options';
 import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms'
 import {Router} from '@angular/router'
 
+import {MembroService} from './membros.service';
+import {MembroModel} from './membro.model';
+
 @Component({
   selector: 'app-membros',
   templateUrl: './membros.component.html'
 })
 export class MembrosComponent implements OnInit {
 
+  
   orderForm: FormGroup
 
   mailPattern =/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -42,38 +46,35 @@ export class MembrosComponent implements OnInit {
     {value:'SEM_CARGO',label:'Sem Cargo'}
   ]
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private router: Router,
+    private membroService: MembroService,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.orderForm = this.formBuilder.group({
       nome:this.formBuilder.control('',[Validators.required,Validators.max(50), Validators.pattern(this.alfaPattern)]),
-      status:this.formBuilder.control('',Validators.required) ,
+      status:this.formBuilder.control('true',Validators.required) ,
       apelido:this.formBuilder.control('') ,
       email:this.formBuilder.control('',Validators.required) ,
-      emailConfirmacao:this.formBuilder.control('',Validators.required) ,
       senha:this.formBuilder.control('',Validators.required) ,
       dataNascimento:this.formBuilder.control('') ,
       dataEntrada:this.formBuilder.control('') , 
       dataSaida:this.formBuilder.control('') ,
       patente:this.formBuilder.control('',[Validators.required]),
       cargo:this.formBuilder.control('',Validators.required) ,
-      situacao:this.formBuilder.control('',Validators.required) ,
-    }),{validator:MembrosComponent.emailIgual}
+      situacao:this.formBuilder.control('')
+    })
   }
 
-  static emailIgual(group:AbstractControl):{[key:string]:boolean}{
-    const email = group.get('email')
-    const emailConfirmacao = group.get('emailConfirmacao')
-
-    if(!email || !emailConfirmacao){
-      return undefined
-    }
-
-    if(email.value !== emailConfirmacao.value){
-      return {emailsNotMatch:true};
-    }
-
-    return undefined
-
+  salvarMembro(membro:MembroModel){
+   
+    this.membroService.salvarMembro(membro)
+      .subscribe((membroId:string)=>{
+        this.router.navigate(['/order-summary'])
+        membro = null
+      })
   }
+
+  
 }

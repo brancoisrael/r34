@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { MembroService } from './membros/membros.service';
 
 const routes: Routes =[
   {
@@ -38,4 +39,11 @@ const routes: Routes =[
   exports: [
   ],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+ /* static forRoot():ModuleWithProviders{ 
+    return{
+        ngModule:AppRoutingModule,
+        providers:[MembroService]
+    }
+  }*/
+ }

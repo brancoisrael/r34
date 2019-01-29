@@ -2,19 +2,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule , LOCALE_ID } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
-
+import { RouterModule, PreloadingStrategy, PreloadAllModules } from '@angular/router';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
 
-
-import {
-  AgmCoreModule
-} from '@agm/core';
+import {AgmCoreModule} from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { MembroService } from './membros/membros.service';
 
 
 @NgModule({
@@ -34,7 +31,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     AppComponent,
     AdminLayoutComponent
   ],
-  providers: [],
+  providers: [MembroService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,8 +16,10 @@ import { MembrosComponent } from '../../membros/membros.component';
 
 import {DropdownModule} from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 
+//remover
 import {
   MatButtonModule,
   MatInputModule,
@@ -26,6 +28,7 @@ import {
   MatTooltipModule,
   MatSelectModule
 } from '@angular/material';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -40,6 +43,7 @@ import {
     MatTooltipModule,
     DropdownModule,
     CalendarModule,
+    InputSwitchModule,
   ],
   declarations: [
     DashboardComponent,
@@ -60,5 +64,4 @@ import {
 })
 
 export class AdminLayoutModule {
-  
 }
