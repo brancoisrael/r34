@@ -12,8 +12,6 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 
-import { MembrosComponent } from '../../membros/membros.component';
-
 import {DropdownModule} from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar';
 import {InputSwitchModule} from 'primeng/inputswitch';
@@ -28,6 +26,9 @@ import {
   MatTooltipModule,
   MatSelectModule
 } from '@angular/material';
+import { MembroService } from 'app/membros/membros.service';
+import { MembrosComponent } from 'app/membros/membros.component';
+
 
 @NgModule({
   imports: [
@@ -44,6 +45,8 @@ import {
     DropdownModule,
     CalendarModule,
     InputSwitchModule,
+    
+    
   ],
   declarations: [
     DashboardComponent,
@@ -54,14 +57,22 @@ import {
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-
     MembrosComponent
   ],
   exports:[
     CommonModule,
     FormsModule,
-    ReactiveFormsModule]  
+    ReactiveFormsModule,
+    DropdownModule,
+    CalendarModule,
+    InputSwitchModule,]  
 })
 
 export class AdminLayoutModule {
+  static forRoot():ModuleWithProviders{
+    return{
+        ngModule:AdminLayoutModule,
+        providers:[]
+    }
+}
 }

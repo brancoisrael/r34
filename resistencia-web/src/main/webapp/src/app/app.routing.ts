@@ -1,10 +1,10 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { MembroService } from './membros/membros.service';
+
 
 const routes: Routes =[
   {
@@ -15,7 +15,7 @@ const routes: Routes =[
     path: '',
     component: AdminLayoutComponent,
     children: [
-        { path: '',  loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'}
+        { path: '',            loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'}
       ]}
     // { path: 'dashboard',      component: DashboardComponent },
     // { path: 'user-profile',   component: UserProfileComponent },
@@ -32,16 +32,11 @@ const routes: Routes =[
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {preloadingStrategy:PreloadAllModules})
   ],
   exports: [
   ],
 })
 export class AppRoutingModule {
- /* static forRoot():ModuleWithProviders{ 
-    return{
-        ngModule:AppRoutingModule,
-        providers:[MembroService]
-    }
-  }*/
+
  }

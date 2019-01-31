@@ -11,7 +11,9 @@ import { AppComponent } from './app.component';
 
 import {AgmCoreModule} from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { MembrosComponent } from './membros/membros.component';
 import { MembroService } from './membros/membros.service';
+import { AdminLayoutService } from './layouts/admin-layout/admin-layout.service';
 
 
 @NgModule({
@@ -25,13 +27,14 @@ import { MembroService } from './membros/membros.service';
     AppRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
-    }),    
+    }),
+    AdminLayoutService
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent
   ],
-  providers: [MembroService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

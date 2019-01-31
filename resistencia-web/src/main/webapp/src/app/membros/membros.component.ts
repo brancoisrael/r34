@@ -8,6 +8,7 @@ import {Router} from '@angular/router'
 import {MembroService} from './membros.service';
 import {MembroModel} from './membro.model';
 
+
 @Component({
   selector: 'app-membros',
   templateUrl: './membros.component.html'
@@ -18,7 +19,7 @@ export class MembrosComponent implements OnInit {
   orderForm: FormGroup
 
   mailPattern =/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-  numeroPattern =/^[0-9]*$/
+  numeroPatterns =/^[0-9]*$/
   alfaPattern=/[A-Za-z]/
 
   patentes: SelectOptions[]=[
