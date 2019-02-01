@@ -26,7 +26,7 @@ export class MembrosComponent implements OnInit {
     {label:'Selecione',value:null},
     {label:'Rodando', value:'RODANDO'},
     {label:'PP', value:'PP'},
-    {label:'Meio Escudo', value:'MEIO_EXCUDO'},
+    {label:'Meio Escudo', value:'MEIO_ESCUDO'},
     {label:'Escudado', value:'ESCUDADO'}
   ];
 
@@ -44,7 +44,7 @@ export class MembrosComponent implements OnInit {
     {value:'SARGENTO_ARMAS',label:'Sargento de armas'},
     {value:'SECRETARIO',label:'Secretário'},
     {value:'TESOUREIRO',label:'Tesoureiro'},
-    {value:'SEM_CARGO',label:'Sem Cargo'}
+   
   ]
 
   constructor(
@@ -60,11 +60,11 @@ export class MembrosComponent implements OnInit {
       email:this.formBuilder.control('',Validators.required) ,
       senha:this.formBuilder.control('',Validators.required) ,
       dataNascimento:this.formBuilder.control('') ,
-      dataEntrada:this.formBuilder.control('') , 
+      dataEntrada:this.formBuilder.control('',Validators.required) , 
       dataSaida:this.formBuilder.control('') ,
       patente:this.formBuilder.control('',[Validators.required]),
       cargo:this.formBuilder.control('',Validators.required) ,
-      situacao:this.formBuilder.control('')
+      situacaoMembro:this.formBuilder.control('',Validators.required)
     })
   }
 
@@ -72,7 +72,7 @@ export class MembrosComponent implements OnInit {
    
     this.membroService.salvarMembro(membro)
       .subscribe((membroId:string)=>{
-        this.router.navigate(['/order-summary'])
+        this.router.navigate(['/membros'])
         membro = null
       })
   }

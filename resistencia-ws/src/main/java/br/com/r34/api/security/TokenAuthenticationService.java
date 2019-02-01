@@ -46,5 +46,6 @@ public class TokenAuthenticationService {
 				}
 			}
 			return null;
+			//return new UsernamePasswordAuthenticationToken("afsdfa", null, Collections.emptyList());
 		}
 }

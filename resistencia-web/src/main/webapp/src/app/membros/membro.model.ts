@@ -12,6 +12,6 @@ export class MembroModel{
         public dataSaida: Date,
         public patente: string,
         public cargo: string ,
-        public situacao: string
+        public situacaoMembro: string
     ){}
 }
