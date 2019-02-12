@@ -3,7 +3,9 @@ package br.com.r34.negocio.service.membro.impl;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.r34.negocio.dao.membro.MembroDAO;
@@ -12,7 +14,7 @@ import br.com.r34.negocio.domain.vo.membro.Membro;
 import br.com.r34.negocio.service.membro.ServiceMembro;
 
 @Service
-@Transactional
+
 public class ServiceMembroImpl implements ServiceMembro {
 
 	@Autowired
@@ -31,9 +33,15 @@ public class ServiceMembroImpl implements ServiceMembro {
 				membroDTO.setSucesso(true);
 				membroDTO.setMessage("Membro inserido com sucesso");
 			}
-		} catch (Exception e) {
+		}
+		catch(DataIntegrityViolationException e) {
 			membroDTO.setSucesso(false);
-			membroDTO.setMessage("Erro ao tentar inserir membro.");
+			membroDTO.setMessage("Membro já existente, revise os dados e tente novamente.");
+			Logger.getLogger(e.getMessage());
+		}
+		catch (Exception e) {
+			membroDTO.setSucesso(false);
+			membroDTO.setMessage("Erro ao tentar inserir membro. ");
 			Logger.getLogger(e.getMessage());
 		}
 		return membroDTO;

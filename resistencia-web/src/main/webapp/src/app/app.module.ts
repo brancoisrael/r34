@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import {AgmCoreModule} from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AdminLayoutService } from './layouts/admin-layout/admin-layout.service';
+import { HttpModule } from '@angular/http';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { AdminLayoutService } from './layouts/admin-layout/admin-layout.service'
     FormsModule,     
     ReactiveFormsModule,
     HttpClientModule,
+    HttpModule,
     ComponentsModule,
     RouterModule,
     AppRoutingModule,

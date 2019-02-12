@@ -9,7 +9,14 @@
                   </div>
                   <div class="card-body">
                       <form [formGroup]="orderForm" novalidate >
-                          <div class="row">
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p-messages [(value)]="msg"></p-messages>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
                               <div class="col-md-4">
                                 <p>Nome</p>
                                 <input  type="text" required formControlName="nome" />
@@ -29,17 +36,17 @@
                           <div class="row">
                               <div class="col-md-4">
                                   <p>Situação</p>
-                                  <p-dropdown [options]="situacoes" formControlName="situacaoMembro" ></p-dropdown>
-                              </div>
-
-                              <div class="col-md-4">
-                                  <p>Cargo</p>
-                                  <p-dropdown [options]="cargos" required formControlName="cargo" ></p-dropdown>
+                                  <p-dropdown [options]="situacoes" formControlName="situacaoMembro" (onChange)="changeDataSaida($event)" ></p-dropdown>
                               </div>
 
                               <div class="col-md-4">
                                 <p>Patente</p>
-                                <p-dropdown [options]="patentes" required formControlName="patente" ></p-dropdown>
+                                <p-dropdown [options]="patentes" required formControlName="patente" (onChange)="changePatente($event)" ></p-dropdown>
+                              </div>
+
+                              <div class="col-md-4">
+                                  <p>Cargo</p>
+                                  <p-dropdown [options]="cargos" required formControlName="cargo" [disabled]="patenteDisable" ></p-dropdown>
                               </div>
                           </div>
 
@@ -47,19 +54,18 @@
                               
                             <div class="col-md-4">
                                 <p>Data de nascimento</p>
-                                <p-calendar formControlName="dataNascimento" ></p-calendar>                    
+                                <p-calendar formControlName="dataNascimento" (onSelect)="setMinDateEntrada($event)" [minDate]="minDateNascimento" ></p-calendar>                    
                             </div>
 
                             <div class="col-md-4">
                                 <p>Data de entrada</p>
-                                <p-calendar formControlName="dataEntrada" ></p-calendar>                                       
+                                <p-calendar formControlName="dataEntrada" (onSelect)="setMinDateSaida($event)" [minDate]="minDateEntrada" ></p-calendar>                                       
                             </div>
 
                             <div class="col-md-4">
                                 <p>Data de saída</p>
-                                <p-calendar formControlName="dataSaida" ></p-calendar>                                       
+                                <p-calendar formControlName="dataSaida" [disabled]="dataSaidaDisable" [minDate]="minDateSaida"></p-calendar>                                       
                             </div>
-
                            
                         </div>
 

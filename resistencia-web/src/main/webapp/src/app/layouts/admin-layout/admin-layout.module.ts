@@ -15,7 +15,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {DropdownModule} from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar';
 import {InputSwitchModule} from 'primeng/inputswitch';
-
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 //remover
 import {
@@ -45,7 +46,8 @@ import { MembrosComponent } from 'app/membros/membros.component';
     DropdownModule,
     CalendarModule,
     InputSwitchModule,
-    
+    MessagesModule,
+    MessageModule
     
   ],
   declarations: [
@@ -65,7 +67,9 @@ import { MembrosComponent } from 'app/membros/membros.component';
     ReactiveFormsModule,
     DropdownModule,
     CalendarModule,
-    InputSwitchModule,]  
+    InputSwitchModule,
+    MessagesModule,
+    MessageModule]  
 })
 
 export class AdminLayoutModule {

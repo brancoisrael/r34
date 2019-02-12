@@ -7,6 +7,8 @@ import {Router} from '@angular/router'
 
 import {MembroService} from './membros.service';
 import {MembroModel} from './membro.model';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { MembroDTO } from './membro.dto';
 
 
 @Component({
@@ -17,9 +19,14 @@ export class MembrosComponent implements OnInit {
 
   
   orderForm: FormGroup
+  dataSaidaDisable:boolean=true
+  patenteDisable:boolean=true
+  minDateNascimento:Date=new Date()
+  minDateEntrada:Date
+  minDateSaida:Date
 
   mailPattern =/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-  numeroPatterns =/^[0-9]*$/
+  numeroPattern =/^[0-9]*$/
   alfaPattern=/[A-Za-z]/
 
   patentes: SelectOptions[]=[
@@ -50,14 +57,17 @@ export class MembrosComponent implements OnInit {
   constructor(
     private router: Router,
     private membroService: MembroService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private messageService: MessageService) {
+      this.minDateNascimento.setFullYear(1900);
+     }
 
   ngOnInit() {
     this.orderForm = this.formBuilder.group({
       nome:this.formBuilder.control('',[Validators.required,Validators.max(50), Validators.pattern(this.alfaPattern)]),
       status:this.formBuilder.control('true',Validators.required) ,
       apelido:this.formBuilder.control('') ,
-      email:this.formBuilder.control('',Validators.required) ,
+      email:this.formBuilder.control('',[Validators.required,Validators.pattern(this.mailPattern)]) ,
       senha:this.formBuilder.control('',Validators.required) ,
       dataNascimento:this.formBuilder.control('') ,
       dataEntrada:this.formBuilder.control('',Validators.required) , 
@@ -68,13 +78,47 @@ export class MembrosComponent implements OnInit {
     })
   }
 
+  changePatente(event){
+    this.patenteDisable=true;
+    this.orderForm.get('cargo').setValue(null);
+
+    if(this.orderForm.get('patente').value ==='ESCUDADO'){
+      this.patenteDisable=false;
+    }
+  }
+
+  changeDataSaida(event){
+    this.dataSaidaDisable=true;
+
+    if(this.orderForm.get('situacaoMembro').value ==='DESLIGADO'){
+      this.dataSaidaDisable=false;
+    }
+  }
+
+  setMinDateEntrada(event){
+    this.minDateEntrada = this.orderForm.get('dataNascimento').value;
+    this.orderForm.get('dataEntrada'). setValue(null);
+  }
+
+  setMinDateSaida(event){
+    this.minDateSaida = this.orderForm.get('dataEntrada').value;
+    this.orderForm.get('dataSaida'). setValue(null);
+  }
+
   salvarMembro(membro:MembroModel){
    
     this.membroService.salvarMembro(membro)
-      .subscribe((membroId:string)=>{
+      .subscribe((response:MembroDTO)=>{
         this.router.navigate(['/membros'])
-        membro = null
-      })
+        //console.log(response);
+        this.messageService.clear();
+        this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
+        
+        if(response.sucesso){
+          this.orderForm.reset();
+          this.orderForm.get('status').setValue(true);
+        }
+      })     
   }
 
   
