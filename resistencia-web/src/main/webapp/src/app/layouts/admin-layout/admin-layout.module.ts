@@ -29,6 +29,7 @@ import {
 } from '@angular/material';
 import { MembroService } from 'app/membros/membros.service';
 import { MembrosComponent } from 'app/membros/membros.component';
+import { MembroNovoComponent } from 'app/membros/novo/membro-novo.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { MembrosComponent } from 'app/membros/membros.component';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    MembrosComponent
+    MembrosComponent,
+    MembroNovoComponent
   ],
   exports:[
     CommonModule,

@@ -9,6 +9,7 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { MembrosComponent } from 'app/membros/membros.component';
+import { MembroNovoComponent } from 'app/membros/novo/membro-novo.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -22,7 +23,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade',        component: UpgradeComponent },
 
     { path: 'membros',        component: MembrosComponent },
-   
+    { path: 'membro-novo',        component: MembroNovoComponent },
 
    
 ];

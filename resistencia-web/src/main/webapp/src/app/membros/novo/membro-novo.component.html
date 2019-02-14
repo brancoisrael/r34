@@ -1,0 +1,97 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title">Cadastrar do membro</h4>
+                      <p class="card-category"></p>
+                  </div>
+                  <div class="card-body">
+                      <form [formGroup]="orderForm" novalidate >
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p-messages [(value)]="msg"></p-messages>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                              <div class="col-md-4">
+                                <p>Nome</p>
+                                <input  type="text" required formControlName="nome" />
+                              </div>
+                             
+                              <div class="col-md-4">
+                                <p>Apelido</p>
+                                <input type="text" formControlName="apelido" />
+                              </div>
+
+                              <div class="col-md-4">
+                                <p>Status</p>
+                                <p-inputSwitch formControlName="status" ></p-inputSwitch>     
+                              </div>                              
+                            </div>
+                         
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <p>Situação</p>
+                                  <p-dropdown [options]="situacoes" formControlName="situacaoMembro" (onChange)="changeDataSaida($event)" ></p-dropdown>
+                              </div>
+
+                              <div class="col-md-4">
+                                <p>Patente</p>
+                                <p-dropdown [options]="patentes" required formControlName="patente" (onChange)="changePatente($event)" ></p-dropdown>
+                              </div>
+
+                              <div class="col-md-4">
+                                  <p>Cargo</p>
+                                  <p-dropdown [options]="cargos" required formControlName="cargo" [disabled]="patenteDisable" ></p-dropdown>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              
+                            <div class="col-md-4">
+                                <p>Data de nascimento</p>
+                                <p-calendar formControlName="dataNascimento" (onSelect)="setMinDateEntrada($event)" [minDate]="minDateNascimento" ></p-calendar>                    
+                            </div>
+
+                            <div class="col-md-4">
+                                <p>Data de entrada</p>
+                                <p-calendar formControlName="dataEntrada" (onSelect)="setMinDateSaida($event)" [minDate]="minDateEntrada" ></p-calendar>                                       
+                            </div>
+
+                            <div class="col-md-4">
+                                <p>Data de saída</p>
+                                <p-calendar formControlName="dataSaida" [disabled]="dataSaidaDisable" [minDate]="minDateSaida"></p-calendar>                                       
+                            </div>
+                           
+                        </div>
+
+                        <div class="row">                           
+                            <div class="col-md-4">
+                                <p>E-mail</p>
+                                <input  type="text" autocomplete="off" required formControlName="email" />
+                              </div>
+
+                              <div class="col-md-4">
+                                <p>Senha</p>
+                                <input size="20"  type="password" required formControlName="senha" />
+                              </div>
+                         
+                                                                                  
+                        </div>
+
+                          <button [disabled]="!orderForm.valid" 
+                          (click)="salvarMembro(orderForm.value)"  
+                          type="submit"
+                           class="btn btn-danger pull-right">Salvar</button>
+                          <div class="clearfix"></div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

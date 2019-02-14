@@ -5,8 +5,8 @@ import {Http, Headers, RequestOptions} from '@angular/http'
 import 'rxjs/add/operator/map'
 
 import {R34_API} from '../app.api'
-import {MembroModel} from './membro.model'
-import { MembroDTO } from './membro.dto';
+import {MembroModel} from './modelo/membro.model'
+import { MembroDTO } from './modelo/membro.dto';
 
 @Injectable()
 export class MembroService{

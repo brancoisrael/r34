@@ -1,8 +1,11 @@
 package br.com.r34.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,13 +36,23 @@ public class ControllerMembro {
 	@RequestMapping(value="/salvar",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public MembroDTO salvar(@RequestBody Membro membro) {
+	public ResponseEntity<MembroDTO> salvar(@RequestBody Membro membro) {
 		MembroDTO membroDTO = serviceMembroImpl.inserir(membro);
 		
-		return membroDTO;
+		return new ResponseEntity<MembroDTO>(membroDTO,HttpStatus.OK);
 	}
 
-	
+	/*@ApiOperation(value = "buscar todos", notes = "buscar todos", protocols = "Accept=application/json", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
+	@RequestMapping(value="/buscartodos",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public ResponseEntity<Iterable<Membro>> selectAll(@RequestBody Membro membro) {
+		Iterable<Membro> membros = serviceMembroImpl.selectAll();
+		
+		return new ResponseEntity<Iterable<Membro>>(membros,HttpStatus.OK);
+	}
+	*/
 	public void setServiceMembroImpl(ServiceMembroImpl serviceMembroImpl) {
 		this.serviceMembroImpl = serviceMembroImpl;
 	}

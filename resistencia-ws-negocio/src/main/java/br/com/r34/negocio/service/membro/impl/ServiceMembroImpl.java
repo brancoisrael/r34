@@ -1,12 +1,11 @@
 package br.com.r34.negocio.service.membro.impl;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import br.com.r34.negocio.dao.membro.MembroDAO;
 import br.com.r34.negocio.domain.dto.membro.MembroDTO;
@@ -85,6 +84,11 @@ public class ServiceMembroImpl implements ServiceMembro {
 		return membroDTO;
 	}
 
+	@Override
+	public Iterable<Membro> selectAll(){
+		return membroDAO.findAll();
+	}
+	
 	public void setMembroDAO(MembroDAO membroDAO) {
 		this.membroDAO = membroDAO;
 	}
