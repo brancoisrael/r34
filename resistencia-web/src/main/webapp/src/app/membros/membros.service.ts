@@ -13,21 +13,30 @@ export class MembroService{
 
     constructor(private http:Http){}
 
-    retorno :MembroDTO
-    salvarMembro(membro:MembroModel):Observable<MembroDTO>{
-        
-
-        /*return this.http.post<MembroDTO>
-        (`${R34_API}/membros/salvar`, membro);*/
-        
+    salvarMembro(membro:MembroModel):Observable<MembroDTO>{       
         const headers = new Headers()
         headers.append('Content-Type','application/json')
-        /*headers.append('Access-Control-Allow-Origin', '*')
-        headers.append('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT')
-        headers.append('Access-Control-Allow-Header', 'Content-Type')*/
         
         return this.http.post(`${R34_API}/membros/salvar`
         ,JSON.stringify(membro)
+        ,new RequestOptions({headers:headers}))
+            .map(response=> response.json())
+    }
+
+    listarMembros():Observable<MembroModel[]>{       
+        const headers = new Headers()
+        headers.append('Content-Type','application/json')
+        
+        return this.http.get(`${R34_API}/membros/buscartodos`
+        ,new RequestOptions({headers:headers}))
+            .map(response=> response.json())
+    }
+
+    excluirMembro(membro:MembroModel):Observable<MembroDTO>{       
+        const headers = new Headers()
+        headers.append('Content-Type','application/json')
+        
+        return this.http.delete(`${R34_API}/membros/excluir/${membro.id}`
         ,new RequestOptions({headers:headers}))
             .map(response=> response.json())
     }

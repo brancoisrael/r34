@@ -3,6 +3,8 @@ package br.com.r34.negocio.service.membro.impl;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,11 @@ public class ServiceMembroImpl implements ServiceMembro {
 		catch(DataIntegrityViolationException e) {
 			membroDTO.setSucesso(false);
 			membroDTO.setMessage("Membro já existente, revise os dados e tente novamente.");
+			Logger.getLogger(e.getMessage());
+		}
+		catch(ConstraintViolationException e) {
+			membroDTO.setSucesso(false);
+			membroDTO.setMessage(e.getConstraintViolations().stream().findAny().get().getMessage());
 			Logger.getLogger(e.getMessage());
 		}
 		catch (Exception e) {
@@ -86,7 +93,7 @@ public class ServiceMembroImpl implements ServiceMembro {
 
 	@Override
 	public Iterable<Membro> selectAll(){
-		return membroDAO.findAll();
+		return membroDAO.selectAll();
 	}
 	
 	public void setMembroDAO(MembroDAO membroDAO) {

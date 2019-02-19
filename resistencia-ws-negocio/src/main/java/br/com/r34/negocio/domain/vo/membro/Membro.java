@@ -81,8 +81,7 @@ public class Membro implements ValueObject {
 	@Enumerated(EnumType.ORDINAL)
 	private Patente patente;
 	
-	@NotNull(message="Informe o cargo")
-	@Column(name="cargo",nullable=false)
+	@Column(name="cargo",nullable=true)
 	@Enumerated(EnumType.ORDINAL)
 	private Cargo cargo;
 		

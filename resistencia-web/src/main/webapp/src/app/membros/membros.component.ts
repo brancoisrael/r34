@@ -6,7 +6,7 @@ import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/form
 import {Router} from '@angular/router'
 
 import {MembroService} from './membros.service';
-import {MembroModel} from './modelo/membro.model';
+import {MembroModel, PATENTES, SITUACOES, CARGOS} from './modelo/membro.model';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { MembroDTO } from './modelo/membro.dto';
 
@@ -17,6 +17,9 @@ import { MembroDTO } from './modelo/membro.dto';
 })
 export class MembrosComponent implements OnInit {
 
+  patentes=PATENTES
+  situacoes=SITUACOES
+  cargos=CARGOS
   
   orderForm: FormGroup
   membros: MembroModel[]
@@ -29,17 +32,26 @@ export class MembrosComponent implements OnInit {
   }
 
   ngOnInit() {
-
-   this.membros = new Array();
-   this.membros[0]= new MembroModel(new Uint8Array(3),true,'Teste','asdf','asdfasdf','',new Date(),new Date(),null,'adf','asdf','ATIVO');
-   this.membros[1]= new MembroModel(new Uint8Array(3),true,'Teste','asdf','asdfasdf','',new Date(),new Date(),null,'adf','asdf','ATIVO');
-   this.membros[2]= new MembroModel(new Uint8Array(3),true,'Teste','asdf','asdfasdf','',new Date(),new Date(),null,'adf','asdf','LICENCA');
-   this.membros[3]= new MembroModel(new Uint8Array(3),true,'Teste','asdf','asdfasdf','',new Date(),new Date(),null,'adf','asdf','DESLIGADO');
-   this.membros[4]= new MembroModel(new Uint8Array(3),false,'Teste','asdf','asdfasdf','',new Date(),new Date(),null,'adf','asdf','DESLIGADO');
-
-   console.log(this.membros);
+   this.membroService.listarMembros()
+      .subscribe((response:MembroModel[])=>{
+        this.membros=response
+      })
+      console.log(this.membros);
   }
 
-  
+  excluirMembro(membro:MembroModel){
+    this.membroService.excluirMembro(membro)
+      .subscribe((response:MembroDTO)=>{
+        this.router.navigate(['/membros'])
+        this.messageService.clear();
+        this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
+     
+       if(response.sucesso){
+          const index = this.membros.indexOf(membro, 0);
+          if(index!==-1)
+            this.membros.splice(index, 1); 
+        }
+    })     
+  }
   
 }

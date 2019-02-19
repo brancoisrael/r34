@@ -6,7 +6,7 @@ import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/form
 import {Router} from '@angular/router'
 
 import {MembroService} from '../membros.service';
-import {MembroModel} from '../modelo/membro.model';
+import {MembroModel, PATENTES, CARGOS, SITUACOES} from '../modelo/membro.model';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { MembroDTO } from '../modelo/membro.dto';
 
@@ -24,35 +24,12 @@ export class MembroNovoComponent implements OnInit {
   minDateNascimento:Date=new Date()
   minDateEntrada:Date
   minDateSaida:Date
-
+  patentes=PATENTES
+  situacoes=SITUACOES
+  cargos=CARGOS
   mailPattern =/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   numeroPattern =/^[0-9]*$/
   alfaPattern=/[A-Za-z]/
-
-  patentes: SelectOptions[]=[
-    {label:'Selecione',value:null},
-    {label:'Rodando', value:'RODANDO'},
-    {label:'PP', value:'PP'},
-    {label:'Meio Escudo', value:'MEIO_ESCUDO'},
-    {label:'Escudado', value:'ESCUDADO'}
-  ];
-
-  situacoes:SelectOptions[]=[
-    {label:'Selecione',value:null},
-    {value:'ATIVO', label:'Ativo'},
-    {value:'LICENCA',label:'Em licencao'},
-    {value:'DESLIGADO', label:'Desligado'}
-  ]
-
-  cargos:SelectOptions[]=[
-    {label:'Selecione',value:null},
-    {value:'PRESIDENTE',label:'Presidente'},
-    {value:'VICE_PRESIDENTE',label:'Vice Presidente'},
-    {value:'SARGENTO_ARMAS',label:'Sargento de armas'},
-    {value:'SECRETARIO',label:'Secretário'},
-    {value:'TESOUREIRO',label:'Tesoureiro'},
-   
-  ]
 
   constructor(
     private router: Router,
@@ -73,7 +50,7 @@ export class MembroNovoComponent implements OnInit {
       dataEntrada:this.formBuilder.control('',Validators.required) , 
       dataSaida:this.formBuilder.control('') ,
       patente:this.formBuilder.control('',[Validators.required]),
-      cargo:this.formBuilder.control('',Validators.required) ,
+      cargo:this.formBuilder.control('') ,
       situacaoMembro:this.formBuilder.control('',Validators.required)
     })
   }
@@ -106,10 +83,9 @@ export class MembroNovoComponent implements OnInit {
   }
 
   salvarMembro(membro:MembroModel){
-   
     this.membroService.salvarMembro(membro)
       .subscribe((response:MembroDTO)=>{
-        this.router.navigate(['/membros'])
+        this.router.navigate(['/membro-novo'])
         //console.log(response);
         this.messageService.clear();
         this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 

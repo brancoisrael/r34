@@ -15,6 +15,6 @@ public interface MembroDAO extends CrudRepository<Membro, Long> {
 	@Query("select m from Membro m where m.email=:email and m.senha=:senha and m.situacaoMembro = 'SituacaoMembro.ATIVO' ")
 	List<Membro> login(@Param("email") String email,@Param("senha") String senha);
 	
-	/*@Query("select m from Membro order by m.patente desc , m.cargo asc, m.situacaoMembro asc")
-	List<Membro> selectAll();*/
+	@Query("select m from Membro m order by  m.situacaoMembro asc, m.patente desc , m.cargo asc")
+	List<Membro> selectAll();
 }
