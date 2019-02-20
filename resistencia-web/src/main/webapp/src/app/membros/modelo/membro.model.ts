@@ -2,6 +2,10 @@ import { SelectOptions } from "app/components/select/select-options";
 
 export class MembroModel{
 
+    public cargoDescricao: string
+    public patenteDescricao: string
+
+
     constructor( 
         public id: number,
         public status: boolean,
@@ -15,8 +19,9 @@ export class MembroModel{
         public patente: string,
         public cargo: string ,
         public situacaoMembro: string
-       
-    ){}
+    ){
+        
+    }
 }
 
 export const PATENTES: SelectOptions[]=[

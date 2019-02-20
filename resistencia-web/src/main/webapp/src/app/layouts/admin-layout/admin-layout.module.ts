@@ -17,6 +17,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 //remover
 import {
@@ -27,7 +28,6 @@ import {
   MatTooltipModule,
   MatSelectModule
 } from '@angular/material';
-import { MembroService } from 'app/membros/membros.service';
 import { MembrosComponent } from 'app/membros/membros.component';
 import { MembroNovoComponent } from 'app/membros/novo/membro-novo.component';
 
@@ -48,7 +48,8 @@ import { MembroNovoComponent } from 'app/membros/novo/membro-novo.component';
     CalendarModule,
     InputSwitchModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    ConfirmDialogModule
     
   ],
   declarations: [
@@ -71,7 +72,9 @@ import { MembroNovoComponent } from 'app/membros/novo/membro-novo.component';
     CalendarModule,
     InputSwitchModule,
     MessagesModule,
-    MessageModule]  
+    MessageModule,
+    ConfirmDialogModule
+  ]  
 })
 
 export class AdminLayoutModule {

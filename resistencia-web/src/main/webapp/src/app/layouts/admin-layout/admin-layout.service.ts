@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core'
-import {MessageService} from 'primeng/api';
+import {MessageService, ConfirmationService} from 'primeng/api';
 
 import { MembroService } from 'app/membros/membros.service';
 
 
 @NgModule({
-    providers:[MembroService,MessageService]
+    providers:[MembroService,MessageService,ConfirmationService]
 })
 
 export class AdminLayoutService{}

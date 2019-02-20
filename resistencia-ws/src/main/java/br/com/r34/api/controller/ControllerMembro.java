@@ -1,7 +1,5 @@
 package br.com.r34.api.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.r34.negocio.domain.dto.acesso.EndPointDTO;
 import br.com.r34.negocio.domain.dto.membro.MembroDTO;
 import br.com.r34.negocio.domain.vo.membro.Membro;
 import br.com.r34.negocio.service.membro.impl.ServiceMembroImpl;
