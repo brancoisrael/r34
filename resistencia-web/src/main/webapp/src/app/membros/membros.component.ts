@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms'
 import {Router} from '@angular/router'
 
@@ -89,5 +89,4 @@ export class MembrosComponent implements OnInit {
         }
     })     
   }
-  
 }

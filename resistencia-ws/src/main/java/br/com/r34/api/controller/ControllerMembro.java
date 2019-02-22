@@ -64,6 +64,18 @@ public class ControllerMembro {
 		return new ResponseEntity<MembroDTO>(membroDTO,HttpStatus.OK);
 	}
 	
+	@CrossOrigin
+	@ApiOperation(value = "pesquisar por id", notes = "pesquisar por id", protocols = "Accept=application/json", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
+	@RequestMapping(value="/buscarid/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public ResponseEntity<Membro> buscarId(@PathVariable long id) {
+		Membro membro = serviceMembroImpl.buscarId(id);
+		
+		return new ResponseEntity<Membro>(membro,HttpStatus.OK);
+	}
+	
 	public void setServiceMembroImpl(ServiceMembroImpl serviceMembroImpl) {
 		this.serviceMembroImpl = serviceMembroImpl;
 	}

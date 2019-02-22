@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import {SelectOptions} from '../../components/select/select-options';
 
 import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms'
-import {Router} from '@angular/router'
+import {Router, ActivatedRoute} from '@angular/router'
 
 import {MembroService} from '../membros.service';
 import {MembroModel, PATENTES, CARGOS, SITUACOES} from '../modelo/membro.model';
@@ -17,7 +17,7 @@ import { MembroDTO } from '../modelo/membro.dto';
 })
 export class MembroNovoComponent implements OnInit {
 
-  
+  membro:MembroModel
   orderForm: FormGroup
   dataSaidaDisable:boolean=true
   patenteDisable:boolean=true
@@ -32,6 +32,7 @@ export class MembroNovoComponent implements OnInit {
   alfaPattern=/[A-Za-z]/
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private membroService: MembroService,
     private formBuilder: FormBuilder,
@@ -40,6 +41,9 @@ export class MembroNovoComponent implements OnInit {
      }
 
   ngOnInit() {
+    if(this.route.snapshot.params.id)
+      this.prepararEditar(this.route.snapshot.params.id) 
+
     this.orderForm = this.formBuilder.group({
       nome:this.formBuilder.control('',[Validators.required,Validators.max(50), Validators.pattern(this.alfaPattern)]),
       status:this.formBuilder.control('true',Validators.required) ,
@@ -97,5 +101,22 @@ export class MembroNovoComponent implements OnInit {
       })     
   }
 
-  
+  prepararEditar(id:number){
+    this.membroService.buscarMembroID(id)
+    .subscribe((membro:MembroModel)=>{
+      this.orderForm.get('nome').setValue(membro.nome);
+      this.orderForm.get('status').setValue(membro.status);
+      this.orderForm.get('apelido').setValue(membro.apelido);
+      this.orderForm.get('senha').setValue(membro.senha);
+      this.orderForm.get('email').setValue(membro.email);
+      this.orderForm.get('dataNascimento').setValue(membro.dataNascimento);
+      this.orderForm.get('dataEntrada').setValue(membro.dataEntrada);
+      this.orderForm.get('dataSaida').setValue(membro.dataSaida);
+      this.orderForm.get('patente').setValue(membro.patente);
+      //this.orderForm.get('situacaoMembro').setValue(membro.situacaoMembro);
+      this.orderForm.controls.[''].u
+
+     // this.orderForm.updateValueAndValidity({onlySelf: true})
+    })    
+  }
 }

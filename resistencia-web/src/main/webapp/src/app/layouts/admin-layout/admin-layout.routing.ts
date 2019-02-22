@@ -24,6 +24,11 @@ export const AdminLayoutRoutes: Routes = [
 
     { path: 'membros',        component: MembrosComponent },
     { path: 'membro-novo',        component: MembroNovoComponent },
+    { path: 'membro-novo/:id',        component: MembroNovoComponent ,
+        children:[
+            {path:'membro-novo/:id',component:MembroNovoComponent}
+        ]
+    },
 
    
 ];

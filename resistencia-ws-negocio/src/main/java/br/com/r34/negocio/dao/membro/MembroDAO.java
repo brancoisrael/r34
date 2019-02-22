@@ -17,4 +17,6 @@ public interface MembroDAO extends CrudRepository<Membro, Long> {
 	
 	@Query("select m from Membro m order by  m.situacaoMembro asc, m.patente desc , m.cargo asc")
 	List<Membro> selectAll();
+	
+	Membro findById(long id);
 }

@@ -1,6 +1,5 @@
 package br.com.r34.negocio.service.membro.impl;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import javax.validation.ConstraintViolationException;
@@ -94,6 +93,11 @@ public class ServiceMembroImpl implements ServiceMembro {
 	@Override
 	public Iterable<Membro> selectAll(){
 		return membroDAO.selectAll();
+	}
+	
+	@Override
+	public Membro buscarId(long id) {
+		return membroDAO.findById(id);
 	}
 	
 	public void setMembroDAO(MembroDAO membroDAO) {
