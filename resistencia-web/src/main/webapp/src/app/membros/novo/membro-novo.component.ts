@@ -9,6 +9,7 @@ import {MembroService} from '../membros.service';
 import {MembroModel, PATENTES, CARGOS, SITUACOES} from '../modelo/membro.model';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { MembroDTO } from '../modelo/membro.dto';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @Component({
@@ -41,9 +42,6 @@ export class MembroNovoComponent implements OnInit {
      }
 
   ngOnInit() {
-    if(this.route.snapshot.params.id)
-      this.prepararEditar(this.route.snapshot.params.id) 
-
     this.orderForm = this.formBuilder.group({
       nome:this.formBuilder.control('',[Validators.required,Validators.max(50), Validators.pattern(this.alfaPattern)]),
       status:this.formBuilder.control('true',Validators.required) ,
@@ -57,6 +55,10 @@ export class MembroNovoComponent implements OnInit {
       cargo:this.formBuilder.control('') ,
       situacaoMembro:this.formBuilder.control('',Validators.required)
     })
+
+    if(this.route.snapshot.params.id)
+    this.prepararEditar(this.route.snapshot.params.id) 
+  
   }
 
   changePatente(event){
@@ -78,7 +80,7 @@ export class MembroNovoComponent implements OnInit {
 
   setMinDateEntrada(event){
     this.minDateEntrada = this.orderForm.get('dataNascimento').value;
-    this.orderForm.get('dataEntrada'). setValue(null);
+    this.orderForm.get('dataEntrada').setValue(null);
   }
 
   setMinDateSaida(event){
@@ -102,21 +104,24 @@ export class MembroNovoComponent implements OnInit {
   }
 
   prepararEditar(id:number){
+
     this.membroService.buscarMembroID(id)
     .subscribe((membro:MembroModel)=>{
+
+
+     this.orderForm.controls[ 'dataNascimento' ].setValue(new Date(membro.dataNascimento));
+     this.orderForm.controls[ 'dataEntrada' ].setValue(new Date(membro.dataEntrada));
+     this.orderForm.controls[ 'dataSaida' ].setValue(new Date(membro.dataSaida));
+     this.orderForm.controls[ 'situacaoMembro' ].setValue(membro.situacaoMembro);
+     this.orderForm.controls[ 'patente' ].setValue(membro.patente);
+     this.orderForm.controls[ 'cargo' ].setValue(membro.cargo);
+
       this.orderForm.get('nome').setValue(membro.nome);
       this.orderForm.get('status').setValue(membro.status);
       this.orderForm.get('apelido').setValue(membro.apelido);
       this.orderForm.get('senha').setValue(membro.senha);
       this.orderForm.get('email').setValue(membro.email);
-      this.orderForm.get('dataNascimento').setValue(membro.dataNascimento);
-      this.orderForm.get('dataEntrada').setValue(membro.dataEntrada);
-      this.orderForm.get('dataSaida').setValue(membro.dataSaida);
-      this.orderForm.get('patente').setValue(membro.patente);
-      //this.orderForm.get('situacaoMembro').setValue(membro.situacaoMembro);
-      this.orderForm.controls.[''].u
-
-     // this.orderForm.updateValueAndValidity({onlySelf: true})
-    })    
+      
+    })
   }
 }
