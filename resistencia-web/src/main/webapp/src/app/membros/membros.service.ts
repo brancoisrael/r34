@@ -23,6 +23,16 @@ export class MembroService{
             .map(response=> response.json())
     }
 
+    atualizarMembro(membro:MembroModel):Observable<MembroDTO>{       
+        const headers = new Headers()
+        headers.append('Content-Type','application/json')
+        
+        return this.http.post(`${R34_API}/membros/atualizar`
+        ,JSON.stringify(membro)
+        ,new RequestOptions({headers:headers}))
+            .map(response=> response.json())
+    }
+
     listarMembros():Observable<MembroModel[]>{       
         const headers = new Headers()
         headers.append('Content-Type','application/json')

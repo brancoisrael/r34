@@ -41,6 +41,18 @@ public class ControllerMembro {
 		return new ResponseEntity<MembroDTO>(membroDTO,HttpStatus.OK);
 	}
 
+	@CrossOrigin
+	@ApiOperation(value = "atualizar", notes = "atualizar", protocols = "Accept=application/json", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
+	@RequestMapping(value="/atualizar",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public ResponseEntity<MembroDTO> atualziar(@RequestBody Membro membro) {
+		MembroDTO membroDTO = serviceMembroImpl.atualizar(membro);
+		
+		return new ResponseEntity<MembroDTO>(membroDTO,HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "buscar todos", notes = "buscar todos", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
 	@RequestMapping(value="/buscartodos",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)

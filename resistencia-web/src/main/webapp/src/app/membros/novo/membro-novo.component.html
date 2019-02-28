@@ -4,7 +4,7 @@
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-danger">
-                      <h4 class="card-title">Cadastrar do membro</h4>
+                      <h4 class="card-title">{{header}}</h4>
                       <p class="card-category"></p>
                   </div>
                   <div class="card-body">
@@ -28,15 +28,15 @@
                               </div>
 
                               <div class="col-md-4">
-                                <p>Status</p>
-                                <p-inputSwitch formControlName="status" ></p-inputSwitch>     
-                              </div>                              
+                                    <p>E-mail</p>
+                                    <input  type="text" autocomplete="off" required formControlName="email" />
+                                  </div>                              
                             </div>
                          
                           <div class="row">
                               <div class="col-md-4">
                                   <p>Situação</p>
-                                  <p-dropdown [options]="situacoes" formControlName="situacaoMembro" (onChange)="changeDataSaida($event)" ></p-dropdown>
+                                  <p-dropdown [options]="situacoes" formControlName="situacaoMembro" (onChange)="changeSituacao($event)" ></p-dropdown>
                               </div>
 
                               <div class="col-md-4">
@@ -70,24 +70,34 @@
                         </div>
 
                         <div class="row">                           
-                            <div class="col-md-4">
-                                <p>E-mail</p>
-                                <input  type="text" autocomplete="off" required formControlName="email" />
-                              </div>
-
                               <div class="col-md-4">
                                 <p>Senha</p>
                                 <input size="20"  type="password" required formControlName="senha" />
-                              </div>
-                         
-                                                                                  
+                                <input type="hidden" formControlName="id" />
+                              </div>                     
+                                    
+                              
                         </div>
 
-                          <button [disabled]="!orderForm.valid" 
+                          <button [hidden]="!visibleBtNovo" [disabled]="!orderForm.valid" 
                           (click)="salvarMembro(orderForm.value)"  
                           type="submit"
-                           class="btn btn-danger pull-right">Salvar</button>
-                          <div class="clearfix"></div>
+                           class="btn btn-outline-danger pull-right">Salvar</button>
+
+                           <button [hidden]="visibleBtNovo" [disabled]="!orderForm.valid" 
+                          (click)="atualizarMembro(orderForm.value)"  
+                          type="submit"
+                           class="btn btn-outline-danger pull-right">Atualizar</button>
+
+                          <button [hidden]="visibleBtNovo"  
+                          [routerLink]="['/membros']"  
+                          type="submit"
+                           class="btn btn-outline-info pull-right">Voltar</button>
+                          
+                           <div class="clearfix">
+
+
+                          </div>
                       </form>
                   </div>
               </div>

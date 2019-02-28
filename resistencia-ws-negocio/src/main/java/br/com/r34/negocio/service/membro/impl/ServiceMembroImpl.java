@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.r34.negocio.dao.membro.MembroDAO;
 import br.com.r34.negocio.domain.dto.membro.MembroDTO;
 import br.com.r34.negocio.domain.vo.membro.Membro;
+import br.com.r34.negocio.enums.SituacaoMembro;
 import br.com.r34.negocio.service.membro.ServiceMembro;
 
 @Service
@@ -27,24 +28,26 @@ public class ServiceMembroImpl implements ServiceMembro {
 		membroDTO = new MembroDTO();
 		membroDTO.setMessage("Erro ao inserir membro");
 
+		if(membro.getSituacaoMembro()==SituacaoMembro.DESLIGADO && membro.getDataSaida()==null) {
+			membroDTO.setMessage("Informe a data de saída do infeliz.");
+			return membroDTO;
+		}
+		
 		try {
 			Membro m = membroDAO.save(membro);
 			if (m != null) {
 				membroDTO.setSucesso(true);
 				membroDTO.setMessage("Membro inserido com sucesso");
 			}
-		}
-		catch(DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) {
 			membroDTO.setSucesso(false);
 			membroDTO.setMessage("Membro já existente, revise os dados e tente novamente.");
 			Logger.getLogger(e.getMessage());
-		}
-		catch(ConstraintViolationException e) {
+		} catch (ConstraintViolationException e) {
 			membroDTO.setSucesso(false);
 			membroDTO.setMessage(e.getConstraintViolations().stream().findAny().get().getMessage());
 			Logger.getLogger(e.getMessage());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			membroDTO.setSucesso(false);
 			membroDTO.setMessage("Erro ao tentar inserir membro. ");
 			Logger.getLogger(e.getMessage());
@@ -72,12 +75,31 @@ public class ServiceMembroImpl implements ServiceMembro {
 	@Override
 	public MembroDTO atualizar(Membro membro) {
 		membroDTO = new MembroDTO();
-		membroDTO.setMessage("Erro ao inserir membro");
-
-		Membro m = membroDAO.save(membro);
-		if (m != null) {
-			membroDTO.setSucesso(true);
-			membroDTO.setMessage("Memro atualizado com sucesso");
+		membroDTO.setMessage("Erro ao atualizar membro");
+		
+		if(membro.getSituacaoMembro()==SituacaoMembro.DESLIGADO && membro.getDataSaida()==null) {
+			membroDTO.setMessage("Informe a data de saída do infeliz.");
+			return membroDTO;
+		}
+		
+		try {
+			Membro m = membroDAO.save(membro);
+			if (m != null) {
+				membroDTO.setSucesso(true);
+				membroDTO.setMessage("Membro atualizado com sucesso");
+			}
+		} catch (DataIntegrityViolationException e) {
+			membroDTO.setSucesso(false);
+			membroDTO.setMessage("Membro já existente, revise os dados e tente novamente.");
+			Logger.getLogger(e.getMessage());
+		} catch (ConstraintViolationException e) {
+			membroDTO.setSucesso(false);
+			membroDTO.setMessage(e.getConstraintViolations().stream().findAny().get().getMessage());
+			Logger.getLogger(e.getMessage());
+		} catch (Exception e) {
+			membroDTO.setSucesso(false);
+			membroDTO.setMessage("Erro ao tentar inserir membro. ");
+			Logger.getLogger(e.getMessage());
 		}
 
 		return membroDTO;
@@ -91,15 +113,15 @@ public class ServiceMembroImpl implements ServiceMembro {
 	}
 
 	@Override
-	public Iterable<Membro> selectAll(){
+	public Iterable<Membro> selectAll() {
 		return membroDAO.selectAll();
 	}
-	
+
 	@Override
 	public Membro buscarId(long id) {
 		return membroDAO.findById(id);
 	}
-	
+
 	public void setMembroDAO(MembroDAO membroDAO) {
 		this.membroDAO = membroDAO;
 	}

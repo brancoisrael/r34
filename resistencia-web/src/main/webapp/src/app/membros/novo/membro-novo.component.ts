@@ -18,8 +18,10 @@ import { DropdownModule } from 'primeng/dropdown';
 })
 export class MembroNovoComponent implements OnInit {
 
+  header:string='Cadastrar novo membro'
   membro:MembroModel
   orderForm: FormGroup
+  visibleBtNovo:boolean=true
   dataSaidaDisable:boolean=true
   patenteDisable:boolean=true
   minDateNascimento:Date=new Date()
@@ -44,7 +46,6 @@ export class MembroNovoComponent implements OnInit {
   ngOnInit() {
     this.orderForm = this.formBuilder.group({
       nome:this.formBuilder.control('',[Validators.required,Validators.max(50), Validators.pattern(this.alfaPattern)]),
-      status:this.formBuilder.control('true',Validators.required) ,
       apelido:this.formBuilder.control('') ,
       email:this.formBuilder.control('',[Validators.required,Validators.pattern(this.mailPattern)]) ,
       senha:this.formBuilder.control('',Validators.required) ,
@@ -53,12 +54,12 @@ export class MembroNovoComponent implements OnInit {
       dataSaida:this.formBuilder.control('') ,
       patente:this.formBuilder.control('',[Validators.required]),
       cargo:this.formBuilder.control('') ,
-      situacaoMembro:this.formBuilder.control('',Validators.required)
+      situacaoMembro:this.formBuilder.control('',Validators.required),
+      id:this.formBuilder.control('') ,
     })
 
     if(this.route.snapshot.params.id)
     this.prepararEditar(this.route.snapshot.params.id) 
-  
   }
 
   changePatente(event){
@@ -70,9 +71,8 @@ export class MembroNovoComponent implements OnInit {
     }
   }
 
-  changeDataSaida(event){
+  changeSituacao(event){
     this.dataSaidaDisable=true;
-
     if(this.orderForm.get('situacaoMembro').value ==='DESLIGADO'){
       this.dataSaidaDisable=false;
     }
@@ -85,43 +85,60 @@ export class MembroNovoComponent implements OnInit {
 
   setMinDateSaida(event){
     this.minDateSaida = this.orderForm.get('dataEntrada').value;
-    this.orderForm.get('dataSaida'). setValue(null);
+    this.orderForm.get('dataSaida').setValue(null);
+  }
+
+  prepararEditar(id:number){
+    this.header = 'Atualizar membro';
+    this.visibleBtNovo=false;
+    this.membroService.buscarMembroID(id)
+    .subscribe((membro:MembroModel)=>{
+     this.orderForm.controls['dataNascimento'].setValue(new Date(membro.dataNascimento));
+     this.orderForm.controls['dataEntrada'].setValue(new Date(membro.dataEntrada));
+     this.orderForm.controls['dataSaida'].setValue(membro.situacaoMembro==='DESATIVADO'? new Date(membro.dataSaida):null);
+     this.orderForm.controls['situacaoMembro'].setValue(membro.situacaoMembro);
+     this.orderForm.controls['patente'].setValue(membro.patente);
+     this.orderForm.controls['cargo'].setValue(membro.cargo);
+     this.orderForm.controls['nome'].setValue(membro.nome);
+     this.orderForm.controls['apelido'].setValue(membro.apelido);
+     this.orderForm.controls['senha'].setValue(membro.senha);
+     this.orderForm.controls['email'].setValue(membro.email);
+     this.orderForm.controls['id'].setValue(membro.id);   
+     
+     this.changeSituacao(null);
+     this.patenteDisable=this.orderForm.get('patente').value ==='ESCUDADO'?false:true;
+     this.minDateEntrada = this.orderForm.get('dataNascimento').value;
+     this.minDateSaida = this.orderForm.get('dataEntrada').value;
+     
+    })
   }
 
   salvarMembro(membro:MembroModel){
+    membro.status=membro.situacaoMembro==='DESLIGADO'?false:true;
+
     this.membroService.salvarMembro(membro)
       .subscribe((response:MembroDTO)=>{
         this.router.navigate(['/membro-novo'])
-        //console.log(response);
         this.messageService.clear();
         this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
         
         if(response.sucesso){
           this.orderForm.reset();
-          this.orderForm.get('status').setValue(true);
         }
       })     
   }
 
-  prepararEditar(id:number){
+  atualizarMembro(membro:MembroModel){
+    membro.status=membro.situacaoMembro==='DESLIGADO'?false:true;
 
-    this.membroService.buscarMembroID(id)
-    .subscribe((membro:MembroModel)=>{
-
-
-     this.orderForm.controls[ 'dataNascimento' ].setValue(new Date(membro.dataNascimento));
-     this.orderForm.controls[ 'dataEntrada' ].setValue(new Date(membro.dataEntrada));
-     this.orderForm.controls[ 'dataSaida' ].setValue(new Date(membro.dataSaida));
-     this.orderForm.controls[ 'situacaoMembro' ].setValue(membro.situacaoMembro);
-     this.orderForm.controls[ 'patente' ].setValue(membro.patente);
-     this.orderForm.controls[ 'cargo' ].setValue(membro.cargo);
-
-      this.orderForm.get('nome').setValue(membro.nome);
-      this.orderForm.get('status').setValue(membro.status);
-      this.orderForm.get('apelido').setValue(membro.apelido);
-      this.orderForm.get('senha').setValue(membro.senha);
-      this.orderForm.get('email').setValue(membro.email);
-      
-    })
+    this.membroService.atualizarMembro(membro)
+      .subscribe((response:MembroDTO)=>{
+        this.messageService.clear();
+        this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
+        
+        if(response.sucesso){
+          this.router.navigate(['/membros'])        
+        }
+      })     
   }
 }
