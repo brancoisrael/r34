@@ -40,7 +40,7 @@ export const PATENTES: SelectOptions[]=[
   ]
 
   export const CARGOS:SelectOptions[]=[
-    {label:'Selecione',value:''},
+    {label:'Selecione',value:null},
     {value:'PRESIDENTE',label:'Presidente'},
     {value:'VICE_PRESIDENTE',label:'Vice Presidente'},
     {value:'SARGENTO_ARMAS',label:'Sargento de armas'},

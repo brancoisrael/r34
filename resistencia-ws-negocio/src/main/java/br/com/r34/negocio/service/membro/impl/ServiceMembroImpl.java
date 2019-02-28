@@ -33,6 +33,12 @@ public class ServiceMembroImpl implements ServiceMembro {
 			return membroDTO;
 		}
 		
+		if(membro.getPatente()!=null &&
+			membroDAO.findByCargo(membro.getCargo(),membro.getId())==0) {
+			membroDTO.setMessage("Outro infeliz já possui esta patente, mude esta porra e tente novamente.");
+			return membroDTO;
+		}
+		
 		try {
 			Membro m = membroDAO.save(membro);
 			if (m != null) {
@@ -79,6 +85,12 @@ public class ServiceMembroImpl implements ServiceMembro {
 		
 		if(membro.getSituacaoMembro()==SituacaoMembro.DESLIGADO && membro.getDataSaida()==null) {
 			membroDTO.setMessage("Informe a data de saída do infeliz.");
+			return membroDTO;
+		}
+		
+		if(membro.getCargo()!=null &&
+				membroDAO.findByCargo(membro.getCargo(),membro.getId())>0) {
+			membroDTO.setMessage("Outro infeliz já possui esta patente, mude esta porra e tente novamente.");
 			return membroDTO;
 		}
 		

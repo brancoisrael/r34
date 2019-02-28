@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import br.com.r34.negocio.domain.vo.membro.Membro;
+import br.com.r34.negocio.enums.Cargo;
 
 public interface MembroDAO extends CrudRepository<Membro, Long> {
 
@@ -19,4 +20,7 @@ public interface MembroDAO extends CrudRepository<Membro, Long> {
 	List<Membro> selectAll();
 	
 	Membro findById(long id);
+	
+	@Query("select count(m.id) from Membro m where m.cargo=:cargo and m.id!=:id ")
+	int findByCargo(@Param("cargo")Cargo cargo,@Param("id") long id);
 }

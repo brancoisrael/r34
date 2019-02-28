@@ -48,7 +48,7 @@ public class Membro implements ValueObject {
 	private String nome;
 	
 	@Size(min=0,max=255,message="Máximo 50 caracteres")
-	@Column(name="apelido",length=50)
+	@Column(name="apelido",length=50,unique=true)
 	private String apelido;
 	
 	@NotNull(message="Informe o e-mail")
