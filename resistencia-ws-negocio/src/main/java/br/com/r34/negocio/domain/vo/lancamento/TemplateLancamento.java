@@ -54,11 +54,6 @@ public class TemplateLancamento implements ValueObject{
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name="origem_lancamento",nullable=false)
 	private OrigemLancamento origemLancamento;
-
-	@NotNull(message="Descrição do lançamento é obrigatório")
-	@ManyToOne(optional=false,fetch=FetchType.LAZY)
-	@JoinColumn(name="id_lancamento")
-	private DescricaoLancamento descricaoLancamento;
 		
 	@NotNull(message="Selecione o membro")
 	@ManyToOne(optional=false,fetch=FetchType.LAZY)
@@ -124,14 +119,6 @@ public class TemplateLancamento implements ValueObject{
 
 	public void setOrigemLancamento(OrigemLancamento origemLancamento) {
 		this.origemLancamento = origemLancamento;
-	}
-
-	public DescricaoLancamento getDescricaoLancamento() {
-		return descricaoLancamento;
-	}
-
-	public void setDescricaoLancamento(DescricaoLancamento descricaoLancamento) {
-		this.descricaoLancamento = descricaoLancamento;
 	}
 
 	public Membro getMembro() {

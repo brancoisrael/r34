@@ -15,7 +15,6 @@ import br.com.r34.negocio.enums.SituacaoMembro;
 import br.com.r34.negocio.service.membro.ServiceMembro;
 
 @Service
-
 public class ServiceMembroImpl implements ServiceMembro {
 
 	@Autowired

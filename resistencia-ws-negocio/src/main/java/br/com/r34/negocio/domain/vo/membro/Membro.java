@@ -43,21 +43,21 @@ public class Membro implements ValueObject {
 	private boolean status;
 	
 	@NotNull(message="Informe o nome do infeliz")
-	@Size(min=2,max=255,message="No mínimo 2 e no máximo 255 caracteres")
+	@Size(min=2,max=50,message="No mínimo 2 e no máximo 50 caracteres")
 	@Column(name="nome",length=255,nullable=false)
 	private String nome;
 	
-	@Size(min=0,max=255,message="Máximo 50 caracteres")
+	@Size(min=0,max=15,message="Máximo 15 caracteres")
 	@Column(name="apelido",length=50,unique=true)
 	private String apelido;
 	
 	@NotNull(message="Informe o e-mail")
-	@Size(min=2,max=255,message="No mínimo 2 e no máximo 255 caracteres")
+	@Size(min=2,max=50,message="No mínimo 2 e no máximo 50 caracteres")
 	@Column(name="email",length=255,nullable=false,unique=true)
 	private String email;
 	
 	@NotNull(message="Informe a senha")
-	@Size(min=2,max=255,message="No mínimo 2 e no máximo 255 caracteres")
+	@Size(min=2,max=30,message="No mínimo 2 e no máximo 30 caracteres")
 	@Column(name="senha",length=255,nullable=false)
 	private String senha;
 	
@@ -66,7 +66,8 @@ public class Membro implements ValueObject {
 	@Enumerated(EnumType.ORDINAL)
 	private SituacaoMembro situacaoMembro;
 
-	@Column(name="data_nascimento")
+	@NotNull(message="Informe a data de nascimento")
+	@Column(name="data_nascimento",nullable=false)
 	private Date dataNascimento;
 	
 	@NotNull(message="Informe a data de entrada")

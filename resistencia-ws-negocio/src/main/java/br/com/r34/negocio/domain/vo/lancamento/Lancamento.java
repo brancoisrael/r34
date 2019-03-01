@@ -34,6 +34,9 @@ public class Lancamento implements ValueObject {
 	@Column(name="data_lancamento",nullable=false)
 	private Date dataLancamento;
 	
+	@Column(name="criado_em",nullable=false)
+	private Date criadoEm;
+	
 	@NotNull(message="Valor do lançamento é obrigatório")
 	@Column(name="valor_lancamento",nullable=false,precision=2)
 	private double valorLancamento;
@@ -52,11 +55,6 @@ public class Lancamento implements ValueObject {
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name="origem_lancamento",nullable=false)
 	private OrigemLancamento origemLancamento;
-
-	@NotNull(message="Descrição do lançamento é obrigatório")
-	@ManyToOne(optional=false)
-	@JoinColumn(name="id_descricao_lancamento")
-	private DescricaoLancamento descricaoLancamento;
 		
 	@NotNull(message="Selecione o membro")
 	@ManyToOne(optional=false)
@@ -100,14 +98,6 @@ public class Lancamento implements ValueObject {
 		this.tipoLancamento = tipoLancamento;
 	}
 
-	public DescricaoLancamento getDescricaoLancamento() {
-		return descricaoLancamento;
-	}
-
-	public void setDescricaoLancamento(DescricaoLancamento descricaoLancamento) {
-		this.descricaoLancamento = descricaoLancamento;
-	}
-
 	public Membro getMembro() {
 		return membro;
 	}
@@ -138,5 +128,13 @@ public class Lancamento implements ValueObject {
 
 	public void setResposavelLancamento(Membro resposavelLancamento) {
 		this.resposavelLancamento = resposavelLancamento;
+	}
+
+	public Date getCriadoEm() {
+		return criadoEm;
+	}
+
+	public void setCriadoEm(Date criadoEm) {
+		this.criadoEm = criadoEm;
 	}
 }
