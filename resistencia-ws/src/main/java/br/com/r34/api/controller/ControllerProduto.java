@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.r34.negocio.domain.vo.produto.Produto;
+import br.com.r34.negocio.domain.vo.produto.TipoProduto;
 import br.com.r34.negocio.service.produto.impl.ServiceProdutoImpl;
+import br.com.r34.negocio.service.produto.impl.ServiceTipoProdutoImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -27,18 +29,30 @@ public class ControllerProduto {
 	@Autowired
 	private ServiceProdutoImpl serviceProdutoImpl;
 	
+	@Autowired
+	private ServiceTipoProdutoImpl serviceTipoProdutoImpl;
 		
 	@ApiOperation(value = "listar produtos a venda", notes = "listar produtos a venda", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
 	@RequestMapping(value="/listar-produtos-vendas",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ResponseEntity<List<Produto>> selectAll() {
+	public ResponseEntity<List<Produto>> selectProdutoAll() {
 		List<Produto> produtos = serviceProdutoImpl.listarProdutoVenda();
 		
 		return new ResponseEntity<List<Produto>>(produtos,HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "listar tipo de produto", notes = "listar tipo de produto", protocols = "Accept=application/json", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
+	@RequestMapping(value="/listar-tipo-produto",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public ResponseEntity<List<TipoProduto>> selectTipoProdutoAll() {
+		List<TipoProduto> tipoProdutos = serviceTipoProdutoImpl.listarTipoProduto();
+		
+		return new ResponseEntity<List<TipoProduto>>(tipoProdutos,HttpStatus.OK);
+	}
 		
 	public void setServiceProdutoImpl(ServiceProdutoImpl serviceProdutoImpl) {
 		this.serviceProdutoImpl = serviceProdutoImpl;
