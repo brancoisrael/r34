@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 
 import br.com.r34.negocio.domain.vo.ValueObject;
 import br.com.r34.negocio.domain.vo.membro.Membro;
+import br.com.r34.negocio.domain.vo.produto.ProdutoVenda;
 import br.com.r34.negocio.enums.OrigemLancamento;
 import br.com.r34.negocio.enums.StatusLancamento;
 import br.com.r34.negocio.enums.TipoLancamento;
@@ -41,6 +42,10 @@ public class Lancamento implements ValueObject {
 	@Column(name="valor_lancamento",nullable=false,precision=2)
 	private double valorLancamento;
 	
+	@NotNull(message="Quantidade do produto relacionado é obrigatório")
+	@Column(name="quantidade_produto",nullable=false)
+	private int quantidade;
+	
 	@NotNull(message="Tipo do lançamento é obrigatório")
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name="tipo_lancamento",nullable=false)
@@ -65,6 +70,10 @@ public class Lancamento implements ValueObject {
 	@ManyToOne(optional=false)
 	@JoinColumn(name="id_responsavel_lancamento")
 	private Membro resposavelLancamento;
+	
+	@ManyToOne(optional=true)
+	@JoinColumn(name="id_produto_venda")
+	private ProdutoVenda produtoVenda;
 	
 	public long getId() {
 		return id;
@@ -136,5 +145,21 @@ public class Lancamento implements ValueObject {
 
 	public void setCriadoEm(Date criadoEm) {
 		this.criadoEm = criadoEm;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public ProdutoVenda getProdutoVenda() {
+		return produtoVenda;
+	}
+
+	public void setProdutoVenda(ProdutoVenda produtoVenda) {
+		this.produtoVenda = produtoVenda;
 	}
 }

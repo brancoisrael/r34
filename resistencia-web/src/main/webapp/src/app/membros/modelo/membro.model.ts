@@ -1,4 +1,4 @@
-import { SelectOptions } from "app/components/select/select-options";
+import { SelectOptions } from "../../components/select/select-options";
 
 export class MembroModel{
 

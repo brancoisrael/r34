@@ -1,19 +1,23 @@
 package br.com.r34.negocio.domain.vo.produto;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import br.com.r34.negocio.domain.vo.ValueObject;
+import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 
 @Entity
 @Table(name="tb_produto_venda")
@@ -40,6 +44,9 @@ public class ProdutoVenda implements ValueObject{
 	@ManyToOne(optional=false,cascade=CascadeType.REMOVE)
 	@JoinColumn(name="id_produto")
 	private Produto produto;
+	
+	@OneToMany(mappedBy = "produtoVenda", targetEntity = Lancamento.class, fetch = FetchType.LAZY)
+	private Set<Lancamento> lancamentos;
 
 	public long getId() {
 		return id;
@@ -79,6 +86,14 @@ public class ProdutoVenda implements ValueObject{
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public Set<Lancamento> getLancamentos() {
+		return lancamentos;
+	}
+
+	public void setLancamentos(Set<Lancamento> lancamentos) {
+		this.lancamentos = lancamentos;
 	}
 	
 	

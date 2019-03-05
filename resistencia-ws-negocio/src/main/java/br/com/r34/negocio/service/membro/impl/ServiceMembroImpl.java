@@ -32,9 +32,9 @@ public class ServiceMembroImpl implements ServiceMembro {
 			return membroDTO;
 		}
 		
-		if(membro.getPatente()!=null &&
+		if(membro.getCargo()!=null &&
 			membroDAO.findByCargo(membro.getCargo(),membro.getId())==0) {
-			membroDTO.setMessage("Outro infeliz já possui esta patente, mude esta porra e tente novamente.");
+			membroDTO.setMessage("Outro infeliz já possui este cargo, mude esta porra e tente novamente.");
 			return membroDTO;
 		}
 		
@@ -89,7 +89,7 @@ public class ServiceMembroImpl implements ServiceMembro {
 		
 		if(membro.getCargo()!=null &&
 				membroDAO.findByCargo(membro.getCargo(),membro.getId())>0) {
-			membroDTO.setMessage("Outro infeliz já possui esta patente, mude esta porra e tente novamente.");
+			membroDTO.setMessage("Outro infeliz já possui este cargo, mude esta porra e tente novamente.");
 			return membroDTO;
 		}
 		

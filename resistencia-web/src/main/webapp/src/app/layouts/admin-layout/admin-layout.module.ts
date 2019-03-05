@@ -28,8 +28,9 @@ import {
   MatTooltipModule,
   MatSelectModule
 } from '@angular/material';
-import { MembrosComponent } from 'app/membros/membros.component';
-import { MembroNovoComponent } from 'app/membros/novo/membro-novo.component';
+import { MembrosComponent } from '../../membros/membros.component';
+import { MembroNovoComponent } from '../../membros/novo/membro-novo.component';
+import { LancamentoNovoComponent } from '../../lancamento/novo/lancamento-novo.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { MembroNovoComponent } from 'app/membros/novo/membro-novo.component';
     NotificationsComponent,
     UpgradeComponent,
     MembrosComponent,
-    MembroNovoComponent
+    MembroNovoComponent,
+    LancamentoNovoComponent
   ],
   exports:[
     CommonModule,

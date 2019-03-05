@@ -6,5 +6,5 @@ import br.com.r34.negocio.domain.vo.produto.Produto;
 
 public interface ServiceProduto {
 
-	List<Produto> listarProdutoVenda();
+	List<Produto> listarProdutoVenda(long idTipoProduto);
 }

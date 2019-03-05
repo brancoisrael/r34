@@ -16,7 +16,7 @@ public class ServiceProdutoImpl implements ServiceProduto{
 	private ProdutoDAO produtoDAO;
 	
 	@Override
-	public List<Produto> listarProdutoVenda(){
-		return produtoDAO.listarProdutoVenda();
+	public List<Produto> listarProdutoVenda(long idTipoProduto){
+		return produtoDAO.listarProdutoVenda(idTipoProduto);
 	}
 }

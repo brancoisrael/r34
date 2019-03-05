@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,11 +35,11 @@ public class ControllerProduto {
 		
 	@ApiOperation(value = "listar produtos a venda", notes = "listar produtos a venda", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
-	@RequestMapping(value="/listar-produtos-vendas",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/listar-produtos-vendas/{idTipoProduto}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ResponseEntity<List<Produto>> selectProdutoAll() {
-		List<Produto> produtos = serviceProdutoImpl.listarProdutoVenda();
+	public ResponseEntity<List<Produto>> selectProdutoVendaByTipo(@PathVariable long idTipoProduto) {
+		List<Produto> produtos = serviceProdutoImpl.listarProdutoVenda(idTipoProduto);
 		
 		return new ResponseEntity<List<Produto>>(produtos,HttpStatus.OK);
 	}

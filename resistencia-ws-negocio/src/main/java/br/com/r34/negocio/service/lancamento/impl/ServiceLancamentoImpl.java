@@ -1,6 +1,7 @@
 package br.com.r34.negocio.service.lancamento.impl;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.validation.ConstraintViolationException;
 
@@ -29,12 +30,18 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 			lancamentoDTO.setSucesso(true);			
 		} 
 		catch (ConstraintViolationException e) {
+			lancamentoDTO.setSucesso(false);
 			lancamentoDTO.setMessage(e.getConstraintViolations().iterator().next().getMessageTemplate());
 		}
 		catch(DataIntegrityViolationException e) {
+			lancamentoDTO.setSucesso(false);
 			lancamentoDTO.setMessage("Campo único no banco de dados: "+ e.getMostSpecificCause());
 		}
-		
+		catch (Exception e) {
+			lancamentoDTO.setSucesso(false);
+			lancamentoDTO.setMessage("Erro ao tentar inserir lançameto. ");
+			Logger.getLogger(e.getMessage());
+		}
 		return lancamentoDTO;
 	}
 
@@ -69,10 +76,17 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 			lancamentoDTO.setSucesso(true);			
 		} 
 		catch (ConstraintViolationException e) {
+			lancamentoDTO.setSucesso(false);
 			lancamentoDTO.setMessage(e.getConstraintViolations().iterator().next().getMessageTemplate());
 		}
 		catch(DataIntegrityViolationException e) {
+			lancamentoDTO.setSucesso(false);
 			lancamentoDTO.setMessage("Campo único no banco de dados: "+ e.getMostSpecificCause());
+		}
+		catch (Exception e) {
+			lancamentoDTO.setSucesso(false);
+			lancamentoDTO.setMessage("Erro ao tentar inserir lançameto. ");
+			Logger.getLogger(e.getMessage());
 		}
 		
 		return lancamentoDTO;
