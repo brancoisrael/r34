@@ -1,5 +1,5 @@
 
-export class TipoProduto{
+export class TipoProdutoModel{
 
     constructor(
         public id:number,

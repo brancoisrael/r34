@@ -4,6 +4,18 @@ import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/form
 import {Router, ActivatedRoute} from '@angular/router'
 
 import { MessageService } from 'primeng/components/common/messageservice';
+import {ProdutoService} from '../../produto/produto.service';
+import {LancamentoService} from '../../lancamento/lancamento.service';
+import { MembroService } from '../../membros/membros.service';
+import {TIPO_LANCAMENTO,ORIGEM_DEBITO_LANCAMENTO,ORIGEM_CREDITO_LANCAMENTO,STATUS_LANCAMENTO} from '../../lancamento/modelo/lancamento.model'
+
+import {TipoProdutoModel} from '../../produto/modelo/tipo-produto.model';
+import {ProdutoModel} from '../../produto/modelo/produto.model';
+import {ProdutoVendaModel} from '../../produto/modelo/produto-venda.model';
+
+import { SelectOptions } from '../../components/select/select-options';
+import { MembroModel } from '../../membros/modelo/membro.model';
+
 
 
 @Component({
@@ -12,20 +24,106 @@ import { MessageService } from 'primeng/components/common/messageservice';
 })
 export class LancamentoNovoComponent implements OnInit {
 
-  header:string='Cadastrar novo membro'
+  tiposProdutos:SelectOptions[]
+  produtos:SelectOptions[]
+  membros:SelectOptions[]
+  tiposLancamentos=TIPO_LANCAMENTO
+  origemLancamentos:any
+  produtoDisable:boolean
+  formHidden:boolean
+  header:string='Cadastrar novo lançamento'
   orderForm: FormGroup
-  
+  numeroPattern =/^[0-9]*$/
+  moedaPattern =/^[0-9,.]*$/
+  dataHoje:Date=new Date()
+
   constructor(
+    private lancamentoService:LancamentoService,
+    private produtoService:ProdutoService,
+    private membroService:MembroService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private messageService: MessageService) {
-      
+      this.produtoDisable=true;
+      this.formHidden=true
   }
 
   ngOnInit() {
-     
+    this.orderForm = this.formBuilder.group({
+      dataLancamento:this.formBuilder.control('',Validators.required),
+      membro:this.formBuilder.control('',[Validators.required]),
+      tipoProduto:this.formBuilder.control('',[Validators.required]),
+      produto:this.formBuilder.control('',[Validators.required]),
+      tipoLancamento:this.formBuilder.control('',[Validators.required]),
+      origemLancamento:this.formBuilder.control('',[Validators.required]),
+      quantidade:this.formBuilder.control('',[Validators.required,Validators.pattern(this.numeroPattern)]),
+      valorLancamento:this.formBuilder.control('',[Validators.required,Validators.pattern(this.moedaPattern)])
+    })
+
+    this.listarMembros();
   }
 
-  
+  listarMembros(){
+    this.membroService.buscarMembroStatus(true)
+      .subscribe((response:MembroModel[])=>{
+        var mb:MembroModel[]=response
+        this.membros = [{label:'Selecione',value:null}];
+        
+        for(var i=0;i<mb.length;i++){          
+          this.membros.push(new SelectOptions(mb[i].nome,mb[i].id));
+        }
+      })
+  }
+
+  hiddenForms(event){
+    this.formHidden=this.orderForm.get('dataLancamento')?false:true;
+  }
+
+  changeTipoProduto(event){
+    this.produtoService.listarProdutosVenda(this.orderForm.controls['tipoProduto'].value)
+      .subscribe((response:ProdutoModel[])=>{
+        var pr:ProdutoModel[] = response;
+        this.produtos = [{label:'Selecione',value:null}];
+        for(var i=0;i<pr.length;i++){
+          this.produtos.push(new SelectOptions(pr[i].descricao,pr[i].id))
+        }
+      })
+  }
+
+  changeTipoLancamento(event){
+    this.orderForm.controls['origemLancamento'].setValue(null);
+    this.orderForm.controls['tipoProduto'].setValue(null);
+    this.orderForm.controls['produto'].setValue(null);
+    this.orderForm.controls['valorLancamento'].setValue(0);
+    this.produtoDisable=true;
+    this.origemLancamentos = null;
+    
+    if(this.orderForm.controls['tipoLancamento'].value==='CREDITO')
+      this.origemLancamentos = ORIGEM_CREDITO_LANCAMENTO;
+    else if(this.orderForm.controls['tipoLancamento'].value==='DEBITO')
+      this.origemLancamentos = ORIGEM_DEBITO_LANCAMENTO;
+  }
+
+  changeOrigemLancamento(event){
+    this.produtoDisable=true;
+    this.orderForm.controls['valorLancamento'].setValue(0);
+
+    if(this.orderForm.controls['origemLancamento'].value==='BAR'){
+      this.listarTipoProduto();
+      this.produtoDisable=false;
+    }      
+  }
+
+  listarTipoProduto(){
+    this.produtoService.listarTipoProduto()
+      .subscribe((response:TipoProdutoModel[])=>{
+        var tp:TipoProdutoModel[]=response
+        this.tiposProdutos = [{label:'Selecione',value:null}];
+        
+        for(var i=0;i<tp.length;i++){          
+          this.tiposProdutos.push(new SelectOptions(tp[i].tipoProduto,tp[i].id));
+        }
+      })
+  }
 }

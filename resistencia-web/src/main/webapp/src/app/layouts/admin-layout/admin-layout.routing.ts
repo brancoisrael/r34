@@ -8,9 +8,9 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import { MembrosComponent } from 'app/membros/membros.component';
-import { MembroNovoComponent } from 'app/membros/novo/membro-novo.component';
-
+import { MembrosComponent } from '../../membros/membros.component';
+import { MembroNovoComponent } from '../../membros/novo/membro-novo.component';
+import {LancamentoNovoComponent} from '../../lancamento/novo/lancamento-novo.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -23,12 +23,14 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade',        component: UpgradeComponent },
 
     { path: 'membros',        component: MembrosComponent },
-    { path: 'membro-novo',        component: MembroNovoComponent },
-    { path: 'membro-novo/:id',        component: MembroNovoComponent ,
+    { path: 'membro-novo',    component: MembroNovoComponent },
+    { path: 'membro-novo/:id',component: MembroNovoComponent ,
         children:[
             {path:'membro-novo/:id',component:MembroNovoComponent}
         ]
     },
+
+    {path: 'lancamento-novo',      component: LancamentoNovoComponent },
 
    
 ];

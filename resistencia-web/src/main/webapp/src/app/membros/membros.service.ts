@@ -53,6 +53,16 @@ export class MembroService{
             
     }
 
+    buscarMembroStatus(status:boolean):Observable<MembroModel[]>{       
+        const headers = new Headers()
+        headers.append('Content-Type','application/json')
+        
+        return this.http.get(`${R34_API}/membros/buscar-status/${status}`
+        ,new RequestOptions({headers:headers}))
+            .map(response=> response.json())
+            
+    }
+
     excluirMembro(membro:MembroModel):Observable<MembroDTO>{       
         const headers = new Headers()
         headers.append('Content-Type','application/json')

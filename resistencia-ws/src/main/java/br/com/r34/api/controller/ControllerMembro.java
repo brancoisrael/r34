@@ -1,5 +1,7 @@
 package br.com.r34.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -86,6 +88,18 @@ public class ControllerMembro {
 		Membro membro = serviceMembroImpl.buscarId(id);
 		
 		return new ResponseEntity<Membro>(membro,HttpStatus.OK);
+	}
+	
+	@CrossOrigin
+	@ApiOperation(value = "pesquisar por status", notes = "pesquisar por status", protocols = "Accept=application/json", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
+	@RequestMapping(value="/buscar-status/{status}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public ResponseEntity<List<Membro>> buscarByStatus(@PathVariable boolean status) {
+		List<Membro> membros = serviceMembroImpl.selectByStatus(status);
+		
+		return new ResponseEntity<List<Membro>>(membros,HttpStatus.OK);
 	}
 	
 	public void setServiceMembroImpl(ServiceMembroImpl serviceMembroImpl) {

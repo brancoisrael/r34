@@ -1,0 +1,92 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title">{{header}}</h4>
+                      <p class="card-category"></p>
+                  </div>
+                  <div class="card-body">
+                      <form [formGroup]="orderForm" novalidate >
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p-messages [(value)]="msg"></p-messages>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                              <div class="col-md-4">
+                                  <p>Membro</p>
+                                  <p-dropdown [options]="membros" formControlName="membro" filter="true"></p-dropdown>
+                              </div>
+
+                              <div class="col-md-4">
+                                    <p>Data do lançamento</p>
+                                    <p-calendar formControlName="dataLancamento" (onSelect)="hiddenForms($event)" [maxDate]="dataHoje" ></p-calendar>                    
+                                  </div>     
+
+                              <div class="col-md-4" [hidden]="formHidden">
+                                    <p>Tipo de lançamento</p>
+                                    <p-dropdown [options]="tiposLancamentos" formControlName="tipoLancamento" (onChange)="changeTipoLancamento($event)"></p-dropdown>
+                              </div>
+                                                                                  
+                        </div>  
+                        
+                        <div class="row" [hidden]="formHidden">
+                            <div class="col-md-4">
+                                <p>Origem lançamento</p>
+                                <p-dropdown [options]="origemLancamentos" formControlName="origemLancamento" filter="true" (onChange)="changeOrigemLancamento($event)"></p-dropdown>
+                            </div>  
+                            
+                            <div class="col-md-4">
+                                <p>Tipo de produto</p>
+                                <p-dropdown [options]="tiposProdutos" formControlName="tipoProduto" filter="true" [disabled]="produtoDisable" (onChange)="changeTipoProduto($event)" ></p-dropdown>
+                            </div>
+
+                            <div class="col-md-4">
+                                <p>Produto</p>
+                                <p-dropdown [options]="produtos" formControlName="produto" [disabled]="produtoDisable" filter="true"></p-dropdown>
+                            </div>                            
+                       </div>
+
+                       <div class="row" [hidden]="formHidden">
+                            <div class="col-md-4">
+                                    <p>Quantidade</p>
+                                    <input  type="text" required formControlName="quantidade"/>
+                            </div>
+
+                            <div class="col-md-4">
+                                <p>Valor</p>
+                                <input type="text" formControlName="valorLancamento" [readonly]="!produtoDisable" />
+                            </div>
+
+                       </div>
+                                                
+                         <!-- <button [hidden]="!visibleBtNovo" [disabled]="!orderForm.valid" 
+                          (click)="salvarMembro(orderForm.value)"  
+                          type="submit"
+                           class="btn btn-outline-danger pull-right">Salvar</button>
+
+                           <button [hidden]="visibleBtNovo" [disabled]="!orderForm.valid" 
+                          (click)="atualizarMembro(orderForm.value)"  
+                          type="submit"
+                           class="btn btn-outline-danger pull-right">Atualizar</button>
+
+                          <button [hidden]="visibleBtNovo"  
+                          [routerLink]="['/membros']"  
+                          type="submit"
+                           class="btn btn-outline-info pull-right">Voltar</button>
+                          -->
+                           <div class="clearfix">
+
+
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

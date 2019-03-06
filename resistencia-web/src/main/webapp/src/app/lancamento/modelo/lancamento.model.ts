@@ -17,7 +17,6 @@ export class LancamentoModel{
       public responsavelLancamento:MembroModel,
       public produtoVenda:ProdutoVendaModel
     ){}
-
 }
 
 export const TIPO_LANCAMENTO: SelectOptions[]=[
@@ -33,12 +32,16 @@ export const STATUS_LANCAMENTO: SelectOptions[]=[
    {label:'Em atraso', value:'EM_ATRASO'}
 ];
 
-export const ORIGEM_LANCAMENTO: SelectOptions[]=[
+export const ORIGEM_DEBITO_LANCAMENTO: SelectOptions[]=[
     {label:'Selecione',value:null},
     {label:'Bar', value:'BAR'},
     {label:'Caixinha', value:'CAIXINHA'},
     {label:'Multa por mensagem no WhatsApp', value:'MULTA_WHATSAPP'},
-    {label:'Multa de atraso de pagamento de caixinha', value:'MULTA_ATRASO_CAIXINHA'},
-    {label:'Aquisição de bens', value:'AQUISICAO_BENS'},
-    {label:'Aquisição de serviços', value:'AQUISICAO_SERVICO'}
+    {label:'Multa de atraso de pagamento de caixinha', value:'MULTA_ATRASO_CAIXINHA'}
  ];
+
+ export const ORIGEM_CREDITO_LANCAMENTO: SelectOptions[]=[
+  {label:'Selecione',value:null},
+  {label:'Aquisição de bens', value:'AQUISICAO_BENS'},
+  {label:'Aquisição de serviços', value:'AQUISICAO_SERVICO'}
+];

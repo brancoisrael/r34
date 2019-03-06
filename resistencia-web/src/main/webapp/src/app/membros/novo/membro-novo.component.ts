@@ -1,15 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import {SelectOptions} from '../../components/select/select-options';
-
-import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms'
+import {FormGroup, FormBuilder, Validators} from '@angular/forms'
 import {Router, ActivatedRoute} from '@angular/router'
 
 import {MembroService} from '../membros.service';
 import {MembroModel, PATENTES, CARGOS, SITUACOES} from '../modelo/membro.model';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { MembroDTO } from '../modelo/membro.dto';
-import { DropdownModule } from 'primeng/dropdown';
+
 
 
 @Component({

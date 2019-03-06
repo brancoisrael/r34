@@ -28,6 +28,7 @@ import {
   MatTooltipModule,
   MatSelectModule
 } from '@angular/material';
+
 import { MembrosComponent } from '../../membros/membros.component';
 import { MembroNovoComponent } from '../../membros/novo/membro-novo.component';
 import { LancamentoNovoComponent } from '../../lancamento/novo/lancamento-novo.component';
