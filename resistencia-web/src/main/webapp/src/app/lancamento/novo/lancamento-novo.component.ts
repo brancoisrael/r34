@@ -54,8 +54,8 @@ export class LancamentoNovoComponent implements OnInit {
       dataLancamento:this.formBuilder.control('',Validators.required),
       membro:this.formBuilder.control('',[Validators.required]),
       tipoProduto:this.formBuilder.control('',[Validators.required]),
-      produto:this.formBuilder.control('',[Validators.required]),
-      tipoLancamento:this.formBuilder.control('',[Validators.required]),
+      produto:this.formBuilder.control(''),
+      tipoLancamento:this.formBuilder.control(''),
       origemLancamento:this.formBuilder.control('',[Validators.required]),
       quantidade:this.formBuilder.control('',[Validators.required,Validators.pattern(this.numeroPattern)]),
       valorLancamento:this.formBuilder.control('',[Validators.required,Validators.pattern(this.moedaPattern)])
@@ -81,6 +81,9 @@ export class LancamentoNovoComponent implements OnInit {
   }
 
   changeTipoProduto(event){
+    this.orderForm.controls['produto'].setValue(null);
+    this.produtos=null;
+
     this.produtoService.listarProdutosVenda(this.orderForm.controls['tipoProduto'].value)
       .subscribe((response:ProdutoModel[])=>{
         var pr:ProdutoModel[] = response;
@@ -108,10 +111,17 @@ export class LancamentoNovoComponent implements OnInit {
   changeOrigemLancamento(event){
     this.produtoDisable=true;
     this.orderForm.controls['valorLancamento'].setValue(0);
+    this.orderForm.controls['tipoProduto'].setValue(null);
+    this.orderForm.controls['produto'].setValue(null);
+    this.orderForm.controls['tipoProduto'].setValidators(null);
+    this.orderForm.controls['produto'].setValidators(null);
 
     if(this.orderForm.controls['origemLancamento'].value==='BAR'){
       this.listarTipoProduto();
       this.produtoDisable=false;
+
+      this.orderForm.controls['tipoProduto'].setValidators(Validators.required);
+      this.orderForm.controls['produto'].setValidators(Validators.required);
     }      
   }
 
