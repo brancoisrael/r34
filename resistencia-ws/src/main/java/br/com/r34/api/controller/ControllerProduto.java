@@ -1,19 +1,27 @@
 package br.com.r34.api.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.r34.negocio.domain.dto.produto.ProdutoVendaDTO;
 import br.com.r34.negocio.domain.vo.produto.Produto;
+import br.com.r34.negocio.domain.vo.produto.ProdutoVenda;
 import br.com.r34.negocio.domain.vo.produto.TipoProduto;
 import br.com.r34.negocio.service.produto.impl.ServiceProdutoImpl;
 import br.com.r34.negocio.service.produto.impl.ServiceTipoProdutoImpl;
@@ -41,7 +49,18 @@ public class ControllerProduto {
 	public ResponseEntity<List<Produto>> selectProdutoVendaByTipo(@PathVariable long idTipoProduto) {
 		List<Produto> produtos = serviceProdutoImpl.listarProdutoVenda(idTipoProduto);
 		
-		return new ResponseEntity<List<Produto>>(produtos,HttpStatus.OK);
+		return new ResponseEntity<>(produtos,HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "buscar produto venda por data", notes = "buscar produto venda por data", protocols = "Accept=application/json", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
+	@RequestMapping(value="/buscar-produto-venda-data",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public ResponseEntity<ProdutoVenda> selectProdutoVendaByData(@RequestBody ProdutoVendaDTO produtoVendaDTO){
+		ProdutoVenda produtoVenda = serviceProdutoImpl.buscarPorProdutoData(produtoVendaDTO);
+		
+		return new ResponseEntity<>(produtoVenda,HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "listar tipo de produto", notes = "listar tipo de produto", protocols = "Accept=application/json", response = String.class)

@@ -41,7 +41,7 @@ public class ProdutoVenda implements ValueObject{
 	private Date fimVigencia;
 	
 	@NotNull(message="Informe o produto")
-	@ManyToOne(optional=false,cascade=CascadeType.REMOVE)
+	@ManyToOne(optional=false,cascade=CascadeType.REMOVE,fetch=FetchType.LAZY)
 	@JoinColumn(name="id_produto")
 	private Produto produto;
 	

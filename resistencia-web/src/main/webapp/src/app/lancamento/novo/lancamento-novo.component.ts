@@ -15,6 +15,7 @@ import {ProdutoVendaModel} from '../../produto/modelo/produto-venda.model';
 
 import { SelectOptions } from '../../components/select/select-options';
 import { MembroModel } from '../../membros/modelo/membro.model';
+import { ProdutoVendaDTO } from '../../produto/modelo/produto-venda.dto';
 
 
 
@@ -110,6 +111,7 @@ export class LancamentoNovoComponent implements OnInit {
 
   changeOrigemLancamento(event){
     this.produtoDisable=true;
+    this.orderForm.controls['quantidade'].setValue(1);
     this.orderForm.controls['valorLancamento'].setValue(0);
     this.orderForm.controls['tipoProduto'].setValue(null);
     this.orderForm.controls['produto'].setValue(null);
@@ -134,6 +136,20 @@ export class LancamentoNovoComponent implements OnInit {
         for(var i=0;i<tp.length;i++){          
           this.tiposProdutos.push(new SelectOptions(tp[i].tipoProduto,tp[i].id));
         }
+      })
+  }
+
+  calcPrecoVendaProduto(event){
+
+    var dto:ProdutoVendaDTO=new ProdutoVendaDTO(this.orderForm.controls['produto'].value,this.orderForm.controls['dataLancamento'].value);
+   
+    this.produtoService.selectProdutoVendaByData(dto)
+      .subscribe((response:ProdutoVendaModel)=>{
+        
+        if(this.orderForm.controls['quantidade'].value===undefined)
+          this.orderForm.controls['quantidade'].setValue(1);
+
+        this.orderForm.controls['valorLancamento'].setValue(this.orderForm.controls['quantidade'].value*response.preco);
       })
   }
 }

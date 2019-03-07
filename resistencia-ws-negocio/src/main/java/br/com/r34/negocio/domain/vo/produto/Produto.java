@@ -1,6 +1,6 @@
 package br.com.r34.negocio.domain.vo.produto;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.r34.negocio.domain.vo.ValueObject;
 
@@ -44,8 +46,9 @@ public class Produto implements ValueObject{
 	@JoinColumn(name="id_tipo_produto")
 	private TipoProduto tipoProduto;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "produto", targetEntity = ProdutoVenda.class, fetch = FetchType.LAZY)
-	private List<ProdutoVenda> produtosVenda;
+	private Set<ProdutoVenda> produtosVenda;
 	
 	public long getId() {
 		return id;
@@ -87,11 +90,11 @@ public class Produto implements ValueObject{
 		this.habilitarCompra = habilitarCompra;
 	}
 
-	public List<ProdutoVenda> getProdutosVenda() {
+	public Set<ProdutoVenda> getProdutosVenda() {
 		return produtosVenda;
 	}
 
-	public void setProdutosVenda(List<ProdutoVenda> produtosVenda) {
+	public void setProdutosVenda(Set<ProdutoVenda> produtosVenda) {
 		this.produtosVenda = produtosVenda;
 	}
 	

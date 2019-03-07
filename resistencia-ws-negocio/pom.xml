@@ -1,25 +1,36 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>br.com.r34</groupId>
-    <artifactId>resistencia-parent</artifactId>
-    <version>${version-project}</version>
-  </parent>
-  
-  <artifactId>resistencia-ws-negocio</artifactId>
-  <name>resistencia-ws-negocio</name>
-  <url>http://maven.apache.org</url>
-  
-  <dependencies>
-  	<dependency>
-    	<groupId>org.springframework.boot</groupId>
-    	<artifactId>spring-boot-starter-validation</artifactId>
-  	</dependency>
-  
-	  
-  
-  </dependencies>
-  
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>br.com.r34</groupId>
+		<artifactId>resistencia-parent</artifactId>
+		<version>${version-project}</version>
+	</parent>
+
+	<artifactId>resistencia-ws-negocio</artifactId>
+	<name>resistencia-ws-negocio</name>
+	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.9.8</version>
+		</dependency>
+		
+	</dependencies>
+
 </project>

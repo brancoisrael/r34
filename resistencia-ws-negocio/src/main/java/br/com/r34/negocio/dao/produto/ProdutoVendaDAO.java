@@ -17,6 +17,6 @@ public interface ProdutoVendaDAO extends CrudRepository<ProdutoVenda, Long>{
 			+ "inner join fetch p.tipoProduto tp "
 			+ "where p.id =:idProduto and "
 			+ "((:dataLancamento between pv.inicioVigencia and pv.fimVigencia) or "
-			+ "(pv.inicioVigencia>=:dataLancamento and pv.fimVigencia is null))")
+			+ "(pv.inicioVigencia<=:dataLancamento and pv.fimVigencia is null))")
 	List<ProdutoVenda> findByProdutoData(@Param("idProduto")long idProduto,@Param("dataLancamento") Date dataLancamento, Pageable pageable);
 }

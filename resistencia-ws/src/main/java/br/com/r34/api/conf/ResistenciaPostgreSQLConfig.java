@@ -57,6 +57,7 @@ public class ResistenciaPostgreSQLConfig {
 		hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.r34.dialect"));
 		hibernateProperties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.r34.hbm2ddl.auto"));
 		hibernateProperties.setProperty("hibernate.format_sql", env.getProperty("hibernate.r34.format_sql"));
+		hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("hibernate.r34.show_sql"));
 		hibernateProperties.setProperty("hibernate.jdbc.batch_size", env.getProperty("hibernate.r34.jdbc.batch_size"));
 		return hibernateProperties;
 	}

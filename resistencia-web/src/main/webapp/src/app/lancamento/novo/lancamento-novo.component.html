@@ -47,7 +47,7 @@
 
                             <div class="col-md-4">
                                 <p>Produto</p>
-                                <p-dropdown [options]="produtos" formControlName="produto" [disabled]="produtoDisable" filter="true"></p-dropdown>
+                                <p-dropdown [options]="produtos" formControlName="produto" [disabled]="produtoDisable" filter="true" (onChange)="calcPrecoVendaProduto($event)"></p-dropdown>
                             </div>                            
                        </div>
 
