@@ -100,8 +100,8 @@
                                         </ng-template>
                                         <ng-template pTemplate="body" let-lancamento>
                                             <tr>
-                                                <td>{{lancamento.tipoLancamento}}</td>
-                                                <td>{{lancamento.origemLancamento}}</td>
+                                                <td>{{findTipoLancamento(lancamento.tipoLancamento)}}</td>
+                                                <td>{{findOrigemLancamento(lancamento.origemLancamento)}}</td>
                                                 <td>{{lancamento.produtoVenda.produto.descricao}}</td>
                                                 <td>{{lancamento.quantidade}}</td>
                                                 <td>{{lancamento.valorLancamento}}</td>

@@ -180,4 +180,17 @@ export class LancamentoNovoComponent implements OnInit {
         })           
     }
   }
+
+  findTipoLancamento(key:string):string{
+    return TIPO_LANCAMENTO.find(tp=>tp.value == key).label;
+  }
+
+  findOrigemLancamento(key:string):string{
+    var ret = ORIGEM_DEBITO_LANCAMENTO.find(tp=>tp.value == key);
+    if(!ret){
+      ret = ORIGEM_CREDITO_LANCAMENTO.find(tp=>tp.value == key);
+    }
+
+    return ret.label;
+  }
 }
