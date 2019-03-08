@@ -1,5 +1,6 @@
 package br.com.r34.negocio.service.lancamento.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import br.com.r34.negocio.dao.lancamento.LancamentoDAO;
 import br.com.r34.negocio.domain.dto.lancamento.LancamentoDTO;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
+import br.com.r34.negocio.enums.StatusLancamento;
 import br.com.r34.negocio.service.lancamento.ServiceLancamento;
 
 @Service
@@ -24,8 +26,13 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 	public LancamentoDTO inserir(Lancamento lancamento) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
 		
+		lancamento.setResposavelLancamento(lancamento.getMembro());
+		lancamento.setCriadoEm(new Date());
+		lancamento.setStatusLancamento(StatusLancamento.AGUARDANDO_QUITACAO);
+		
 		try {
 			lancamento = lancamentoDAO.save(lancamento);
+			lancamentoDTO.setLancamento(lancamento);
 			lancamentoDTO.setMessage("Lançamento inserido com sucesso.");
 			lancamentoDTO.setSucesso(true);			
 		} 

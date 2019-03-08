@@ -1,3 +1,4 @@
+import { ProdutoModel } from "./produto.model";
 
 
 export class ProdutoVendaModel{
@@ -7,6 +8,6 @@ export class ProdutoVendaModel{
         public preco:number,
         public inicioVigencia:Date,
         public fimVigencia:Date,
-        public produto:ProdutoVendaModel
+        public produto:ProdutoModel
     ){}
 }

@@ -5,7 +5,6 @@ export class MembroModel{
     public cargoDescricao: string
     public patenteDescricao: string
 
-
     constructor( 
         public id: number,
         public status: boolean,

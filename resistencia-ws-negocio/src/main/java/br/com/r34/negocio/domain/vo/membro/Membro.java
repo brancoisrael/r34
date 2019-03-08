@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.r34.negocio.domain.vo.ValueObject;
 import br.com.r34.negocio.domain.vo.acesso.RegraAcesso;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
@@ -86,18 +88,23 @@ public class Membro implements ValueObject {
 	@Enumerated(EnumType.ORDINAL)
 	private Cargo cargo;
 		
+	@JsonIgnore
 	@OneToMany(mappedBy = "membro", targetEntity = Lancamento.class, fetch = FetchType.LAZY)
 	private Set<Lancamento> lancamentos;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "membro", targetEntity = Lancamento.class, fetch = FetchType.LAZY)
 	private Set<Lancamento> responsavelLancamentos;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "membro", targetEntity = TemplateLancamento.class, fetch = FetchType.LAZY)
 	private Set<TemplateLancamento> templateLancamentos;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "membro", targetEntity = Lancamento.class, fetch = FetchType.LAZY)
 	private Set<Lancamento> templateResponsavelLancamentos;
 	
+	@JsonIgnore
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_membro_regra_acesso",
 	joinColumns={@JoinColumn(name="id_regra_acesso")},

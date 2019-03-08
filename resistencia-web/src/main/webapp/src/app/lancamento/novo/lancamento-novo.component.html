@@ -19,7 +19,7 @@
                         <div class="row">
                               <div class="col-md-4">
                                   <p>Membro</p>
-                                  <p-dropdown [options]="membros" formControlName="membro" filter="true"></p-dropdown>
+                                  <p-dropdown [options]="membros" formControlName="membro" filter="true" (onChange)="listarLancamento($event)"></p-dropdown>
                               </div>
 
                               <div class="col-md-4">
@@ -64,12 +64,12 @@
 
                        </div>
                                                 
-                         <!-- <button [hidden]="!visibleBtNovo" [disabled]="!orderForm.valid" 
-                          (click)="salvarMembro(orderForm.value)"  
+                         <button [disabled]="!orderForm.valid" 
+                          (click)="salvarLancamento(orderForm.value)"  
                           type="submit"
                            class="btn btn-outline-danger pull-right">Salvar</button>
 
-                           <button [hidden]="visibleBtNovo" [disabled]="!orderForm.valid" 
+                          <!-- <button [hidden]="visibleBtNovo" [disabled]="!orderForm.valid" 
                           (click)="atualizarMembro(orderForm.value)"  
                           type="submit"
                            class="btn btn-outline-danger pull-right">Atualizar</button>
@@ -80,7 +80,36 @@
                            class="btn btn-outline-info pull-right">Voltar</button>
                           -->
                            <div class="clearfix">
+                                
 
+                          </div>
+
+                          <div [hidden]="!lancamentos || lancamentos.length===0">
+
+                                <p-table [value]="lancamentos">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>Origem</th>
+                                                <th>Produto</th>
+                                                <th>Quatidade</th>
+                                                <th>Valor</th>
+                                                <th>Data</th>
+                                                
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-lancamento>
+                                            <tr>
+                                                <td>{{lancamento.tipoLancamento}}</td>
+                                                <td>{{lancamento.origemLancamento}}</td>
+                                                <td>{{lancamento.produtoVenda.produto.descricao}}</td>
+                                                <td>{{lancamento.quantidade}}</td>
+                                                <td>{{lancamento.valorLancamento}}</td>
+                                                <td>{{lancamento.dataLancamento}}</td>
+                                                
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
 
                           </div>
                       </form>

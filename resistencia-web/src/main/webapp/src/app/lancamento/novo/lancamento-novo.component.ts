@@ -7,7 +7,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import {ProdutoService} from '../../produto/produto.service';
 import {LancamentoService} from '../../lancamento/lancamento.service';
 import { MembroService } from '../../membros/membros.service';
-import {TIPO_LANCAMENTO,ORIGEM_DEBITO_LANCAMENTO,ORIGEM_CREDITO_LANCAMENTO,STATUS_LANCAMENTO} from '../../lancamento/modelo/lancamento.model'
+import {TIPO_LANCAMENTO,ORIGEM_DEBITO_LANCAMENTO,ORIGEM_CREDITO_LANCAMENTO,STATUS_LANCAMENTO, LancamentoModel} from '../../lancamento/modelo/lancamento.model'
 
 import {TipoProdutoModel} from '../../produto/modelo/tipo-produto.model';
 import {ProdutoModel} from '../../produto/modelo/produto.model';
@@ -16,6 +16,7 @@ import {ProdutoVendaModel} from '../../produto/modelo/produto-venda.model';
 import { SelectOptions } from '../../components/select/select-options';
 import { MembroModel } from '../../membros/modelo/membro.model';
 import { ProdutoVendaDTO } from '../../produto/modelo/produto-venda.dto';
+import { LancamentoDTO } from '../modelo/lancamento.dto';
 
 
 
@@ -25,10 +26,12 @@ import { ProdutoVendaDTO } from '../../produto/modelo/produto-venda.dto';
 })
 export class LancamentoNovoComponent implements OnInit {
 
+  produtoVenda:ProdutoVendaModel
   tiposProdutos:SelectOptions[]
   produtos:SelectOptions[]
   membros:SelectOptions[]
   tiposLancamentos=TIPO_LANCAMENTO
+  lancamentos:LancamentoModel[]
   origemLancamentos:any
   produtoDisable:boolean
   formHidden:boolean
@@ -72,7 +75,7 @@ export class LancamentoNovoComponent implements OnInit {
         this.membros = [{label:'Selecione',value:null}];
         
         for(var i=0;i<mb.length;i++){          
-          this.membros.push(new SelectOptions(mb[i].nome,mb[i].id));
+          this.membros.push(new SelectOptions(mb[i].nome,mb[i]));
         }
       })
   }
@@ -82,6 +85,7 @@ export class LancamentoNovoComponent implements OnInit {
   }
 
   changeTipoProduto(event){
+    this.produtoVenda=null;
     this.orderForm.controls['produto'].setValue(null);
     this.produtos=null;
 
@@ -96,6 +100,7 @@ export class LancamentoNovoComponent implements OnInit {
   }
 
   changeTipoLancamento(event){
+    this.produtoVenda=null;
     this.orderForm.controls['origemLancamento'].setValue(null);
     this.orderForm.controls['tipoProduto'].setValue(null);
     this.orderForm.controls['produto'].setValue(null);
@@ -110,6 +115,7 @@ export class LancamentoNovoComponent implements OnInit {
   }
 
   changeOrigemLancamento(event){
+    this.produtoVenda=null;
     this.produtoDisable=true;
     this.orderForm.controls['quantidade'].setValue(1);
     this.orderForm.controls['valorLancamento'].setValue(0);
@@ -145,11 +151,33 @@ export class LancamentoNovoComponent implements OnInit {
    
     this.produtoService.selectProdutoVendaByData(dto)
       .subscribe((response:ProdutoVendaModel)=>{
-        
+        this.produtoVenda=response;
+
         if(this.orderForm.controls['quantidade'].value===undefined)
           this.orderForm.controls['quantidade'].setValue(1);
 
         this.orderForm.controls['valorLancamento'].setValue(this.orderForm.controls['quantidade'].value*response.preco);
       })
+  }
+
+  salvarLancamento(lancamento:LancamentoModel){
+    lancamento.produtoVenda=this.produtoVenda;
+
+    this.lancamentoService.salvarLancamento(lancamento)
+      .subscribe((response:LancamentoDTO)=>{
+        this.messageService.clear();
+        this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
+      })           
+  }
+
+  listarLancamento(event){
+    var m = this.orderForm.controls['membro'].value;
+    this.lancamentos = null;
+    if(m!==null && m!==undefined){
+      this.lancamentoService.listarLancamento(m.id)
+        .subscribe((response:LancamentoModel[])=>{
+          this.lancamentos=response;
+        })           
+    }
   }
 }

@@ -18,7 +18,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-
+import {TableModule} from 'primeng/table';
 //remover
 import {
   MatButtonModule,
@@ -51,7 +51,8 @@ import { LancamentoNovoComponent } from '../../lancamento/novo/lancamento-novo.c
     InputSwitchModule,
     MessagesModule,
     MessageModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TableModule
     
   ],
   declarations: [
@@ -76,7 +77,8 @@ import { LancamentoNovoComponent } from '../../lancamento/novo/lancamento-novo.c
     InputSwitchModule,
     MessagesModule,
     MessageModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TableModule
   ]  
 })
 

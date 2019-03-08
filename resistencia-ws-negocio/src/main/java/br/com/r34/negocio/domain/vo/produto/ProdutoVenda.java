@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.r34.negocio.domain.vo.ValueObject;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 
@@ -45,6 +47,7 @@ public class ProdutoVenda implements ValueObject{
 	@JoinColumn(name="id_produto")
 	private Produto produto;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "produtoVenda", targetEntity = Lancamento.class, fetch = FetchType.LAZY)
 	private Set<Lancamento> lancamentos;
 

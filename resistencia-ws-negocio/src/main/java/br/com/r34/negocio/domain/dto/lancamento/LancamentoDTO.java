@@ -1,6 +1,7 @@
 package br.com.r34.negocio.domain.dto.lancamento;
 
 import br.com.r34.negocio.domain.dto.DataTransferObject;
+import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 
 public class LancamentoDTO implements DataTransferObject {
 
@@ -10,6 +11,7 @@ public class LancamentoDTO implements DataTransferObject {
 
 	private boolean sucesso;
 
+	private Lancamento lancamento;
 	
 	public String getMessage() {
 		return message;
@@ -25,6 +27,14 @@ public class LancamentoDTO implements DataTransferObject {
 
 	public void setSucesso(boolean sucesso) {
 		this.sucesso = sucesso;
+	}
+
+	public Lancamento getLancamento() {
+		return lancamento;
+	}
+
+	public void setLancamento(Lancamento lancamento) {
+		this.lancamento = lancamento;
 	}
 
 }

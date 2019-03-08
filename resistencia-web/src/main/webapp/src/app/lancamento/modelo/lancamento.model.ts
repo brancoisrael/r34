@@ -16,7 +16,8 @@ export class LancamentoModel{
       public membro:MembroModel,
       public responsavelLancamento:MembroModel,
       public produtoVenda:ProdutoVendaModel
-    ){}
+    ){
+    }
 }
 
 export const TIPO_LANCAMENTO: SelectOptions[]=[
@@ -43,5 +44,6 @@ export const ORIGEM_DEBITO_LANCAMENTO: SelectOptions[]=[
  export const ORIGEM_CREDITO_LANCAMENTO: SelectOptions[]=[
   {label:'Selecione',value:null},
   {label:'Aquisição de bens', value:'AQUISICAO_BENS'},
-  {label:'Aquisição de serviços', value:'AQUISICAO_SERVICO'}
+  {label:'Aquisição de serviços', value:'AQUISICAO_SERVICO'},
+  {label:'Quitação de débitos', value:'QUITACAO_DEBITOS'}
 ];
