@@ -40,7 +40,7 @@ export class LancamentoNovoComponent implements OnInit {
   numeroPattern =/^[0-9]*$/
   moedaPattern =/^[0-9,.]*$/
   dataHoje:Date=new Date()
-
+ 
   constructor(
     private lancamentoService:LancamentoService,
     private produtoService:ProdutoService,
@@ -64,7 +64,6 @@ export class LancamentoNovoComponent implements OnInit {
       quantidade:this.formBuilder.control('',[Validators.required,Validators.pattern(this.numeroPattern)]),
       valorLancamento:this.formBuilder.control('',[Validators.required,Validators.pattern(this.moedaPattern)])
     })
-
     this.listarMembros();
   }
 
