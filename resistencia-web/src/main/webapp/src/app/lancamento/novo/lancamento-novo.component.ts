@@ -57,7 +57,7 @@ export class LancamentoNovoComponent implements OnInit {
     this.orderForm = this.formBuilder.group({
       dataLancamento:this.formBuilder.control('',Validators.required),
       membro:this.formBuilder.control('',[Validators.required]),
-      tipoProduto:this.formBuilder.control('',[Validators.required]),
+      tipoProduto:this.formBuilder.control(''),
       produto:this.formBuilder.control(''),
       tipoLancamento:this.formBuilder.control(''),
       origemLancamento:this.formBuilder.control('',[Validators.required]),
@@ -120,15 +120,10 @@ export class LancamentoNovoComponent implements OnInit {
     this.orderForm.controls['valorLancamento'].setValue(0);
     this.orderForm.controls['tipoProduto'].setValue(null);
     this.orderForm.controls['produto'].setValue(null);
-    this.orderForm.controls['tipoProduto'].setValidators(null);
-    this.orderForm.controls['produto'].setValidators(null);
-
+   
     if(this.orderForm.controls['origemLancamento'].value==='BAR'){
       this.listarTipoProduto();
       this.produtoDisable=false;
-
-      this.orderForm.controls['tipoProduto'].setValidators(Validators.required);
-      this.orderForm.controls['produto'].setValidators(Validators.required);
     }      
   }
 
@@ -166,6 +161,10 @@ export class LancamentoNovoComponent implements OnInit {
       .subscribe((response:LancamentoDTO)=>{
         this.messageService.clear();
         this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
+
+        if(response.sucesso){
+          this.lancamentos.push(lancamento)
+        }
       })           
   }
 

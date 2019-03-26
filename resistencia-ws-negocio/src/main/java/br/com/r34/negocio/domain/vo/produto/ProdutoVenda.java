@@ -36,10 +36,10 @@ public class ProdutoVenda implements ValueObject{
 	private double preco;
 	
 	@NotNull(message="Informe o início da vigência da venda")
-	@Column(name="inicio_vigencia",nullable=false)
+	@Column(name="inicio_vigencia",nullable=false,unique=true)
 	private Date inicioVigencia;
 	
-	@Column(name="fim_vigencia",nullable=true)
+	@Column(name="fim_vigencia",nullable=true,unique=true)
 	private Date fimVigencia;
 	
 	@NotNull(message="Informe o produto")

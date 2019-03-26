@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -89,6 +90,10 @@ public class Membro implements ValueObject {
 	private Cargo cargo;
 		
 	@JsonIgnore
+	@OneToOne(mappedBy="membro", fetch=FetchType.EAGER,cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
+	private SaldoMembro saldoMembro;
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "membro", targetEntity = Lancamento.class, fetch = FetchType.LAZY)
 	private Set<Lancamento> lancamentos;
 	
@@ -110,6 +115,12 @@ public class Membro implements ValueObject {
 	joinColumns={@JoinColumn(name="id_regra_acesso")},
 	inverseJoinColumns={@JoinColumn(name="id_membro")})
 	private Set<RegraAcesso> regrasAcesso;
+	
+	public Membro() {
+		if(saldoMembro==null) {
+			saldoMembro=new SaldoMembro(this);
+		}
+	}
 	
 	public long getId() {
 		return id;
@@ -237,6 +248,14 @@ public class Membro implements ValueObject {
 
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+
+	public SaldoMembro getSaldoMembro() {
+		return saldoMembro;
+	}
+
+	public void setSaldoMembro(SaldoMembro saldoMembro) {
+		this.saldoMembro = saldoMembro;
 	}
 
 }

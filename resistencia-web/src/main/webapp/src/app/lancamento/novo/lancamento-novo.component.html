@@ -90,8 +90,8 @@
                                         <ng-template pTemplate="caption">
                                                 <div style="text-align: right">
                                                     <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                                                    <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                                        style="width:auto">
+                                                    <input type="text" pInputText size="20" placeholder="Filtro de data e valor" 
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:25%">
                                                 </div>
                                             </ng-template>
                                         <ng-template pTemplate="header" let-lancamento>
@@ -126,11 +126,11 @@
                                             <tr>
                                                 <td>{{findTipoLancamento(lancamento.tipoLancamento)}}</td>
                                                 <td>{{findOrigemLancamento(lancamento.origemLancamento)}}</td>
-                                                <td>{{lancamento.produtoVenda.produto.descricao}}</td>
+                                                <td *ngIf="!lancamento.produtoVenda || !lancamento.produtoVenda.produto"></td>
+                                                <td *ngIf="lancamento.produtoVenda && lancamento.produtoVenda.produto">{{lancamento.produtoVenda.produto.descricao}}</td>
                                                 <td>{{lancamento.quantidade}}</td>
                                                 <td>{{lancamento.valorLancamento | currency:'BRL'}}</td>
-                                                <td>{{lancamento.dataLancamento | date: 'dd/MM/yyyy'}}</td>
-                                                
+                                                <td>{{lancamento.dataLancamento | date: 'dd/MM/yyyy'}}</td>                                                
                                             </tr>
                                         </ng-template>
                                     </p-table>

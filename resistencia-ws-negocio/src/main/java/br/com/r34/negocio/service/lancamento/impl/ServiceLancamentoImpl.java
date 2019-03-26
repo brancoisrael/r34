@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import br.com.r34.negocio.dao.lancamento.LancamentoDAO;
 import br.com.r34.negocio.domain.dto.lancamento.LancamentoDTO;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
+import br.com.r34.negocio.enums.OrigemLancamento;
 import br.com.r34.negocio.enums.StatusLancamento;
 import br.com.r34.negocio.service.lancamento.ServiceLancamento;
 
@@ -25,6 +26,19 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 	@Override
 	public LancamentoDTO inserir(Lancamento lancamento) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
+		
+		if(lancamento.getOrigemLancamento()==OrigemLancamento.BAR &&
+				(lancamento.getProdutoVenda()==null || lancamento.getTipoLancamento()==null)) {
+			lancamentoDTO.setSucesso(false);
+			lancamentoDTO.setMessage("Quando o lançamento for do tipo BAR, é obrigatório informar o produto.");
+			return lancamentoDTO;
+		}
+		
+		if(lancamento.getValorLancamento()<1) {
+			lancamentoDTO.setSucesso(false);
+			lancamentoDTO.setMessage("Valor do lançamento tem que ser maior que zero.");
+			return lancamentoDTO;
+		}
 		
 		lancamento.setResposavelLancamento(lancamento.getMembro());
 		lancamento.setCriadoEm(new Date());

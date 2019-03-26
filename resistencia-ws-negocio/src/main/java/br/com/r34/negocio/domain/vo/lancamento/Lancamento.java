@@ -12,7 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import br.com.r34.negocio.domain.vo.ValueObject;
 import br.com.r34.negocio.domain.vo.membro.Membro;
@@ -38,13 +40,19 @@ public class Lancamento implements ValueObject {
 	@Column(name="criado_em",nullable=false)
 	private Date criadoEm;
 	
+	@Min(value=1, message="Valor do lançamento precisa ser maior que zero")
 	@NotNull(message="Valor do lançamento é obrigatório")
 	@Column(name="valor_lancamento",nullable=false,precision=2)
 	private double valorLancamento;
 	
+	@Min(value=1, message="Quantidade precisa ser maior que zero")
 	@NotNull(message="Quantidade do produto relacionado é obrigatório")
 	@Column(name="quantidade_produto",nullable=false)
 	private int quantidade;
+	
+	@Size(max=2000,message="Limite de 2000 caracteres no campo observação")
+	@Column(name="observacao",nullable=true,length=2000)
+	private String observacao;
 	
 	@NotNull(message="Tipo do lançamento é obrigatório")
 	@Enumerated(EnumType.ORDINAL)
@@ -161,5 +169,13 @@ public class Lancamento implements ValueObject {
 
 	public void setProdutoVenda(ProdutoVenda produtoVenda) {
 		this.produtoVenda = produtoVenda;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 }

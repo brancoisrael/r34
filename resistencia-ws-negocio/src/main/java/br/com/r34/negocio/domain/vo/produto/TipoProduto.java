@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.r34.negocio.domain.vo.ValueObject;
+import br.com.r34.negocio.domain.vo.lancamento.Promocao;
 
 @Entity
 @Table(name="tb_tipo_produto")
@@ -33,6 +34,9 @@ public class TipoProduto implements ValueObject{
 	@OneToMany(mappedBy = "tipoProduto", targetEntity = Produto.class, fetch = FetchType.LAZY)
 	private List<Produto> produtos;
 	
+	@OneToMany(mappedBy = "tipoProduto", targetEntity = Promocao.class, fetch = FetchType.LAZY)
+	private List<Promocao> promocao;
+	
 	public long getId() {
 		return id;
 	}
@@ -47,6 +51,14 @@ public class TipoProduto implements ValueObject{
 
 	public void setTipoProduto(String tipoProduto) {
 		this.tipoProduto = tipoProduto;
+	}
+
+	public List<Promocao> getPromocao() {
+		return promocao;
+	}
+
+	public void setPromocao(List<Promocao> promocao) {
+		this.promocao = promocao;
 	}
 
 }

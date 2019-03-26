@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.r34.negocio.dao.membro.MembroDAO;
 import br.com.r34.negocio.domain.dto.membro.MembroDTO;
 import br.com.r34.negocio.domain.vo.membro.Membro;
+import br.com.r34.negocio.domain.vo.membro.SaldoMembro;
 import br.com.r34.negocio.enums.SituacaoMembro;
 import br.com.r34.negocio.service.membro.ServiceMembro;
 

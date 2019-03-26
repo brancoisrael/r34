@@ -1,6 +1,7 @@
 import { SelectOptions } from "../../components/select/select-options";
 import { MembroModel } from "../../membros/modelo/membro.model";
 import { ProdutoVendaModel } from "../../produto/modelo/produto-venda.model"
+import { ProdutoModel } from "../../produto/modelo/produto.model";
 
 export class LancamentoModel{
 
