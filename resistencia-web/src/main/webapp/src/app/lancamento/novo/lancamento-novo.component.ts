@@ -40,6 +40,7 @@ export class LancamentoNovoComponent implements OnInit {
   numeroPattern =/^[0-9]*$/
   moedaPattern =/^[0-9,.]*$/
   dataHoje:Date=new Date()
+  membroSelecionado:MembroModel
  
   constructor(
     private lancamentoService:LancamentoService,
@@ -58,6 +59,7 @@ export class LancamentoNovoComponent implements OnInit {
       dataLancamento:this.formBuilder.control('',Validators.required),
       membro:this.formBuilder.control('',[Validators.required]),
       tipoProduto:this.formBuilder.control(''),
+      observacao:this.formBuilder.control(''),
       produto:this.formBuilder.control(''),
       tipoLancamento:this.formBuilder.control(''),
       origemLancamento:this.formBuilder.control('',[Validators.required]),
@@ -169,10 +171,11 @@ export class LancamentoNovoComponent implements OnInit {
   }
 
   listarLancamento(event){
-    var m = this.orderForm.controls['membro'].value;
+    this.membroSelecionado = this.orderForm.controls['membro'].value;
+    
     this.lancamentos = null;
-    if(m!==null && m!==undefined){
-      this.lancamentoService.listarLancamento(m.id)
+    if(this.membroSelecionado!==null && this.membroSelecionado!==undefined){
+      this.lancamentoService.listarLancamento(this.membroSelecionado.id)
         .subscribe((response:LancamentoModel[])=>{
           this.lancamentos=response;
         })           

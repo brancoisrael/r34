@@ -6,6 +6,7 @@
                   <div class="card-header card-header-danger">
                       <h4 class="card-title">{{header}}</h4>
                       <p class="card-category"></p>
+                      <div class="card-title" style="text-align: right">{{membro}}</div>
                   </div>
                   <div class="card-body">
                       <form [formGroup]="orderForm" novalidate >
@@ -62,6 +63,11 @@
                                 <input type="text" formControlName="valorLancamento" [readonly]="!produtoDisable" />
                             </div>
 
+                            <div class="col-md-4">
+                                <p>Observação</p>
+                                <textarea rows="4" cols="50" formControlName="observacao"></textarea>
+                            </div>
+
                        </div>
                                                 
                          <button [disabled]="!orderForm.valid" 
@@ -86,13 +92,17 @@
 
                           <div [hidden]="!lancamentos || lancamentos.length===0">
 
-                                <p-table #dt [value]="lancamentos" [paginator]="true" [rows]="10" [globalFilterFields]="['dataLancamento','valorLancamento']">
+                                <p-table #dt [value]="lancamentos" [paginator]="true" [rows]="10" [globalFilterFields]="['dataLancamento','valorLancamento','observacao']">
                                         <ng-template pTemplate="caption">
                                                 <div style="text-align: right">
                                                     <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                                                    <input type="text" pInputText size="20" placeholder="Filtro de data e valor" 
-                                                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:25%">
+                                                    <input type="text" pInputText size="20" placeholder="Filtro: data, valor e observação" 
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:25%">                                   
                                                 </div>
+
+                                                <div style="text-align: left">Saldo atual: {{membroSelecionado.saldoMembro.saldo | currency:'BRL'}}</div>
+                                               
+                                              
                                             </ng-template>
                                         <ng-template pTemplate="header" let-lancamento>
                                             <tr>
@@ -111,15 +121,19 @@
                                                 <th [pSortableColumn]="'quantidade'">
                                                     Quatidade
                                                     <p-sortIcon [field]="'quantidade'"></p-sortIcon>
-                                                </th>
-                                                <th [pSortableColumn]="'valorLancamento'">
-                                                    Valor
-                                                    <p-sortIcon [field]="'valorLancamento'"></p-sortIcon>
-                                                </th>
+                                                </th>                                               
                                                 <th [pSortableColumn]="'dataLancamento'">
                                                     Data
                                                     <p-sortIcon [field]="'dataLancamento'"></p-sortIcon>                                
-                                                </th>                                                
+                                                </th> 
+                                                <th [pSortableColumn]="'valorLancamento'">
+                                                        Valor
+                                                        <p-sortIcon [field]="'valorLancamento'"></p-sortIcon>
+                                                    </th> 
+                                                <th [pSortableColumn]="'observacao'">
+                                                    Observação
+                                                    <p-sortIcon [field]="'observacao'"></p-sortIcon>
+                                                </th>  
                                             </tr>
                                         </ng-template>
                                         <ng-template pTemplate="body" let-lancamento>
@@ -128,11 +142,12 @@
                                                 <td>{{findOrigemLancamento(lancamento.origemLancamento)}}</td>
                                                 <td *ngIf="!lancamento.produtoVenda || !lancamento.produtoVenda.produto"></td>
                                                 <td *ngIf="lancamento.produtoVenda && lancamento.produtoVenda.produto">{{lancamento.produtoVenda.produto.descricao}}</td>
-                                                <td>{{lancamento.quantidade}}</td>
+                                                <td>{{lancamento.quantidade}}</td>                                                
+                                                <td>{{lancamento.dataLancamento | date: 'dd/MM/yyyy'}}</td> 
                                                 <td>{{lancamento.valorLancamento | currency:'BRL'}}</td>
-                                                <td>{{lancamento.dataLancamento | date: 'dd/MM/yyyy'}}</td>                                                
-                                            </tr>
-                                        </ng-template>
+                                                <td>{{lancamento.observacao}}</td>                                               
+                                            </tr>                                           
+                                        </ng-template>                                        
                                     </p-table>
 
                           </div>

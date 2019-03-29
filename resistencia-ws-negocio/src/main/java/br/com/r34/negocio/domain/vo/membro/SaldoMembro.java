@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.r34.negocio.domain.vo.ValueObject;
 
 @Entity
@@ -33,6 +35,7 @@ public class SaldoMembro implements ValueObject {
 	@Column(name="ultima_atualizacao",nullable=false)
 	private Date ultimaAtualizacao;
 	
+	@JsonIgnore
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_membro", referencedColumnName = "id",unique=true)
 	private Membro membro;

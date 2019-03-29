@@ -1,6 +1,7 @@
 package br.com.r34.negocio.domain.vo.lancamento;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -82,6 +85,12 @@ public class Lancamento implements ValueObject {
 	@ManyToOne(optional=true)
 	@JoinColumn(name="id_produto_venda")
 	private ProdutoVenda produtoVenda;
+	
+	@ManyToMany
+	@JoinTable(name = "tb_lancamento_promocao", 
+			  joinColumns = @JoinColumn(name = "id_lancamento"), 
+			  inverseJoinColumns = @JoinColumn(name = "id_promocao"))
+	private List<Promocao> promocoes;
 	
 	public long getId() {
 		return id;
@@ -177,5 +186,13 @@ public class Lancamento implements ValueObject {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public List<Promocao> getPromocoes() {
+		return promocoes;
+	}
+
+	public void setPromocoes(List<Promocao> promocoes) {
+		this.promocoes = promocoes;
 	}
 }

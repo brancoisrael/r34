@@ -14,9 +14,10 @@ export class LancamentoModel{
       public tipoLancamento:string,
       public statusLancamento:string,
       public origemLancamento:string,
+      public lancamento:string,
       public membro:MembroModel,
       public responsavelLancamento:MembroModel,
-      public produtoVenda:ProdutoVendaModel
+      public produtoVenda:ProdutoVendaModel      
     ){
     }
 }

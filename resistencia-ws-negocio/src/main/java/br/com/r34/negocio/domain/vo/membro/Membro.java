@@ -22,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import br.com.r34.negocio.domain.vo.ValueObject;
 import br.com.r34.negocio.domain.vo.acesso.RegraAcesso;
@@ -89,7 +90,6 @@ public class Membro implements ValueObject {
 	@Enumerated(EnumType.ORDINAL)
 	private Cargo cargo;
 		
-	@JsonIgnore
 	@OneToOne(mappedBy="membro", fetch=FetchType.EAGER,cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
 	private SaldoMembro saldoMembro;
 	

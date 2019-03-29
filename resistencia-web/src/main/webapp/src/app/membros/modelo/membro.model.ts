@@ -1,4 +1,5 @@
 import { SelectOptions } from "../../components/select/select-options";
+import { SaldoModel } from "./saldo.model";
 
 export class MembroModel{
 
@@ -17,7 +18,8 @@ export class MembroModel{
         public dataSaida: Date,
         public patente: string,
         public cargo: string ,
-        public situacaoMembro: string
+        public situacaoMembro: string,
+        public saldoMembro:SaldoModel
     ){
         
     }
