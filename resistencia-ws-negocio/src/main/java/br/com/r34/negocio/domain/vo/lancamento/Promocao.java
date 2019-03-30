@@ -46,16 +46,16 @@ public class Promocao implements ValueObject {
 	private double valor;
 	
 	@NotNull(message="Informe o início da vigência da venda")
-	@Column(name="inicio_vigencia",nullable=false,unique=true)
+	@Column(name="inicio_vigencia",nullable=false)
 	private Date inicioVigencia;
 	
-	@Column(name="fim_vigencia",nullable=true,unique=true)
+	@Column(name="fim_vigencia",nullable=true)
 	private Date fimVigencia;
 	
-	@NotNull(message="Informe o tipo do produto")
+	@NotNull(message="Informe o produto associado a promoção")
 	@ManyToOne(optional=false,cascade=CascadeType.REMOVE)
-	@JoinColumn(name="id_tipo_produto")
-	private TipoProduto tipoProduto;
+	@JoinColumn(name="id_produto")
+	private Produto produto;
 	
 	@ManyToMany(mappedBy = "promocoes")
 	private List<Lancamento> lancamentos;
@@ -101,21 +101,21 @@ public class Promocao implements ValueObject {
 	public void setFimVigencia(Date fimVigencia) {
 		this.fimVigencia = fimVigencia;
 	}
-
-	public TipoProduto getTipoProduto() {
-		return tipoProduto;
-	}
-
-	public void setTipoProduto(TipoProduto tipoProduto) {
-		this.tipoProduto = tipoProduto;
-	}
-
+	
 	public List<Lancamento> getLancamentos() {
 		return lancamentos;
 	}
 
 	public void setLancamentos(List<Lancamento> lancamentos) {
 		this.lancamentos = lancamentos;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 	
 	

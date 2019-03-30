@@ -23,6 +23,9 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 	@Autowired
 	private LancamentoDAO lancamentoDAO;
 	
+	@Autowired
+	private ServicePromocaoImpl servicePromocao;
+	
 	@Override
 	public LancamentoDTO inserir(Lancamento lancamento) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
@@ -48,7 +51,9 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 			lancamento = lancamentoDAO.save(lancamento);
 			lancamentoDTO.setLancamento(lancamento);
 			lancamentoDTO.setMessage("Lançamento inserido com sucesso.");
-			lancamentoDTO.setSucesso(true);			
+			lancamentoDTO.setSucesso(true);		
+			
+			servicePromocao.acrescentarPromocao(lancamento);
 		} 
 		catch (ConstraintViolationException e) {
 			lancamentoDTO.setSucesso(false);
@@ -60,7 +65,7 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 		}
 		catch (Exception e) {
 			lancamentoDTO.setSucesso(false);
-			lancamentoDTO.setMessage("Erro ao tentar inserir lançameto. ");
+			lancamentoDTO.setMessage("Erro ao tentar inserir lançamento. ");
 			Logger.getLogger(e.getMessage());
 		}
 		return lancamentoDTO;

@@ -1,5 +1,6 @@
 package br.com.r34.negocio.domain.vo.produto;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,6 +20,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.r34.negocio.domain.vo.ValueObject;
+import br.com.r34.negocio.domain.vo.lancamento.Promocao;
 
 @Entity
 @Table(name="tb_produto")
@@ -49,6 +51,11 @@ public class Produto implements ValueObject{
 	@JsonIgnore
 	@OneToMany(mappedBy = "produto", targetEntity = ProdutoVenda.class, fetch = FetchType.LAZY)
 	private Set<ProdutoVenda> produtosVenda;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "produto", targetEntity = Promocao.class, fetch = FetchType.LAZY)
+	private List<Promocao> promocao;
+	
 	
 	public long getId() {
 		return id;
@@ -96,6 +103,14 @@ public class Produto implements ValueObject{
 
 	public void setProdutosVenda(Set<ProdutoVenda> produtosVenda) {
 		this.produtosVenda = produtosVenda;
+	}
+
+	public List<Promocao> getPromocao() {
+		return promocao;
+	}
+
+	public void setPromocao(List<Promocao> promocao) {
+		this.promocao = promocao;
 	}
 	
 	
