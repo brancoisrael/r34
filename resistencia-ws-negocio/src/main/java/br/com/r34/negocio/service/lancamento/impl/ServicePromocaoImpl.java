@@ -21,6 +21,7 @@ public class ServicePromocaoImpl implements ServicePromocao{
 	@Autowired
 	private PromocaoDAO promocaoDAO;
 	
+	@Autowired
 	private LancamentoDAO lancamentoDAO;
 	
 	@Override
@@ -39,17 +40,19 @@ public class ServicePromocaoImpl implements ServicePromocao{
 			
 			List<Lancamento> lancamentos = lancamentoDAO.pesquisarParaPromocao(lancamento.getMembro().getId(),
 					lancamento.getProdutoVenda().getProduto().getId(),
-					promocao.getInicioVigencia(), promocao.getFimVigencia(), PageRequest.of(0, 
-					promocao.getQuantidade()));
+					promocao.getInicioVigencia(), promocao.getFimVigencia(),lancamento.getId(), PageRequest.of(0, 
+					promocao.getQuantidade()-1));
 			
 			if(!CollectionUtils.isEmpty(lancamentos)) {
 				for(Lancamento l : lancamentos) {
 					l.setPromocoes(promocoes);
 					l.setValorLancamento(0);
+					l.setObservacao("Promoção: "+ promocao.getQuantidade() +"x"+promocao.getValor() + " " +l.getObservacao());
 					lancamentoDAO.save(l);
 				}
 				lancamento.setValorLancamento(promocao.getValor());
 				lancamento.setPromocoes(promocoes);
+				lancamento.setObservacao("Promoção: "+ promocao.getQuantidade() +"x"+promocao.getValor() + " " +lancamento.getObservacao());
 				lancamentoDAO.save(lancamento);
 			}			
 		}

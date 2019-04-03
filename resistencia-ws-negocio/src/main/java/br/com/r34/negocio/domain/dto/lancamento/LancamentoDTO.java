@@ -1,5 +1,8 @@
 package br.com.r34.negocio.domain.dto.lancamento;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.r34.negocio.domain.dto.DataTransferObject;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 
@@ -11,7 +14,13 @@ public class LancamentoDTO implements DataTransferObject {
 
 	private boolean sucesso;
 
-	private Lancamento lancamento;
+	private List<Lancamento> lancamentos;
+	
+	public void addLancamento(Lancamento lancamento) {
+		if(lancamentos==null)
+			lancamentos = new ArrayList<>();
+		lancamentos.add(lancamento);
+	}
 	
 	public String getMessage() {
 		return message;
@@ -29,12 +38,12 @@ public class LancamentoDTO implements DataTransferObject {
 		this.sucesso = sucesso;
 	}
 
-	public Lancamento getLancamento() {
-		return lancamento;
+	public List<Lancamento> getLancamentos() {
+		return lancamentos;
 	}
 
-	public void setLancamento(Lancamento lancamento) {
-		this.lancamento = lancamento;
+	public void setLancamentos(List<Lancamento> lancamentos) {
+		this.lancamentos = lancamentos;
 	}
 
 }

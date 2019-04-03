@@ -28,7 +28,7 @@ import br.com.r34.negocio.enums.TipoLancamento;
 
 @Entity
 @Table(name = "tb_lancamento")
-public class Lancamento implements ValueObject {
+public class Lancamento implements ValueObject, Cloneable{
 
 	private static final long serialVersionUID = 5940470217930532235L;
 
@@ -43,7 +43,6 @@ public class Lancamento implements ValueObject {
 	@Column(name="criado_em",nullable=false)
 	private Date criadoEm;
 	
-	@Min(value=1, message="Valor do lançamento precisa ser maior que zero")
 	@NotNull(message="Valor do lançamento é obrigatório")
 	@Column(name="valor_lancamento",nullable=false,precision=2)
 	private double valorLancamento;
@@ -91,6 +90,11 @@ public class Lancamento implements ValueObject {
 			  joinColumns = @JoinColumn(name = "id_lancamento"), 
 			  inverseJoinColumns = @JoinColumn(name = "id_promocao"))
 	private List<Promocao> promocoes;
+	
+	@Override
+    public Lancamento clone() throws CloneNotSupportedException {
+        return (Lancamento) super.clone();
+    }
 	
 	public long getId() {
 		return id;

@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.r34.negocio.domain.vo.ValueObject;
 import br.com.r34.negocio.domain.vo.produto.Produto;
 import br.com.r34.negocio.domain.vo.produto.TipoProduto;
@@ -57,6 +59,7 @@ public class Promocao implements ValueObject {
 	@JoinColumn(name="id_produto")
 	private Produto produto;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "promocoes")
 	private List<Lancamento> lancamentos;
 	

@@ -28,7 +28,9 @@ public interface LancamentoDAO extends CrudRepository<Lancamento, Long> {
 			+ "where m.id =:idMembro and "
 			+ "p.id =:idProduto and "
 			+ "lancamento.dataLancamento between :dataInicio and :dataFim and "
-			+ "promo.id is null")			
+			+ "promo.id is null and "
+			+ "lancamento.id !=:idLancamento")			
 	List<Lancamento> pesquisarParaPromocao(@Param("idMembro") long idMembro, @Param("idProduto") long idProduto,
-			@Param("dataInicio") Date dataInicio,@Param("dataFim") Date dataFim, Pageable pageable);
+			@Param("dataInicio") Date dataInicio,@Param("dataFim") Date dataFim,
+			@Param("idLancamento") long idLancamento, Pageable pageable);
 }

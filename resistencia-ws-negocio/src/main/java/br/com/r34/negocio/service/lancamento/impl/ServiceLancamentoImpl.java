@@ -27,46 +27,56 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 	private ServicePromocaoImpl servicePromocao;
 	
 	@Override
-	public LancamentoDTO inserir(Lancamento lancamento) {
+	public LancamentoDTO inserir(Lancamento lanc) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
 		
-		if(lancamento.getOrigemLancamento()==OrigemLancamento.BAR &&
-				(lancamento.getProdutoVenda()==null || lancamento.getTipoLancamento()==null)) {
-			lancamentoDTO.setSucesso(false);
-			lancamentoDTO.setMessage("Quando o lançamento for do tipo BAR, é obrigatório informar o produto.");
-			return lancamentoDTO;
-		}
-		
-		if(lancamento.getValorLancamento()<1) {
-			lancamentoDTO.setSucesso(false);
-			lancamentoDTO.setMessage("Valor do lançamento tem que ser maior que zero.");
-			return lancamentoDTO;
-		}
-		
-		lancamento.setResposavelLancamento(lancamento.getMembro());
-		lancamento.setCriadoEm(new Date());
-		lancamento.setStatusLancamento(StatusLancamento.AGUARDANDO_QUITACAO);
-		
-		try {
-			lancamento = lancamentoDAO.save(lancamento);
-			lancamentoDTO.setLancamento(lancamento);
-			lancamentoDTO.setMessage("Lançamento inserido com sucesso.");
-			lancamentoDTO.setSucesso(true);		
+		for(int i=0; i<lanc.getQuantidade();i++) {
 			
-			servicePromocao.acrescentarPromocao(lancamento);
-		} 
-		catch (ConstraintViolationException e) {
-			lancamentoDTO.setSucesso(false);
-			lancamentoDTO.setMessage(e.getConstraintViolations().iterator().next().getMessageTemplate());
-		}
-		catch(DataIntegrityViolationException e) {
-			lancamentoDTO.setSucesso(false);
-			lancamentoDTO.setMessage("Campo único no banco de dados: "+ e.getMostSpecificCause());
-		}
-		catch (Exception e) {
-			lancamentoDTO.setSucesso(false);
-			lancamentoDTO.setMessage("Erro ao tentar inserir lançamento. ");
-			Logger.getLogger(e.getMessage());
+			try {					
+				Lancamento lancamento = lanc.clone();
+				lancamento.setQuantidade(1);
+				
+				if(lancamento.getOrigemLancamento()==OrigemLancamento.BAR &&
+						(lancamento.getProdutoVenda()==null || lancamento.getTipoLancamento()==null)) {
+					lancamentoDTO.setSucesso(false);
+					lancamentoDTO.setMessage("Quando o lançamento for do tipo BAR, é obrigatório informar o produto.");
+					return lancamentoDTO;
+				}
+				
+				if(lancamento.getValorLancamento()<1) {
+					lancamentoDTO.setSucesso(false);
+					lancamentoDTO.setMessage("Valor do lançamento tem que ser maior que zero.");
+					return lancamentoDTO;
+				}
+				
+				lancamento.setResposavelLancamento(lancamento.getMembro());
+				lancamento.setCriadoEm(new Date());
+				lancamento.setStatusLancamento(StatusLancamento.AGUARDANDO_QUITACAO);			
+			
+				lancamento = lancamentoDAO.save(lancamento);
+				lancamentoDTO.addLancamento(lancamento);
+				lancamentoDTO.setMessage(lanc.getQuantidade() +" lançamento(s) inserido(s) com sucesso.");
+				lancamentoDTO.setSucesso(true);		
+				
+				servicePromocao.acrescentarPromocao(lancamento);
+			} 
+			
+			catch (ConstraintViolationException e) {
+				lancamentoDTO.setSucesso(false);
+				lancamentoDTO.setMessage(e.getConstraintViolations().iterator().next().getMessageTemplate());
+				break;
+			}
+			catch(DataIntegrityViolationException e) {
+				lancamentoDTO.setSucesso(false);
+				lancamentoDTO.setMessage("Campo único no banco de dados: "+ e.getMostSpecificCause());
+				break;
+			}
+			catch (Exception  e) {
+				lancamentoDTO.setSucesso(false);
+				lancamentoDTO.setMessage("Erro ao tentar inserir lançamento. ");
+				Logger.getLogger(e.getMessage());
+				break;
+			}
 		}
 		return lancamentoDTO;
 	}

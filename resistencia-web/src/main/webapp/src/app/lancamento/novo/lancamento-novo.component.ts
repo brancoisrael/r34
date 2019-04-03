@@ -151,8 +151,8 @@ export class LancamentoNovoComponent implements OnInit {
 
         if(this.orderForm.controls['quantidade'].value===undefined)
           this.orderForm.controls['quantidade'].setValue(1);
-
-        this.orderForm.controls['valorLancamento'].setValue(this.orderForm.controls['quantidade'].value*response.preco);
+        
+        this.orderForm.controls['valorLancamento'].setValue(response.preco);
       })
   }
 
@@ -165,7 +165,9 @@ export class LancamentoNovoComponent implements OnInit {
         this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
 
         if(response.sucesso){
-          this.lancamentos.push(lancamento)
+          for(var i=0;i<response.lancamento.length;i++){
+            this.lancamentos.push(response.lancamento[i])
+          }
         }
       })           
   }

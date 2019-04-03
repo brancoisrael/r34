@@ -14,6 +14,6 @@ public interface PromocaoDAO extends CrudRepository<Promocao, Long>{
 				+ "inner join promocao.produto produto "
 				+ "where produto.id=:idProduto and "
 				+ "((:dataLancamento between promocao.inicioVigencia and promocao.fimVigencia) "
-				+ "or (promocao.inicioVigencia >=:dataLancamento and promocao.fimVigencia is null))")
+				+ "or (promocao.inicioVigencia <=:dataLancamento and promocao.fimVigencia is null))")
 		Promocao perquisarPorProduto(@Param("idProduto") long idProduto, @Param("dataLancamento") Date dataLancamento);
 }
