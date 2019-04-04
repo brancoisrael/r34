@@ -11,10 +11,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.r34.negocio.dao.lancamento.LancamentoDAO;
+import br.com.r34.negocio.dao.membro.SaldoMembroDAO;
 import br.com.r34.negocio.domain.dto.lancamento.LancamentoDTO;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 import br.com.r34.negocio.enums.OrigemLancamento;
 import br.com.r34.negocio.enums.StatusLancamento;
+import br.com.r34.negocio.enums.TipoLancamento;
 import br.com.r34.negocio.service.lancamento.ServiceLancamento;
 
 @Service
@@ -24,8 +26,11 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 	private LancamentoDAO lancamentoDAO;
 	
 	@Autowired
+	private SaldoMembroDAO saldoMembroDAO;
+		
+	@Autowired
 	private ServicePromocaoImpl servicePromocao;
-	
+		
 	@Override
 	public LancamentoDTO inserir(Lancamento lanc) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
@@ -59,6 +64,14 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 				lancamentoDTO.setSucesso(true);		
 				
 				servicePromocao.acrescentarPromocao(lancamento);
+				
+				if(lancamento.getTipoLancamento()==TipoLancamento.DEBITO)
+					lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()+(lancamento.getValorLancamento()*-1));
+				else
+					lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()+lancamento.getValorLancamento());
+				
+				lancamento.getMembro().getSaldoMembro().setMembro(lancamento.getMembro());
+				saldoMembroDAO.save(lancamento.getMembro().getSaldoMembro());
 			} 
 			
 			catch (ConstraintViolationException e) {

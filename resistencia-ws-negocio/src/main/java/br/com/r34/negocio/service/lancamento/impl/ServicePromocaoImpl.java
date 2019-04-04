@@ -13,6 +13,8 @@ import br.com.r34.negocio.dao.lancamento.LancamentoDAO;
 import br.com.r34.negocio.dao.lancamento.PromocaoDAO;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 import br.com.r34.negocio.domain.vo.lancamento.Promocao;
+import br.com.r34.negocio.domain.vo.membro.Membro;
+import br.com.r34.negocio.domain.vo.membro.SaldoMembro;
 import br.com.r34.negocio.service.lancamento.ServicePromocao;
 
 @Service
@@ -29,6 +31,7 @@ public class ServicePromocaoImpl implements ServicePromocao{
 		if(lancamento.getProdutoVenda()==null)
 			return;
 		
+		SaldoMembro saldoMembro = lancamento.getMembro().getSaldoMembro();
 		Promocao promocao = promocaoDAO.perquisarPorProduto(lancamento.getProdutoVenda().getProduto().getId(), lancamento.getDataLancamento());
 		
 		if(promocao!=null) {
@@ -45,6 +48,7 @@ public class ServicePromocaoImpl implements ServicePromocao{
 			
 			if(!CollectionUtils.isEmpty(lancamentos)) {
 				for(Lancamento l : lancamentos) {
+					saldoMembro.setSaldo(saldoMembro.getSaldo()+l.getValorLancamento());					
 					l.setPromocoes(promocoes);
 					l.setValorLancamento(0);
 					l.setObservacao("Promoção: "+ promocao.getQuantidade() +"x"+promocao.getValor() + " " +l.getObservacao());
@@ -55,6 +59,32 @@ public class ServicePromocaoImpl implements ServicePromocao{
 				lancamento.setObservacao("Promoção: "+ promocao.getQuantidade() +"x"+promocao.getValor() + " " +lancamento.getObservacao());
 				lancamentoDAO.save(lancamento);
 			}			
+		}
+	}
+	
+	@Override
+	public void removerPromocao(Lancamento lancamento) {
+		
+		lancamento = lancamentoDAO.pesquisarById(lancamento.getId());
+		
+		if(lancamento!=null) {			
+			Promocao promocao = lancamento.getPromocoes().get(0);
+			
+			List<Lancamento> lancamentos = lancamentoDAO.pesquisarPorPromocao(lancamento.getMembro().getId(),
+					promocao.getInicioVigencia(), promocao.getFimVigencia(),lancamento.getId(), promocao.getId(), PageRequest.of(0, 
+					promocao.getQuantidade()-1));
+			
+			for(Lancamento l : lancamentos) {
+					l.setPromocoes(null);
+					l.setValorLancamento(lancamento.getProdutoVenda().getPreco());
+					l.setObservacao(l.getObservacao().replace("Promoção: "+ promocao.getQuantidade() +"x"+promocao.getValor() + " " ,""));
+					lancamentoDAO.save(l);
+			}
+			
+			lancamento.setPromocoes(null);
+			lancamento.setValorLancamento(lancamento.getProdutoVenda().getPreco());
+			lancamento.setObservacao(lancamento.getObservacao().replace("Promoção: "+ promocao.getQuantidade() +"x"+promocao.getValor() + " " ,""));
+			lancamentoDAO.save(lancamento);
 		}
 	}
 }

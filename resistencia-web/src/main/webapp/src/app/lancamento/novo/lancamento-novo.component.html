@@ -118,10 +118,7 @@
                                                     Produto
                                                     <p-sortIcon [field]="'produtoVenda.produto.descricao'"></p-sortIcon>
                                                 </th>
-                                                <th [pSortableColumn]="'quantidade'">
-                                                    Quatidade
-                                                    <p-sortIcon [field]="'quantidade'"></p-sortIcon>
-                                                </th>                                               
+                                                                            
                                                 <th [pSortableColumn]="'dataLancamento'">
                                                     Data
                                                     <p-sortIcon [field]="'dataLancamento'"></p-sortIcon>                                
@@ -142,7 +139,6 @@
                                                 <td>{{findOrigemLancamento(lancamento.origemLancamento)}}</td>
                                                 <td *ngIf="!lancamento.produtoVenda || !lancamento.produtoVenda.produto"></td>
                                                 <td *ngIf="lancamento.produtoVenda && lancamento.produtoVenda.produto">{{lancamento.produtoVenda.produto.descricao}}</td>
-                                                <td>{{lancamento.quantidade}}</td>                                                
                                                 <td>{{lancamento.dataLancamento | date: 'dd/MM/yyyy'}}</td> 
                                                 <td>{{lancamento.valorLancamento | currency:'BRL'}}</td>
                                                 <td>{{lancamento.observacao}}</td>                                               
