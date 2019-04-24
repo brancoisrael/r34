@@ -39,11 +39,9 @@ public class TemplateLancamentoImpl implements ServiceLancamento<TemplateLancame
 	}
 
 	@Override
-	public TemplateLancamentoDTO deletar(long id) {
+	public TemplateLancamentoDTO deletar(TemplateLancamento templateLancamento) {
 		TemplateLancamentoDTO templateLancamentoDTO = new TemplateLancamentoDTO();
-
-		TemplateLancamento templateLancamento = new TemplateLancamento();
-		templateLancamento.setId(id);
+		
 		try {
 			templateLancamentoDAO.delete(templateLancamento);
 			templateLancamentoDTO.setSucesso(true);

@@ -40,6 +40,8 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 			try {					
 				Lancamento lancamento = lanc.clone();
 				lancamento.setQuantidade(1);
+				lancamento.getMembro().setSaldoMembro(saldoMembroDAO.findById(lancamento.getMembro().getSaldoMembro().getId()).get());
+				lancamentoDTO.setSaldoMembro(lancamento.getMembro().getSaldoMembro());
 				
 				if(lancamento.getOrigemLancamento()==OrigemLancamento.BAR &&
 						(lancamento.getProdutoVenda()==null || lancamento.getTipoLancamento()==null)) {
@@ -62,7 +64,7 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 				lancamentoDTO.addLancamento(lancamento);
 				lancamentoDTO.setMessage(lanc.getQuantidade() +" lançamento(s) inserido(s) com sucesso.");
 				lancamentoDTO.setSucesso(true);		
-				
+								
 				servicePromocao.acrescentarPromocao(lancamento);
 				
 				if(lancamento.getTipoLancamento()==TipoLancamento.DEBITO)
@@ -71,7 +73,7 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 					lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()+lancamento.getValorLancamento());
 				
 				lancamento.getMembro().getSaldoMembro().setMembro(lancamento.getMembro());
-				saldoMembroDAO.save(lancamento.getMembro().getSaldoMembro());
+				saldoMembroDAO.save(lancamento.getMembro().getSaldoMembro());				
 			} 
 			
 			catch (ConstraintViolationException e) {
@@ -94,22 +96,40 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 		return lancamentoDTO;
 	}
 
+	
 	@Override
-	public LancamentoDTO deletar(long id) {
+	public LancamentoDTO deletar(Lancamento lanc) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
-
-		Lancamento lancamento = new Lancamento();
-		lancamento.setId(id);
 		try {
+			Lancamento lancamento = lanc.clone();
+			lancamento.getMembro().setSaldoMembro(saldoMembroDAO.findById(lancamento.getMembro().getSaldoMembro().getId()).get());
+			lancamentoDTO.setSaldoMembro(lancamento.getMembro().getSaldoMembro());
+			
+			servicePromocao.removerPromocao(lancamento);
+			
+			if(lancamento.getTipoLancamento()==TipoLancamento.DEBITO)
+				lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()-(lancamento.getValorLancamento()*-1));
+			else
+				lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()-lancamento.getValorLancamento());
+			
+			lancamento.getMembro().getSaldoMembro().setMembro(lancamento.getMembro());
+			saldoMembroDAO.save(lancamento.getMembro().getSaldoMembro());	
+			
 			lancamentoDAO.delete(lancamento);
 			lancamentoDTO.setSucesso(true);
 			lancamentoDTO.setMessage("Lançamento excluído com sucesso");
+			
 		} 
 		catch (IllegalArgumentException e) {
 			lancamentoDTO.setMessage("Lançamento não pode ser excluído");
 		}
 		catch (ConstraintViolationException e) {
 			lancamentoDTO.setMessage(e.getConstraintViolations().iterator().next().getMessageTemplate());
+		}
+		catch (Exception  e) {
+			lancamentoDTO.setSucesso(false);
+			lancamentoDTO.setMessage("Erro ao tentar excluir lançamento. ");
+			Logger.getLogger(e.getMessage());			
 		}
 
 		return lancamentoDTO;

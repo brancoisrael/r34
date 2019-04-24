@@ -46,11 +46,11 @@ public class ControllerLancamento {
 	@CrossOrigin
 	@ApiOperation(value = "excluir", notes = "excluir", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
-	@RequestMapping(value="/excluir/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/excluir",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ResponseEntity<LancamentoDTO> excluir(@PathVariable long id) {
-		LancamentoDTO lancamentoDTO = serviceLancamentoImpl.deletar(id);
+	public ResponseEntity<LancamentoDTO> excluir(@RequestBody Lancamento lancamento) {
+		LancamentoDTO lancamentoDTO = serviceLancamentoImpl.deletar(lancamento);
 		
 		return new ResponseEntity<LancamentoDTO>(lancamentoDTO,HttpStatus.OK);
 	}

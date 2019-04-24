@@ -165,16 +165,32 @@ export class LancamentoNovoComponent implements OnInit {
         this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
 
         if(response.sucesso){
-          for(var i=0;i<response.lancamento.length;i++){
-            this.lancamentos.push(response.lancamento[i])
+          for(var i=0;i<response.lancamentos.length;i++){            
+            this.lancamentos.push(response.lancamentos[i])
           }
+          this.membroSelecionado.saldoMembro = response.saldoMembro;
+        }
+      })           
+  }
+
+  excluirLancamento(lancamento:LancamentoModel){
+  
+    this.lancamentoService.excluirLancamento(lancamento)
+      .subscribe((response:LancamentoDTO)=>{
+        this.messageService.clear();
+        this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
+
+        if(response.sucesso){   
+            const index = this.lancamentos.indexOf(lancamento,0);
+            if(index!==-1)
+              this.lancamentos.splice(index, 1);           
+          this.membroSelecionado.saldoMembro = response.saldoMembro;
         }
       })           
   }
 
   listarLancamento(event){
     this.membroSelecionado = this.orderForm.controls['membro'].value;
-    
     this.lancamentos = null;
     if(this.membroSelecionado!==null && this.membroSelecionado!==undefined){
       this.lancamentoService.listarLancamento(this.membroSelecionado.id)

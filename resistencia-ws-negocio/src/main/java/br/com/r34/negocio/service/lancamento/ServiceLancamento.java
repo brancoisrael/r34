@@ -6,7 +6,7 @@ public interface ServiceLancamento<T,Z> {
 
 	Z inserir(T t);	
 	
-	Z deletar(long id);
+	Z deletar(T id);
 	
 	Z atualizar(T t);
 	

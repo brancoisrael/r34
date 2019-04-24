@@ -13,7 +13,6 @@ import br.com.r34.negocio.dao.lancamento.LancamentoDAO;
 import br.com.r34.negocio.dao.lancamento.PromocaoDAO;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 import br.com.r34.negocio.domain.vo.lancamento.Promocao;
-import br.com.r34.negocio.domain.vo.membro.Membro;
 import br.com.r34.negocio.domain.vo.membro.SaldoMembro;
 import br.com.r34.negocio.service.lancamento.ServicePromocao;
 
@@ -46,7 +45,7 @@ public class ServicePromocaoImpl implements ServicePromocao{
 					promocao.getInicioVigencia(), promocao.getFimVigencia(),lancamento.getId(), PageRequest.of(0, 
 					promocao.getQuantidade()-1));
 			
-			if(!CollectionUtils.isEmpty(lancamentos)) {
+			if(!CollectionUtils.isEmpty(lancamentos)&&lancamentos.size()==promocao.getQuantidade()-1) {
 				for(Lancamento l : lancamentos) {
 					saldoMembro.setSaldo(saldoMembro.getSaldo()+l.getValorLancamento());					
 					l.setPromocoes(promocoes);

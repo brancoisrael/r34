@@ -23,6 +23,16 @@ export class LancamentoService{
             .map(response=> response.json())
     }
 
+    excluirLancamento(lancamento:LancamentoModel):Observable<LancamentoDTO>{       
+        const headers = new Headers()
+        headers.append('Content-Type','application/json')
+        
+        return this.http.post(`${R34_API}/lancamentos/excluir`
+        ,JSON.stringify(lancamento)
+        ,new RequestOptions({headers:headers}))
+            .map(response=> response.json())
+    }
+
     listarLancamento(idMembro:number):Observable<LancamentoModel[]>{       
         const headers = new Headers()
         headers.append('Content-Type','application/json')

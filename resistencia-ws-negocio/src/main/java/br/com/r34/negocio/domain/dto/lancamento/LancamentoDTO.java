@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.r34.negocio.domain.dto.DataTransferObject;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
+import br.com.r34.negocio.domain.vo.membro.SaldoMembro;
 
 public class LancamentoDTO implements DataTransferObject {
 
@@ -15,6 +16,8 @@ public class LancamentoDTO implements DataTransferObject {
 	private boolean sucesso;
 
 	private List<Lancamento> lancamentos;
+	
+	private SaldoMembro saldoMembro;
 	
 	public void addLancamento(Lancamento lancamento) {
 		if(lancamentos==null)
@@ -44,6 +47,14 @@ public class LancamentoDTO implements DataTransferObject {
 
 	public void setLancamentos(List<Lancamento> lancamentos) {
 		this.lancamentos = lancamentos;
+	}
+
+	public SaldoMembro getSaldoMembro() {
+		return saldoMembro;
+	}
+
+	public void setSaldoMembro(SaldoMembro saldoMembro) {
+		this.saldoMembro = saldoMembro;
 	}
 
 }
