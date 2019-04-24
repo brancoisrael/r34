@@ -17,9 +17,9 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<!--<module>resistencia-web</module>-->
+		<module>resistencia-web</module>
 		<module>resistencia-ws</module>
-    	<module>resistencia-ws-negocio</module>
+    	<module>resistencia-ws-negocio</module>		
   	</modules>
 
 	<parent>
