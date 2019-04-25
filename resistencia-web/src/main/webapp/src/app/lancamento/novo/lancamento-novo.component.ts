@@ -41,6 +41,8 @@ export class LancamentoNovoComponent implements OnInit {
   moedaPattern =/^[0-9,.]*$/
   dataHoje:Date=new Date()
   membroSelecionado:MembroModel
+  membro:string
+  msg:string
  
   constructor(
     private lancamentoService:LancamentoService,

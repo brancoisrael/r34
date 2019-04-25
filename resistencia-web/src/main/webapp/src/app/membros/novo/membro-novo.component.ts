@@ -16,6 +16,7 @@ import { MembroDTO } from '../modelo/membro.dto';
 })
 export class MembroNovoComponent implements OnInit {
 
+  msg:string
   header:string='Cadastrar novo membro'
   membro:MembroModel
   orderForm: FormGroup

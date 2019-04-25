@@ -16,13 +16,14 @@ import {ConfirmationService} from 'primeng/api';
   templateUrl: './membros.component.html'
 })
 export class MembrosComponent implements OnInit {
-
+	
   patentes=PATENTES
   situacoes=SITUACOES
   cargos=CARGOS
   
   orderForm: FormGroup
   membros: MembroModel[]
+  msg:string
 
   constructor(
     private confirmationService: ConfirmationService,
