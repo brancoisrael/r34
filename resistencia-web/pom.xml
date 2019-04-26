@@ -15,7 +15,7 @@
 	<name>resistencia-web</name>
 
 	<properties>
-		<angular.project.location>src/main/webapp</angular.project.location>
+		<angular.project.location>web</angular.project.location>
 		<angular.project.nodeinstallation>C:/ferramentas/node-v10.15.3-win-x64</angular.project.nodeinstallation>
 	</properties>
 
