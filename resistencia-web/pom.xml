@@ -16,7 +16,7 @@
 
 	<properties>
 		<angular.project.location>web</angular.project.location>
-		<angular.project.nodeinstallation>C:/ferramentas/node-v10.15.3-win-x64</angular.project.nodeinstallation>
+		<angular.project.nodeinstallation></angular.project.nodeinstallation>
 	</properties>
 
 	<build>

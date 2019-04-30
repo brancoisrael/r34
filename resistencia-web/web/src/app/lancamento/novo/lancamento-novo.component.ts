@@ -167,9 +167,10 @@ export class LancamentoNovoComponent implements OnInit {
         this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
 
         if(response.sucesso){
-          for(var i=0;i<response.lancamentos.length;i++){            
+          /*for(var i=0;i<response.lancamentos.length;i++){            
             this.lancamentos.push(response.lancamentos[i])
-          }
+          }*/
+          this.listarLancamento(null);  
           this.membroSelecionado.saldoMembro = response.saldoMembro;
         }
       })           
@@ -183,10 +184,11 @@ export class LancamentoNovoComponent implements OnInit {
         this.messageService.add({severity:response.sucesso?'success':'error', summary:'Mensagem: ', detail:response.message}); 
 
         if(response.sucesso){   
-            const index = this.lancamentos.indexOf(lancamento,0);
+            /*const index = this.lancamentos.indexOf(lancamento,0);
             if(index!==-1)
-              this.lancamentos.splice(index, 1);           
-          this.membroSelecionado.saldoMembro = response.saldoMembro;
+              this.lancamentos.splice(index, 1);    */
+            this.listarLancamento(null);       
+            this.membroSelecionado.saldoMembro = response.saldoMembro;
         }
       })           
   }

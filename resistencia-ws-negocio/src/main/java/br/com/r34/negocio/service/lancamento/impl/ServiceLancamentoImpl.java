@@ -108,7 +108,7 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 			servicePromocao.removerPromocao(lancamento);
 			
 			if(lancamento.getTipoLancamento()==TipoLancamento.DEBITO)
-				lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()-(lancamento.getValorLancamento()*-1));
+				lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()+lancamento.getValorLancamento());
 			else
 				lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()-lancamento.getValorLancamento());
 			
