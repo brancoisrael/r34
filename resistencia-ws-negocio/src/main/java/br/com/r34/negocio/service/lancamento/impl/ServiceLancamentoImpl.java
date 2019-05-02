@@ -9,6 +9,7 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.r34.negocio.dao.lancamento.LancamentoDAO;
 import br.com.r34.negocio.dao.membro.SaldoMembroDAO;
@@ -16,7 +17,6 @@ import br.com.r34.negocio.domain.dto.lancamento.LancamentoDTO;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 import br.com.r34.negocio.enums.OrigemLancamento;
 import br.com.r34.negocio.enums.StatusLancamento;
-import br.com.r34.negocio.enums.TipoLancamento;
 import br.com.r34.negocio.service.lancamento.ServiceLancamento;
 
 @Service
@@ -31,6 +31,7 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 	@Autowired
 	private ServicePromocaoImpl servicePromocao;
 		
+	@Transactional(transactionManager="resistenciaTransactionManager")
 	@Override
 	public LancamentoDTO inserir(Lancamento lanc) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
@@ -40,8 +41,6 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 			try {					
 				Lancamento lancamento = lanc.clone();
 				lancamento.setQuantidade(1);
-				lancamento.getMembro().setSaldoMembro(saldoMembroDAO.findById(lancamento.getMembro().getSaldoMembro().getId()).get());
-				lancamentoDTO.setSaldoMembro(lancamento.getMembro().getSaldoMembro());
 				
 				if(lancamento.getOrigemLancamento()==OrigemLancamento.BAR &&
 						(lancamento.getProdutoVenda()==null || lancamento.getTipoLancamento()==null)) {
@@ -66,14 +65,7 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 				lancamentoDTO.setSucesso(true);		
 								
 				servicePromocao.acrescentarPromocao(lancamento);
-				
-				if(lancamento.getTipoLancamento()==TipoLancamento.DEBITO)
-					lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()+(lancamento.getValorLancamento()*-1));
-				else
-					lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()+lancamento.getValorLancamento());
-				
-				lancamento.getMembro().getSaldoMembro().setMembro(lancamento.getMembro());
-				saldoMembroDAO.save(lancamento.getMembro().getSaldoMembro());				
+				saldoMembroDAO.updateSaldoMembro(lanc.getMembro().getId());
 			} 
 			
 			catch (ConstraintViolationException e) {
@@ -93,32 +85,25 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 				break;
 			}
 		}
+		
 		return lancamentoDTO;
 	}
 
 	
+	@Transactional(transactionManager="resistenciaTransactionManager")
 	@Override
 	public LancamentoDTO deletar(Lancamento lanc) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
 		try {
 			Lancamento lancamento = lanc.clone();
-			lancamento.getMembro().setSaldoMembro(saldoMembroDAO.findById(lancamento.getMembro().getSaldoMembro().getId()).get());
-			lancamentoDTO.setSaldoMembro(lancamento.getMembro().getSaldoMembro());
-			
 			servicePromocao.removerPromocao(lancamento);
 			
-			if(lancamento.getTipoLancamento()==TipoLancamento.DEBITO)
-				lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()+lancamento.getValorLancamento());
-			else
-				lancamento.getMembro().getSaldoMembro().setSaldo(lancamento.getMembro().getSaldoMembro().getSaldo()-lancamento.getValorLancamento());
-			
-			lancamento.getMembro().getSaldoMembro().setMembro(lancamento.getMembro());
-			saldoMembroDAO.save(lancamento.getMembro().getSaldoMembro());	
-			
 			lancamentoDAO.delete(lancamento);
+						
+			saldoMembroDAO.updateSaldoMembro(lancamento.getMembro().getId());
+	
 			lancamentoDTO.setSucesso(true);
 			lancamentoDTO.setMessage("Lançamento excluído com sucesso");
-			
 		} 
 		catch (IllegalArgumentException e) {
 			lancamentoDTO.setMessage("Lançamento não pode ser excluído");
@@ -135,6 +120,7 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 		return lancamentoDTO;
 	}
 
+	@Transactional(transactionManager="resistenciaTransactionManager")
 	@Override
 	public LancamentoDTO atualizar(Lancamento lancamento) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
@@ -161,6 +147,7 @@ public class ServiceLancamentoImpl implements ServiceLancamento<Lancamento,Lanca
 		return lancamentoDTO;
 	}
 
+	@Transactional(transactionManager="resistenciaTransactionManager")
 	@Override
 	public List<Lancamento> pesquisarPorMembro(long idMembro) {
 		return lancamentoDAO.perquisarPorMembro(idMembro);

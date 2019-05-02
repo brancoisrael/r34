@@ -1,1 +1,4 @@
 /resistencia-web/src/main/webapp/node_modules
+/resistencia-web/web/node
+/resistencia-web/web/node_modules
+/resistencia-web/web/.vscode

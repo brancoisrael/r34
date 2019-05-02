@@ -8,8 +8,10 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.r34.negocio.dao.membro.MembroDAO;
+import br.com.r34.negocio.dao.membro.SaldoMembroDAO;
 import br.com.r34.negocio.domain.dto.membro.MembroDTO;
 import br.com.r34.negocio.domain.vo.membro.Membro;
 import br.com.r34.negocio.domain.vo.membro.SaldoMembro;
@@ -23,7 +25,11 @@ public class ServiceMembroImpl implements ServiceMembro {
 	private MembroDAO membroDAO;
 
 	private MembroDTO membroDTO;
+	
+	@Autowired
+	private SaldoMembroDAO saldoMembroDAO;
 
+	@Transactional(transactionManager="resistenciaTransactionManager")
 	@Override
 	public MembroDTO inserir(Membro membro) {
 		membroDTO = new MembroDTO();
@@ -62,6 +68,7 @@ public class ServiceMembroImpl implements ServiceMembro {
 		return membroDTO;
 	}
 
+	@Transactional(transactionManager="resistenciaTransactionManager")
 	@Override
 	public MembroDTO deletar(long id) {
 		membroDTO = new MembroDTO();
@@ -79,6 +86,7 @@ public class ServiceMembroImpl implements ServiceMembro {
 		return membroDTO;
 	}
 
+	@Transactional(transactionManager="resistenciaTransactionManager")
 	@Override
 	public MembroDTO atualizar(Membro membro) {
 		membroDTO = new MembroDTO();
@@ -125,19 +133,28 @@ public class ServiceMembroImpl implements ServiceMembro {
 		return membroDTO;
 	}
 
+	@Transactional(transactionManager="resistenciaTransactionManager")
 	@Override
 	public Iterable<Membro> selectAll() {
 		return membroDAO.selectAll();
 	}
 
+	@Transactional(transactionManager="resistenciaTransactionManager")
 	@Override
 	public Membro buscarId(long id) {
 		return membroDAO.findById(id);
 	}
 	
+	@Transactional(transactionManager="resistenciaTransactionManager")
 	@Override
 	public List<Membro> selectByStatus(boolean status){
 		return membroDAO.selectByStatus(status);
+	}
+	
+	@Transactional(transactionManager="resistenciaTransactionManager")
+	@Override
+	public SaldoMembro selectSaldoByMembro(long idMembro) {
+		return saldoMembroDAO.selectByMembro(idMembro);
 	}
 
 	public void setMembroDAO(MembroDAO membroDAO) {

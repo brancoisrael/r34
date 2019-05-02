@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.r34.negocio.domain.dto.lancamento.LancamentoDTO;
 import br.com.r34.negocio.domain.vo.lancamento.Lancamento;
 import br.com.r34.negocio.service.lancamento.impl.ServiceLancamentoImpl;
+import br.com.r34.negocio.service.membro.impl.ServiceMembroImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -31,6 +32,9 @@ public class ControllerLancamento {
 	@Autowired
 	private ServiceLancamentoImpl serviceLancamentoImpl;
 	
+	@Autowired
+	private ServiceMembroImpl serviceMembroImpl;
+	
 	@CrossOrigin
 	@ApiOperation(value = "salvar", notes = "salvar", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
@@ -39,6 +43,7 @@ public class ControllerLancamento {
 	@ResponseBody
 	public ResponseEntity<LancamentoDTO> salvar(@RequestBody Lancamento lancamento) {
 		LancamentoDTO lancamentoDTO = serviceLancamentoImpl.inserir(lancamento);
+		lancamentoDTO.setSaldoMembro(serviceMembroImpl.selectSaldoByMembro(lancamento.getMembro().getId()));
 		
 		return new ResponseEntity<LancamentoDTO>(lancamentoDTO,HttpStatus.OK);
 	}
@@ -51,6 +56,7 @@ public class ControllerLancamento {
 	@ResponseBody
 	public ResponseEntity<LancamentoDTO> excluir(@RequestBody Lancamento lancamento) {
 		LancamentoDTO lancamentoDTO = serviceLancamentoImpl.deletar(lancamento);
+		lancamentoDTO.setSaldoMembro(serviceMembroImpl.selectSaldoByMembro(lancamento.getMembro().getId()));
 		
 		return new ResponseEntity<LancamentoDTO>(lancamentoDTO,HttpStatus.OK);
 	}

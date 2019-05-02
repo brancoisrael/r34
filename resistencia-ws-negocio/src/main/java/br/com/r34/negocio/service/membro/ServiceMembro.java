@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.r34.negocio.domain.dto.membro.MembroDTO;
 import br.com.r34.negocio.domain.vo.membro.Membro;
+import br.com.r34.negocio.domain.vo.membro.SaldoMembro;
 
 public interface ServiceMembro {
 
@@ -20,4 +21,6 @@ public interface ServiceMembro {
 	Iterable<Membro> selectAll();
 	
 	List<Membro> selectByStatus(boolean status);
+	
+	SaldoMembro selectSaldoByMembro(long idMembro);
 }
