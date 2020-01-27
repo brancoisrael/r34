@@ -1,0 +1,49 @@
+FROM jboss/base-jdk:8
+
+ENV WILDFLY_VERSION 10.1.0.Final
+ENV JBOSS_HOME /opt/jboss/wildfly
+ENV DRIVER_DS postgresql-9.4.1211.jar
+ENV NAME_DS DadosAcidenteDS01
+ENV JBOSS_HOME /opt/jboss/wildfly
+ENV JAVA_HOME /usr/lib/jvm/java
+ENV JRE_HOME /usr/lib/jvm/java/jre
+ENV PATH=$JAVA_HOME/bin:$PATH
+ENV JAVA_OPTS "-Xms256m -Xmx256m -XX:NewRatio=3 -XX:+UseParallelGC -Dsun.rmi.dgc.client.gcInterval=1800000 -Dsun.rmi.dgc.server.gcInterval=1800000 -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs='org.jboss.byteman' -Djava.awt.headless=true"
+
+ARG DB_HOST
+ARG DB_NAME
+ARG DB_USER
+ARG DB_PASSWD
+
+USER root
+
+RUN cd $HOME \
+    && curl -O https://download.jboss.org/wildfly/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz \
+    && tar xf wildfly-$WILDFLY_VERSION.tar.gz \
+    && mv $HOME/wildfly-$WILDFLY_VERSION $JBOSS_HOME \
+    && rm wildfly-$WILDFLY_VERSION.tar.gz \
+    && chown -R jboss:0 ${JBOSS_HOME} \
+    && chmod -R g+rw ${JBOSS_HOME}
+
+ENV LAUNCH_JBOSS_IN_BACKGROUND true
+
+COPY Docker/postgresql-9.4.1211.jar /tmp/
+
+RUN /bin/sh -c '$JBOSS_HOME/bin/standalone.sh &' && \
+  sleep 10 && \
+  cd /tmp && \
+  $JBOSS_HOME/bin/jboss-cli.sh --connect --command="module add --name=org.postgresql --resources=/tmp/postgresql-9.4.1211.jar --dependencies=javax.api,javax.transaction.api" && \
+  $JBOSS_HOME/bin/jboss-cli.sh --connect --command="/subsystem=datasources/jdbc-driver=postgresql:add(driver-name="postgresql",driver-module-name="org.postgresql",driver-class-name=org.postgresql.Driver)" && \
+  $JBOSS_HOME/bin/jboss-cli.sh --connect --command="data-source add --jndi-name=java:jboss/datasources/$NAME_DS --name=$NAME_DS --connection-url=jdbc:postgresql://${DB_HOST}:5432/${DB_NAME} --min-pool-size=1 --max-pool-size=20 --idle-timeout-minutes=3 --driver-name=postgresql --user-name=${DB_USER} --password=${DB_PASSWD}" && \
+  sed -i 's/{env.DB_HOST}/${env.DB_HOST}/g' $JBOSS_HOME/standalone/configuration/standalone.xml && \
+  sed -i 's/{env.DB_NAME}/${env.DB_NAME}/g' $JBOSS_HOME/standalone/configuration/standalone.xml && \
+  sed -i 's/{env.DB_USER}/${env.username}/g' $JBOSS_HOME/standalone/configuration/standalone.xml && \
+  sed -i 's/{env.DB_PASSWD}/${env.password}/g' $JBOSS_HOME/standalone/configuration/standalone.xml && \
+  $JBOSS_HOME/bin/jboss-cli.sh --connect --command=:shutdown && \
+  rm -rf $JBOSS_HOME/standalone/configuration/standalone_xml_history/ $JBOSS_HOME/standalone/log/* /tmp/*
+
+EXPOSE 8080
+
+COPY Docker/acidentes-ws.war $JBOSS_HOME/standalone/deployments/
+
+CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "-Djboss.http.port=8080"]
