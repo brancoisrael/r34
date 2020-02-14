@@ -1,7 +1,1 @@
-import {Headers} from '@angular/http'
-
-
-export const R34_API='http://localhost:8080/resistencia-ws';
-
-export const HEADERS = new Headers()
-.append('Content-Type','application/json');
+Unexpected error.  File contents could not be restored from local history during undo/redo.

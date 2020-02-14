@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-	static final String DESCRIPTION = "Resistencia WS - arquitetura de microservicos";
+	static final String DESCRIPTION = "R34 API Rest";;
 
 	@Bean
 	public Docket apiLOC() {

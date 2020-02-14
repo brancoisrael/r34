@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.r34.negocio.domain.dto.acesso.EndPointDTO;
-import br.com.r34.negocio.domain.vo.acesso.Endpoint;
-import br.com.r34.negocio.service.acesso.impl.ServiceEndPointImpl;
+import br.com.r34.persistencia.dto.acesso.EndPointDTO;
+import br.com.r34.persistencia.vo.acesso.Endpoint;
+import br.com.r34.service.acesso.ServiceEndPointImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -24,9 +24,10 @@ import io.swagger.annotations.ApiResponses;
 @Api(tags = "Manutenção de endpoints", value = "Manutenção de endpoints")
 @RestController
 public class ControllerEndPoint {
-
+	
 	@Autowired
 	private ServiceEndPointImpl serviceEndPointImpl;
+	
 	
 	@ApiOperation(value = "salvar", notes = "salvar", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
@@ -82,4 +83,5 @@ public class ControllerEndPoint {
 		
 		return list;
 	}
+ 
 }

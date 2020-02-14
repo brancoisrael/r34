@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.r34.negocio.domain.dto.membro.MembroDTO;
-import br.com.r34.negocio.domain.vo.membro.Membro;
-import br.com.r34.negocio.service.membro.impl.ServiceMembroImpl;
+import br.com.r34.persistencia.dto.membro.MembroDTO;
+import br.com.r34.persistencia.vo.membro.Membro;
+import br.com.r34.service.membro.ServiceMembroImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

@@ -19,7 +19,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"br.com.r34.negocio.dao" }, 
+@EnableJpaRepositories(basePackages = {"br.com.r34.persistencia.repository" }, 
 entityManagerFactoryRef = "resistenciaEntityManagerFactory", 
 transactionManagerRef = "resistenciaTransactionManager")
 
@@ -32,7 +32,7 @@ public class ResistenciaPostgreSQLConfig {
 	public LocalContainerEntityManagerFactoryBean resistenciaEntityManagerFactory() throws NamingException {
 		final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
-		em.setPackagesToScan(new String[] { "br.com.r34.negocio.domain.vo" });
+		em.setPackagesToScan(new String[] { "br.com.r34.persistencia.vo" });
 		em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		em.setJpaProperties(additionalProperties());
 
@@ -62,4 +62,5 @@ public class ResistenciaPostgreSQLConfig {
 		hibernateProperties.setProperty("hibernate.cache.use_query_cache", "hibernate.r34.cache");
 		return hibernateProperties;
 	}
+	
 }

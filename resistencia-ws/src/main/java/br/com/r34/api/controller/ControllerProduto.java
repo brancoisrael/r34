@@ -1,13 +1,8 @@
 package br.com.r34.api.controller;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.r34.negocio.domain.dto.produto.ProdutoVendaDTO;
-import br.com.r34.negocio.domain.vo.produto.Produto;
-import br.com.r34.negocio.domain.vo.produto.ProdutoVenda;
-import br.com.r34.negocio.domain.vo.produto.TipoProduto;
-import br.com.r34.negocio.service.produto.impl.ServiceProdutoImpl;
-import br.com.r34.negocio.service.produto.impl.ServiceTipoProdutoImpl;
+import br.com.r34.persistencia.dto.produto.ProdutoVendaDTO;
+import br.com.r34.persistencia.vo.produto.Produto;
+import br.com.r34.persistencia.vo.produto.ProdutoVenda;
+import br.com.r34.persistencia.vo.produto.TipoProduto;
+import br.com.r34.service.produto.ServiceProdutoImpl;
+import br.com.r34.service.produto.ServiceTipoProdutoImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
