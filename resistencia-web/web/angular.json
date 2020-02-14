@@ -24,9 +24,9 @@
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "src/assets/scss/material-dashboard.scss",
               "src/assets/css/demo.css",
-			  "node_modules/primeicons/primeicons.css",
-			  "node_modules/primeng/resources/themes/nova-light/theme.css",
-			  "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -149,5 +149,8 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "analytics": "7cb3a793-82f1-4fc2-a57e-8bf3fafa7049"
   }
 }
