@@ -31,7 +31,6 @@ public class ControllerMembro {
 	@Autowired
 	private ServiceMembroImpl serviceMembroImpl;
 	
-	@CrossOrigin
 	@ApiOperation(value = "salvar", notes = "salvar", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
 	@RequestMapping(value="/salvar",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,13 +42,12 @@ public class ControllerMembro {
 		return new ResponseEntity<MembroDTO>(membroDTO,HttpStatus.OK);
 	}
 
-	@CrossOrigin
 	@ApiOperation(value = "atualizar", notes = "atualizar", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
 	@RequestMapping(value="/atualizar",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ResponseEntity<MembroDTO> atualziar(@RequestBody Membro membro) {
+	public ResponseEntity<MembroDTO> atualizar(@RequestBody Membro membro) {
 		MembroDTO membroDTO = serviceMembroImpl.atualizar(membro);
 		
 		return new ResponseEntity<MembroDTO>(membroDTO,HttpStatus.OK);
@@ -65,8 +63,7 @@ public class ControllerMembro {
 		
 		return new ResponseEntity<Iterable<Membro>>(membros,HttpStatus.OK);
 	}
-	
-	@CrossOrigin
+		
 	@ApiOperation(value = "excluir", notes = "excluir", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
 	@RequestMapping(value="/excluir/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
