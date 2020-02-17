@@ -16,6 +16,7 @@ import br.com.r34.persistencia.repository.membro.MembroDAO;
 import br.com.r34.persistencia.repository.membro.SaldoMembroDAO;
 import br.com.r34.persistencia.vo.membro.Membro;
 import br.com.r34.persistencia.vo.membro.SaldoMembro;
+import br.com.r34.service.util.CipherUtil;
 
 @Service
 public class ServiceMembroImpl {
@@ -28,8 +29,7 @@ public class ServiceMembroImpl {
 	@Autowired
 	private SaldoMembroDAO saldoMembroDAO;
 
-	@Transactional(transactionManager="resistenciaTransactionManager")
-	
+	@Transactional(transactionManager="resistenciaTransactionManager")	
 	public MembroDTO inserir(Membro membro) {
 		membroDTO = new MembroDTO();
 		membroDTO.setMessage("Erro ao inserir membro");
@@ -40,12 +40,13 @@ public class ServiceMembroImpl {
 		}
 		
 		if(membro.getCargo()!=null &&
-			membroDAO.findByCargo(membro.getCargo(),membro.getId())==0) {
+			membroDAO.findByCargo(membro.getCargo(),membro.getId())>0) {
 			membroDTO.setMessage("Outro infeliz já possui este cargo, mude esta porra e tente novamente.");
 			return membroDTO;
 		}
 		
 		try {
+			membro.setSenha(CipherUtil.cipher(membro.getSenha()));
 			Membro m = membroDAO.save(membro);
 			if (m != null) {
 				membroDTO.setSucesso(true);
@@ -81,7 +82,6 @@ public class ServiceMembroImpl {
 		} catch (IllegalArgumentException e) {
 			membroDTO.setMessage("Membro não pode ser excluído");
 		}
-
 		return membroDTO;
 	}
 

@@ -20,7 +20,7 @@ import br.com.r34.persistencia.vo.ValueObject;
 import br.com.r34.persistencia.vo.membro.Membro;
 
 @Entity
-@Table(name = "tb_template_lancamento")
+@Table(name = "tb_template_lancamento",schema = "core")
 public class TemplateLancamento implements ValueObject{
 
 	private static final long serialVersionUID = 710027902291698814L;

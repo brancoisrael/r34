@@ -22,7 +22,7 @@ import br.com.r34.persistencia.vo.ValueObject;
 import br.com.r34.persistencia.vo.produto.Produto;
 
 @Entity
-@Table(name = "tb_promocao")
+@Table(name = "tb_promocao",schema = "core")
 public class Promocao implements ValueObject {
 
 	/**

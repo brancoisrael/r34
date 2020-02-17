@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 import br.com.r34.persistencia.vo.ValueObject;
 
 @Entity
-@Table(name="tb_tipo_produto")
+@Table(name="tb_tipo_produto",schema = "core")
 public class TipoProduto implements ValueObject{
 
 	private static final long serialVersionUID = 7704754802604164440L;

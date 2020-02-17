@@ -21,6 +21,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.r34.persistencia.enums.Cargo;
@@ -32,7 +35,7 @@ import br.com.r34.persistencia.vo.lancamento.Lancamento;
 import br.com.r34.persistencia.vo.lancamento.TemplateLancamento;
 
 @Entity
-@Table(name = "tb_membro")
+@Table(name = "tb_membro" , schema = "core")
 public class Membro implements ValueObject {
 
 	private static final long serialVersionUID = 8002032853686500638L;
@@ -89,7 +92,8 @@ public class Membro implements ValueObject {
 	@Enumerated(EnumType.ORDINAL)
 	private Cargo cargo;
 		
-	@OneToOne(mappedBy="membro", fetch=FetchType.EAGER,cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
+	@OneToOne(mappedBy="membro", fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST,CascadeType.MERGE})
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private SaldoMembro saldoMembro;
 	
 	@JsonIgnore

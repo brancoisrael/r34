@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 import br.com.r34.persistencia.vo.ValueObject;
 
 @Entity
-@Table(name = "tb_endpoint")
+@Table(name = "tb_endpoint", schema = "core")
 public class Endpoint implements ValueObject{
 
 	private static final long serialVersionUID = -1822389722737103085L;

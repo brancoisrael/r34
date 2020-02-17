@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.r34.persistencia.vo.ValueObject;
 
 @Entity
-@Table(name = "tb_saldo_membro")
+@Table(name = "tb_saldo_membro",  schema = "core")
 public class SaldoMembro implements ValueObject {
 
 	private static final long serialVersionUID = 7344261434291626041L;
@@ -37,7 +37,7 @@ public class SaldoMembro implements ValueObject {
 	
 	@JsonIgnore
 	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_membro", referencedColumnName = "id",unique=true)
+	@JoinColumn(name="id_membro", referencedColumnName = "id")
 	private Membro membro;
 	
 	public SaldoMembro() {

@@ -12,7 +12,7 @@
 	<artifactId>resistencia-service</artifactId>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>br.com.r34</groupId>
 			<artifactId>resistencia-persistencia</artifactId>
@@ -29,6 +29,13 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.6</version>
 		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+
 	</dependencies>
 
 </project>

@@ -27,7 +27,7 @@ import br.com.r34.persistencia.vo.membro.Membro;
 import br.com.r34.persistencia.vo.produto.ProdutoVenda;
 
 @Entity
-@Table(name = "tb_lancamento")
+@Table(name = "tb_lancamento",schema = "core")
 public class Lancamento implements ValueObject, Cloneable{
 
 	private static final long serialVersionUID = 5940470217930532235L;

@@ -3,6 +3,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms'
 import {Router, ActivatedRoute} from '@angular/router'
 
+import {CALENDAR_PT_BR} from '../../components/calendar/calendar-pt-br'
+import {YEAR_RANGE} from '../../components/calendar/calendar-pt-br'
 import {MembroService} from '../membros.service';
 import {MembroModel, PATENTES, CARGOS, SITUACOES} from '../modelo/membro.model';
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -32,6 +34,8 @@ export class MembroNovoComponent implements OnInit {
   mailPattern =/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   numeroPattern =/^[0-9]*$/
   alfaPattern=/[A-Za-z]/
+  ptbr=CALENDAR_PT_BR;
+  yearRange=YEAR_RANGE;
 
   constructor(
     private route: ActivatedRoute,

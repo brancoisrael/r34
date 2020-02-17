@@ -54,22 +54,35 @@
                               
                             <div class="col-md-4">
                                 <p>Data de nascimento</p>
-                                <p-calendar formControlName="dataNascimento" (onSelect)="setMinDateEntrada($event)" [minDate]="minDateNascimento" ></p-calendar>                    
+                                <p-calendar formControlName="dataNascimento"
+                                [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                                [locale]="ptbr"
+                                dateFormat="dd/mm/yy" 
+                                (onSelect)="setMinDateEntrada($event)" 
+                                 [minDate]="minDateNascimento" ></p-calendar>                    
                             </div>
 
                             <div class="col-md-4">
                                 <p>Data de entrada</p>
-                                <p-calendar formControlName="dataEntrada" (onSelect)="setMinDateSaida($event)" [minDate]="minDateEntrada" ></p-calendar>                                       
+                                <p-calendar formControlName="dataEntrada" 
+                                [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                                [locale]="ptbr"
+                                dateFormat="dd/mm/yy" 
+                                (onSelect)="setMinDateSaida($event)" [minDate]="minDateEntrada" ></p-calendar>                                       
                             </div>
 
                             <div class="col-md-4">
                                 <p>Data de saída</p>
-                                <p-calendar formControlName="dataSaida" [disabled]="dataSaidaDisable" [minDate]="minDateSaida"></p-calendar>                                       
+                                <p-calendar formControlName="dataSaida" 
+                                [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                                [locale]="ptbr"
+                                dateFormat="dd/mm/yy" 
+                                [disabled]="dataSaidaDisable" [minDate]="minDateSaida"></p-calendar>                                       
                             </div>
                            
                         </div>
 
-                        <div class="row">                           
+                        <div class="row" [hidden]="!visibleBtNovo">                           
                               <div class="col-md-4">
                                 <p>Senha</p>
                                 <input size="20"  type="password" required formControlName="senha" />

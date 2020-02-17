@@ -22,7 +22,7 @@ import br.com.r34.persistencia.vo.ValueObject;
 import br.com.r34.persistencia.vo.membro.Membro;
 
 @Entity
-@Table(name = "tb_regra_acesso")
+@Table(name = "tb_regra_acesso", schema = "core")
 public class RegraAcesso implements ValueObject {
 
 	private static final long serialVersionUID = -8770307674110008037L;

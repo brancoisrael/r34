@@ -22,7 +22,7 @@ import br.com.r34.persistencia.vo.ValueObject;
 import br.com.r34.persistencia.vo.lancamento.Lancamento;
 
 @Entity
-@Table(name="tb_produto_venda")
+@Table(name="tb_produto_venda",schema = "core")
 public class ProdutoVenda implements ValueObject{
 
 	private static final long serialVersionUID = -8762660046927875906L;
