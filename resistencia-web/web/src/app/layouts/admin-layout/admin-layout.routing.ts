@@ -11,6 +11,7 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { MembrosComponent } from '../../membros/membros.component';
 import { MembroNovoComponent } from '../../membros/novo/membro-novo.component';
 import {LancamentoNovoComponent} from '../../lancamento/novo/lancamento-novo.component';
+import {LoginComponent} from '../../membros/login/login.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -22,6 +23,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
 
+    { path: 'login',        component: LoginComponent },
     { path: 'membros',        component: MembrosComponent },
     { path: 'membro-novo',    component: MembroNovoComponent },
     { path: 'membro-novo/:id',component: MembroNovoComponent ,

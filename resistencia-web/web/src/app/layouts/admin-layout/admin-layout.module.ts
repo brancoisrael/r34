@@ -32,7 +32,7 @@ import {
 import { MembrosComponent } from '../../membros/membros.component';
 import { MembroNovoComponent } from '../../membros/novo/membro-novo.component';
 import { LancamentoNovoComponent } from '../../lancamento/novo/lancamento-novo.component';
-
+import { LoginComponent } from '../../membros/login/login.component';
 
 @NgModule({
   imports: [
@@ -66,7 +66,8 @@ import { LancamentoNovoComponent } from '../../lancamento/novo/lancamento-novo.c
     UpgradeComponent,
     MembrosComponent,
     MembroNovoComponent,
-    LancamentoNovoComponent
+    LancamentoNovoComponent,
+    LoginComponent
   ],
   exports:[
     CommonModule,
