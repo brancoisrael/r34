@@ -32,7 +32,7 @@ import {
 import { MembrosComponent } from '../../membros/membros.component';
 import { MembroNovoComponent } from '../../membros/novo/membro-novo.component';
 import { LancamentoNovoComponent } from '../../lancamento/novo/lancamento-novo.component';
-import { LoginComponent } from '../../membros/login/login.component';
+import { LoginComponent } from 'app/membros/login/login.component';
 
 @NgModule({
   imports: [

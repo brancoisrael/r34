@@ -1,0 +1,43 @@
+<div class="main-content">
+  <div class="container-fluid">
+    
+    <div class="col-md-6" style="position: absolute; left:20%">
+      <div class="card">
+          <div class="card-header card-header-danger">
+              <h4 class="card-title">Resistencia Moto Clube</h4>
+              <p class="card-category">SOFR - Só os fortes resistem</p>
+          </div>
+          <div class="card-body table-responsive">
+            <form [formGroup]="orderForm" novalidate >
+                          
+              <div class="row">
+                <div class="col-md-12">
+                    <p-messages [(value)]="msg"></p-messages>
+                </div>
+              </div>
+          
+              <div class="row">
+                  <div class="col-md-6">
+                    <p>Email</p>
+                    <input  type="text" required formControlName="email" />
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <p>Senha</p>
+                  <input  type="text" required formControlName="senha" />
+                </div>
+              </div>
+
+              <button (click)="login(orderForm.value)"  
+              type="submit" [disabled]="!orderForm.valid"
+               class="btn btn-outline-danger pull-right">Login</button>
+
+
+              </form>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>

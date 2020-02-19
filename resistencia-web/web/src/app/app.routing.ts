@@ -4,12 +4,12 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-
+import { LoginComponent } from './membros/login/login.component'
 
 const routes: Routes =[
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
   }, {
     path: '',

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.r34.persistencia.dto.acesso.LoginDTO;
+import br.com.r34.persistencia.dto.acesso.TokenDTO;
 import br.com.r34.service.acesso.ServiceLogin;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,13 +27,13 @@ public class ControllerAcesso {
 	@Autowired
 	private ServiceLogin serviceLogin;
 	
-	@ApiOperation(value = "login", notes = "login", protocols = "Accept=application/json", response = String.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
+	@ApiOperation(value = "login", notes = "login", protocols = "Accept=application/json", response = TokenDTO.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = TokenDTO.class) })	
 	@RequestMapping(value="/login",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ResponseEntity<String> login(@RequestBody LoginDTO login) {
-		String token = serviceLogin.login(login.getEmail(), login.getSenha());
-		return new ResponseEntity<String>(token,HttpStatus.OK);
+	public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO login) {
+		TokenDTO token = serviceLogin.login(login.getEmail(), login.getSenha());
+		return new ResponseEntity<TokenDTO>(token,HttpStatus.OK);
 	}
 }

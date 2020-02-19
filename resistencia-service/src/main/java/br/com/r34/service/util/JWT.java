@@ -29,7 +29,7 @@ public class JWT {
 
 	public static boolean validarToken(String token) {
 		try {
-			Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
+			Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token.replace("Bearer ", ""));
 			return true;
 		} catch (Exception e) {
 			return false;
