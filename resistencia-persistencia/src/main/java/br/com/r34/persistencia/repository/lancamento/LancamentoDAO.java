@@ -56,4 +56,9 @@ public interface LancamentoDAO extends CrudRepository<Lancamento, Long> {
 			+ "inner join lancamento.promocoes promo "
 			+ "where lancamento.id =:idLancamento")			
 	Lancamento pesquisarById(long idLancamento);
+	
+	@Query(nativeQuery = true, value = "select sum(valor_lancamento),'DEBITO' from core.tb_lancamento where tipo_lancamento=0 and id_membro=:idMembro " + 
+			"union " + 
+			"select sum(valor_lancamento),'CREDITO' from core.tb_lancamento where tipo_lancamento=1 and id_membro=:idMembro")
+	Double[] somarLancamento(@Param("idMembro")long idMembro);
 }

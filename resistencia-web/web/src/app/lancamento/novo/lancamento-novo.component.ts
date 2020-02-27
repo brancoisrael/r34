@@ -17,7 +17,10 @@ import { SelectOptions } from '../../components/select/select-options';
 import { MembroModel } from '../../membros/modelo/membro.model';
 import { ProdutoVendaDTO } from '../../produto/modelo/produto-venda.dto';
 import { LancamentoDTO } from '../modelo/lancamento.dto';
+import { SaldoModel } from 'app/membros/modelo/saldo.model';
 
+import {CALENDAR_PT_BR} from '../../components/calendar/calendar-pt-br'
+import {YEAR_RANGE} from '../../components/calendar/calendar-pt-br'
 
 
 @Component({
@@ -43,6 +46,8 @@ export class LancamentoNovoComponent implements OnInit {
   membroSelecionado:MembroModel
   membro:string
   msg:string
+  ptbr=CALENDAR_PT_BR;
+  yearRange=YEAR_RANGE;
  
   constructor(
     private lancamentoService:LancamentoService,
@@ -54,6 +59,7 @@ export class LancamentoNovoComponent implements OnInit {
     private messageService: MessageService) {
       this.produtoDisable=true;
       this.formHidden=true
+      this.membroSelecionado = new MembroModel(0,true,null,null,null,null,null,null,null,null,null,null,new SaldoModel(0,null,null,null));
   }
 
   ngOnInit() {
@@ -170,8 +176,9 @@ export class LancamentoNovoComponent implements OnInit {
           /*for(var i=0;i<response.lancamentos.length;i++){            
             this.lancamentos.push(response.lancamentos[i])
           }*/
-          this.listarLancamento(null);  
           this.membroSelecionado.saldoMembro = response.saldoMembro;
+          this.listarLancamento(null);  
+         
         }
       })           
   }
@@ -187,20 +194,24 @@ export class LancamentoNovoComponent implements OnInit {
             /*const index = this.lancamentos.indexOf(lancamento,0);
             if(index!==-1)
               this.lancamentos.splice(index, 1);    */
+              this.membroSelecionado.saldoMembro = response.saldoMembro;
             this.listarLancamento(null);       
-            this.membroSelecionado.saldoMembro = response.saldoMembro;
+           
         }
       })           
   }
 
   listarLancamento(event){
-    this.membroSelecionado = this.orderForm.controls['membro'].value;
-    this.lancamentos = null;
-    if(this.membroSelecionado!==null && this.membroSelecionado!==undefined){
-      this.lancamentoService.listarLancamento(this.membroSelecionado.id)
-        .subscribe((response:LancamentoModel[])=>{
-          this.lancamentos=response;
-        })           
+
+    if(this.orderForm.controls['membro'].value!=null){
+      this.membroSelecionado = this.orderForm.controls['membro'].value;
+      this.lancamentos = null;
+      if(this.membroSelecionado!==null && this.membroSelecionado!==undefined){
+        this.lancamentoService.listarLancamento(this.membroSelecionado.id)
+          .subscribe((response:LancamentoModel[])=>{
+            this.lancamentos=response;
+          })           
+      }
     }
   }
 

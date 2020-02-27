@@ -53,4 +53,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/membros'])  
         })     
     }
+
+    getTitle(){
+      return 'Login';
+    }
 }

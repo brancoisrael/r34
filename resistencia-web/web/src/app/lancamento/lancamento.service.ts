@@ -11,7 +11,7 @@ import { LancamentoDTO } from './modelo/lancamento.dto';
 @Injectable()
 export class LancamentoService{
 
-    headers: Headers;
+    private headers: Headers;
 
     constructor(private http:Http){}
 

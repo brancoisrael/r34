@@ -26,13 +26,20 @@
               <div class="row">
                 <div class="col-md-6">
                   <p>Senha</p>
-                  <input  type="text" required formControlName="senha" />
+                  <input  type="password" required formControlName="senha" />
                 </div>
               </div>
 
+             
+              
               <button (click)="login(orderForm.value)"  
               type="submit" [disabled]="!orderForm.valid"
                class="btn btn-outline-danger pull-right">Login</button>
+
+               <button [hidden]="visibleBtNovo"  
+               [routerLink]="['/membro-novo']"  
+               type="submit"
+                class="btn btn-outline-info pull-right">Novo</button>
 
 
               </form>

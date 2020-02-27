@@ -25,7 +25,11 @@
 
                               <div class="col-md-4">
                                     <p>Data do lançamento</p>
-                                    <p-calendar formControlName="dataLancamento" (onSelect)="hiddenForms($event)" [maxDate]="dataHoje" ></p-calendar>                    
+                                    <p-calendar formControlName="dataLancamento" 
+                                    [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                                    [locale]="ptbr"
+                                    dateFormat="dd/mm/yy" 
+                                    (onSelect)="hiddenForms($event)" [maxDate]="dataHoje" ></p-calendar>                    
                                   </div>     
 
                               <div class="col-md-4" [hidden]="formHidden">

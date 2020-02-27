@@ -34,9 +34,9 @@
                             </div>
                          
                           <div class="row">
-                              <div class="col-md-4">
+                              <div class="col-md-4" >
                                   <p>Situação</p>
-                                  <p-dropdown [options]="situacoes" formControlName="situacaoMembro" (onChange)="changeSituacao($event)" ></p-dropdown>
+                                  <p-dropdown [options]="situacoes" formControlName="situacaoMembro" (onChange)="changeSituacao($event)"  [disabled]="visibleBtNovo"></p-dropdown>
                               </div>
 
                               <div class="col-md-4">
@@ -104,6 +104,11 @@
 
                           <button [hidden]="visibleBtNovo"  
                           [routerLink]="['/membros']"  
+                          type="submit"
+                           class="btn btn-outline-info pull-right">Voltar</button>
+
+                           <button [hidden]="!visibleBtNovo"  
+                          [routerLink]="['/login']"  
                           type="submit"
                            class="btn btn-outline-info pull-right">Voltar</button>
                           

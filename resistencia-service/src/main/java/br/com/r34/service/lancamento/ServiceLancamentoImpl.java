@@ -1,5 +1,6 @@
 package br.com.r34.service.lancamento;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -11,12 +12,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.r34.persistencia.vo.lancamento.Lancamento;
 import br.com.r34.persistencia.dto.lancamento.LancamentoDTO;
 import br.com.r34.persistencia.enums.OrigemLancamento;
 import br.com.r34.persistencia.enums.StatusLancamento;
 import br.com.r34.persistencia.repository.lancamento.LancamentoDAO;
 import br.com.r34.persistencia.repository.membro.SaldoMembroDAO;
+import br.com.r34.persistencia.vo.lancamento.Lancamento;
 
 @Service
 public class ServiceLancamentoImpl{
@@ -30,8 +31,7 @@ public class ServiceLancamentoImpl{
 	@Autowired
 	private ServicePromocaoImpl servicePromocao;
 		
-	@Transactional(transactionManager="resistenciaTransactionManager")
-	
+	@Transactional(transactionManager="resistenciaTransactionManager")	
 	public LancamentoDTO inserir(Lancamento lanc) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
 		
@@ -58,13 +58,14 @@ public class ServiceLancamentoImpl{
 				lancamento.setCriadoEm(new Date());
 				lancamento.setStatusLancamento(StatusLancamento.AGUARDANDO_QUITACAO);			
 			
-				lancamento = lancamentoDAO.save(lancamento);
-				lancamentoDTO.addLancamento(lancamento);
-				lancamentoDTO.setMessage(lanc.getQuantidade() +" lançamento(s) inserido(s) com sucesso.");
-				lancamentoDTO.setSucesso(true);		
+				lancamento = lancamentoDAO.save(lancamento);						
 								
 				servicePromocao.acrescentarPromocao(lancamento);
-				saldoMembroDAO.updateSaldoMembro(lanc.getMembro().getId());
+				lancamentoDTO.getSaldoMembro().setSaldo(atualizarSaldoMembro(lanc.getMembro().getId()));
+				
+				lancamentoDTO.addLancamento(lancamento);		
+				lancamentoDTO.setMessage(lanc.getQuantidade() +" lançamento(s) inserido(s) com sucesso.");
+				lancamentoDTO.setSucesso(true);					
 			} 
 			
 			catch (ConstraintViolationException e) {
@@ -89,8 +90,7 @@ public class ServiceLancamentoImpl{
 	}
 
 	
-	@Transactional(transactionManager="resistenciaTransactionManager")
-	
+	@Transactional(transactionManager="resistenciaTransactionManager")	
 	public LancamentoDTO deletar(Lancamento lanc) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
 		try {
@@ -99,8 +99,7 @@ public class ServiceLancamentoImpl{
 			
 			lancamentoDAO.delete(lancamento);
 						
-			saldoMembroDAO.updateSaldoMembro(lancamento.getMembro().getId());
-	
+			lancamentoDTO.getSaldoMembro().setSaldo(atualizarSaldoMembro(lanc.getMembro().getId()));	
 			lancamentoDTO.setSucesso(true);
 			lancamentoDTO.setMessage("Lançamento excluído com sucesso");
 		} 
@@ -119,8 +118,7 @@ public class ServiceLancamentoImpl{
 		return lancamentoDTO;
 	}
 
-	@Transactional(transactionManager="resistenciaTransactionManager")
-	
+	@Transactional(transactionManager="resistenciaTransactionManager")	
 	public LancamentoDTO atualizar(Lancamento lancamento) {
 		LancamentoDTO lancamentoDTO = new LancamentoDTO();
 		
@@ -146,10 +144,25 @@ public class ServiceLancamentoImpl{
 		return lancamentoDTO;
 	}
 
-	@Transactional(transactionManager="resistenciaTransactionManager")
-	
+	@Transactional(transactionManager="resistenciaTransactionManager")	
 	public List<Lancamento> pesquisarPorMembro(long idMembro) {
 		return lancamentoDAO.perquisarPorMembro(idMembro);
+	}
+	
+	private double atualizarSaldoMembro(long idMembro) {
+		Double[] credDeb = lancamentoDAO.somarLancamento(idMembro);
+		if(credDeb[0]==null)
+			credDeb[0]=0D;
+		
+		if(credDeb[1]==null)
+			credDeb[1]=0D;
+		
+		double total = credDeb[1] - credDeb[0];
+		DecimalFormat df = new DecimalFormat("#.00");
+		total = Double.parseDouble(df.format(total).replace(",","."));
+		saldoMembroDAO.updateSaldoMembro(total,idMembro);
+		
+		return total;
 	}
 
 }

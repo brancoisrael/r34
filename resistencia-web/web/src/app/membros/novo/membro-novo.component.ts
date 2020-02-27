@@ -117,7 +117,8 @@ export class MembroNovoComponent implements OnInit {
   }
 
   salvarMembro(membro:MembroModel){
-    membro.status=membro.situacaoMembro==='DESLIGADO'?false:true;
+    membro.situacaoMembro='DESLIGADO';
+    membro.status=false;
 
     this.membroService.salvarMembro(membro)
       .subscribe((response:MembroDTO)=>{

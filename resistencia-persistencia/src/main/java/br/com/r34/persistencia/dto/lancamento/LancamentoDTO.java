@@ -19,6 +19,10 @@ public class LancamentoDTO implements DataTransferObject {
 	
 	private SaldoMembro saldoMembro;
 	
+	public LancamentoDTO() {
+		this.saldoMembro = new SaldoMembro();
+	}
+	
 	public void addLancamento(Lancamento lancamento) {
 		if(lancamentos==null)
 			lancamentos = new ArrayList<>();
