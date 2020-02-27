@@ -12,6 +12,7 @@ import { MembrosComponent } from '../../membros/membros.component';
 import { MembroNovoComponent } from '../../membros/novo/membro-novo.component';
 import { LancamentoNovoComponent } from '../../lancamento/novo/lancamento-novo.component';
 import { LoginComponent } from 'app/membros/login/login.component';
+import { SaldoComponent } from 'app/membros/saldo/saldo.component'
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -30,8 +31,8 @@ export const AdminLayoutRoutes: Routes = [
             {path:'membro-novo/:id',component:MembroNovoComponent}
         ]
     },
-    {path: 'login', component:LoginComponent},
-    {path: 'lancamento-novo',      component: LancamentoNovoComponent },
-
-   
+    { path:'saldo',component:SaldoComponent},
+    
+    { path: 'login', component:LoginComponent},
+    { path: 'lancamento-novo',      component: LancamentoNovoComponent },   
 ];

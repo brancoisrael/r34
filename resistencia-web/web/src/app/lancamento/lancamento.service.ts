@@ -18,7 +18,7 @@ export class LancamentoService{
     addHeaderrequest(){
         this.headers = new Headers()
         this.headers.append('Content-Type','application/json')
-        this.headers.append('authorization',window.localStorage.getItem('token'));
+        this.headers.append('authorization',window.sessionStorage.getItem('token'));
     }
 
     salvarLancamento(lancamento:LancamentoModel):Observable<LancamentoDTO>{       
@@ -43,6 +43,14 @@ export class LancamentoService{
         this.addHeaderrequest();
         
         return this.http.get(`${R34_API}/lancamentos/pesquisar-membro/${idMembro}`
+        ,new RequestOptions({headers:this.headers}))
+            .map(response=> response.json())
+    }
+
+    lancamentoMembro(email:string):Observable<LancamentoModel[]>{       
+        this.addHeaderrequest();
+        
+        return this.http.get(`${R34_API}/lancamentos/membro`
         ,new RequestOptions({headers:this.headers}))
             .map(response=> response.json())
     }

@@ -22,6 +22,7 @@ public class ServiceLogin {
 	
 	public TokenDTO login(String email, String senha) {
 		TokenDTO token = new TokenDTO();
+		
 		try {
 			senha = CipherUtil.cipher(senha);
 			Membro membro = membroDAO.login(email, senha, SituacaoMembro.ATIVO);

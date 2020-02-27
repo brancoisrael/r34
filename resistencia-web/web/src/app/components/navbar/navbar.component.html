@@ -45,8 +45,16 @@
                     </div>
                 </li>-->
                 <li class="nav-item">
-                    <a class="nav-link" href="/membro-novo">
-                        <i class="material-icons">person</i>
+                    <a class="nav-link" href="/saldo">
+                        <i class="material-icons" [hidden]="!visibleLogin">person</i>
+                        <p>
+                            <span class="d-lg-none d-md-block">Account</span>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login" (click)="logon()"  >
+                        <i class="material-icons" [hidden]="!visibleLogin">power_settings_new</i>
                         <p>
                             <span class="d-lg-none d-md-block">Account</span>
                         </p>

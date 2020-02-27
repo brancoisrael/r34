@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
+import { tokenKey } from '@angular/core/src/view';
 
 @Component({
   selector: 'app-navbar',
@@ -10,13 +11,14 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
     private listTitles: any[];
     location: Location;
-      mobile_menu_visible: any = 0;
+    mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    private visibleLogin: boolean;
 
     constructor(location: Location,  private element: ElementRef, private router: Router) {
-      this.location = location;
-          this.sidebarVisible = false;
+        this.location = location;
+        this.sidebarVisible = false;            
     }
 
     ngOnInit(){
@@ -30,7 +32,14 @@ export class NavbarComponent implements OnInit {
            $layer.remove();
            this.mobile_menu_visible = 0;
          }
-     });
+     });     
+     this.visibleLogin = window.sessionStorage.getItem('token')==='null'?false:true;   
+    }
+
+
+    logon(){
+        window.sessionStorage.setItem('token',null);
+        this.visibleLogin = false;
     }
 
     sidebarOpen() {

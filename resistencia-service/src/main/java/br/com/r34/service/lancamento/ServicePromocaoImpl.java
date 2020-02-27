@@ -22,7 +22,6 @@ public class ServicePromocaoImpl {
 
 	@Autowired
 	private LancamentoDAO lancamentoDAO;
-
 	
 	public void acrescentarPromocao(Lancamento lancamento) {
 		if (lancamento.getProdutoVenda() == null)
@@ -60,7 +59,6 @@ public class ServicePromocaoImpl {
 		}
 
 	}
-
 	
 	public void removerPromocao(Lancamento lanc) {
 

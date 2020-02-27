@@ -31,7 +31,7 @@ import { HttpModule } from '@angular/http';
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,    
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,82 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title">{{header}}</h4>
+                      <p class="card-category"></p>
+                      <div class="card-title" style="text-align: right">{{membro}}</div>
+                  </div>
+                  <div class="card-body">
+
+
+                    <p-table #dt [value]="lancamentos" [paginator]="true" [rows]="10" [globalFilterFields]="['dataLancamento','valorLancamento','observacao']">
+                      <ng-template pTemplate="caption">
+                              <div style="text-align: right">
+                                  <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                                  <input type="text" pInputText size="20" placeholder="Filtro: data, valor e observação" 
+                                  (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:25%">                                   
+                              </div>
+                    
+                              <div style="text-align: left">Saldo atual: {{saldoMembro.saldo | currency:'BRL'}}</div>                             
+                            
+                          </ng-template>
+                      <ng-template pTemplate="header" let-lancamento>
+                          <tr>
+                              <th [pSortableColumn]="'tipoLancamento'">
+                                  Tipo
+                                  <p-sortIcon [field]="'tipoLancamento'"></p-sortIcon>
+                              </th>
+                              <th [pSortableColumn]="'origemLancamento'">
+                                  Origem
+                                  <p-sortIcon [field]="'origemLancamento'"></p-sortIcon>
+                              </th>
+                              <th [pSortableColumn]="'produtoVenda.produto.descricao'">
+                                  Produto
+                                  <p-sortIcon [field]="'produtoVenda.produto.descricao'"></p-sortIcon>
+                              </th>
+                                                          
+                              <th [pSortableColumn]="'dataLancamento'">
+                                  Data
+                                  <p-sortIcon [field]="'dataLancamento'"></p-sortIcon>                                
+                              </th> 
+                              <th [pSortableColumn]="'valorLancamento'">
+                                      Valor unitário
+                                      <p-sortIcon [field]="'valorLancamento'"></p-sortIcon>
+                                  </th> 
+                              <th [pSortableColumn]="'observacao'" >
+                                  Observação
+                                  <p-sortIcon [field]="'observacao'"></p-sortIcon>
+                              </th>  
+                              <th style="width: 8%">
+                              </th>  
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-lancamento>
+                          <tr>
+                              <td>{{findTipoLancamento(lancamento.tipoLancamento)}}</td>
+                              <td>{{findOrigemLancamento(lancamento.origemLancamento)}}</td>
+                              <td *ngIf="!lancamento.produtoVenda || !lancamento.produtoVenda.produto"></td>
+                              <td *ngIf="lancamento.produtoVenda && lancamento.produtoVenda.produto">{{lancamento.produtoVenda.produto.descricao}}</td>
+                              <td>{{lancamento.dataLancamento | date: 'dd/MM/yyyy'}}</td> 
+                              <td>{{lancamento.valorLancamento | currency:'BRL'}}</td>
+                              <td>{{lancamento.observacao}}</td>   
+                              <td><button mat-raised-button type="button" matTooltip="Excluir"
+                                   [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon"
+                                   (click)="excluirLancamento(lancamento)" >
+                                      <i class="material-icons">close</i>
+                                  </button></td>                                               
+                          </tr>                                           
+                      </ng-template>                                        
+                    </p-table>
+
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+                      
+
+

@@ -22,6 +22,14 @@ public interface LancamentoDAO extends CrudRepository<Lancamento, Long> {
 	
 	@Query("select lancamento from Lancamento lancamento "
 			+ "inner join fetch lancamento.membro m "
+			+ "inner join fetch lancamento.resposavelLancamento rl "
+			+ "left join fetch lancamento.produtoVenda pv "
+			+ "left join fetch pv.produto p "
+			+ "where m.email =:email order by lancamento.dataLancamento desc ")
+	List<Lancamento> perquisarPorMembro(@Param("email") String email);
+	
+	@Query("select lancamento from Lancamento lancamento "
+			+ "inner join fetch lancamento.membro m "
 			+ "inner join fetch lancamento.produtoVenda pv "
 			+ "inner join fetch pv.produto p "
 			+ "left join lancamento.promocoes promo "

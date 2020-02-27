@@ -38,7 +38,7 @@ public class JWT {
 
 	public static String revalidarToken(String token) {
 		if(validarToken(token)) {
-			Jws<Claims> claimsJws = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
+			Jws<Claims> claimsJws = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token.replace("Bearer ", ""));
 			if(toDate(LocalDateTime.now().plusMinutes(10L)).after(claimsJws.getBody().getExpiration())) {
 				return criarToken(claimsJws.getBody().getSubject(), PerfilAcesso.valueOf((String)claimsJws.getBody().get("perfilAcesso")));	
 			}			
@@ -47,12 +47,12 @@ public class JWT {
 	}
 	
 	public static PerfilAcesso recuperarPerfil(String token) {
-		Jws<Claims> claimsJws = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
+		Jws<Claims> claimsJws = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token.replace("Bearer ", ""));
 		return PerfilAcesso.valueOf((String) claimsJws.getBody().get("perfilAcesso"));
 	}
 	
 	public static String recuperarLogin(String token) {
-		Jws<Claims> claimsJws = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
+		Jws<Claims> claimsJws = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token.replace("Bearer ", ""));
 		return claimsJws.getBody().getSubject();
 	}
 

@@ -2,11 +2,13 @@ package br.com.r34.api.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import br.com.r34.persistencia.dto.lancamento.LancamentoDTO;
 import br.com.r34.persistencia.vo.lancamento.Lancamento;
 import br.com.r34.service.lancamento.ServiceLancamentoImpl;
 import br.com.r34.service.membro.ServiceMembroImpl;
+import br.com.r34.service.util.JWT;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -35,7 +38,9 @@ public class ControllerLancamento {
 	@Autowired
 	private ServiceMembroImpl serviceMembroImpl;
 	
-	@CrossOrigin
+	@Autowired
+	private HttpServletRequest request;
+	
 	@ApiOperation(value = "salvar", notes = "salvar", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
 	@RequestMapping(value="/salvar",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,9 +51,8 @@ public class ControllerLancamento {
 		lancamentoDTO.setSaldoMembro(serviceMembroImpl.selectSaldoByMembro(lancamento.getMembro().getId()));
 		
 		return new ResponseEntity<LancamentoDTO>(lancamentoDTO,HttpStatus.OK);
-	}
-	
-	@CrossOrigin
+	}	
+
 	@ApiOperation(value = "excluir", notes = "excluir", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
 	@RequestMapping(value="/excluir",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,9 +63,8 @@ public class ControllerLancamento {
 		lancamentoDTO.setSaldoMembro(serviceMembroImpl.selectSaldoByMembro(lancamento.getMembro().getId()));
 		
 		return new ResponseEntity<LancamentoDTO>(lancamentoDTO,HttpStatus.OK);
-	}
-	
-	@CrossOrigin
+	}	
+
 	@ApiOperation(value = "atualizar", notes = "atualizar", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
 	@RequestMapping(value="/atualizar",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,7 +76,6 @@ public class ControllerLancamento {
 		return new ResponseEntity<LancamentoDTO>(lancamentoDTO,HttpStatus.OK);
 	}
 	
-	@CrossOrigin
 	@ApiOperation(value = "pesquisar lancamento por membro", notes = "pesquisar lancamento por membro", protocols = "Accept=application/json", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
 	@RequestMapping(value="/pesquisar-membro/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -84,4 +86,16 @@ public class ControllerLancamento {
 		
 		return new ResponseEntity<List<Lancamento>>(lancamentos,HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "pesquisar lancamento do membro", notes = "pesquisar lancamento do membro", protocols = "Accept=application/json", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = String.class) })	
+	@RequestMapping(value="/membro",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public ResponseEntity<List<Lancamento>> pesquisarMembro() {
+		System.out.println(request.getHeader("authorization"));
+		List<Lancamento> lancamentos = serviceLancamentoImpl.pesquisarPorMembro(JWT.recuperarLogin(request.getHeader("authorization")));		
+		return new ResponseEntity<List<Lancamento>>(lancamentos,HttpStatus.OK);
+	}
+	
 }

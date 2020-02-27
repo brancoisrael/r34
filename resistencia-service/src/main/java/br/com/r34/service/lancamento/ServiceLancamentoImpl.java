@@ -88,7 +88,6 @@ public class ServiceLancamentoImpl{
 		
 		return lancamentoDTO;
 	}
-
 	
 	@Transactional(transactionManager="resistenciaTransactionManager")	
 	public LancamentoDTO deletar(Lancamento lanc) {
@@ -144,9 +143,12 @@ public class ServiceLancamentoImpl{
 		return lancamentoDTO;
 	}
 
-	@Transactional(transactionManager="resistenciaTransactionManager")	
 	public List<Lancamento> pesquisarPorMembro(long idMembro) {
 		return lancamentoDAO.perquisarPorMembro(idMembro);
+	}
+	
+	public List<Lancamento> pesquisarPorMembro(String email) {
+		return lancamentoDAO.perquisarPorMembro(email);
 	}
 	
 	private double atualizarSaldoMembro(long idMembro) {

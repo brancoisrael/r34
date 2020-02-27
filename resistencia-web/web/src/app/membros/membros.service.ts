@@ -20,7 +20,7 @@ export class MembroService{
     addHeaderrequest(){
         this.headers = new Headers()
         this.headers.append('content-type','application/json')
-        this.headers.append('authorization',window.localStorage.getItem('token'));
+        this.headers.append('authorization',window.sessionStorage.getItem('token'));
     }
 
     salvarMembro(membro:MembroModel):Observable<MembroDTO>{       

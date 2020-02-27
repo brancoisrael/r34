@@ -48,11 +48,10 @@ export class LoginComponent implements OnInit {
              return;
           }
 
-          window.localStorage.setItem('token',response.token);
-          console.log(window.localStorage.getItem('token'))     
-          this.router.navigate(['/membros'])  
+          window.sessionStorage.setItem('token',response.token);
+          window.location.href='saldo'
         })     
-    }
+    }  
 
     getTitle(){
       return 'Login';
