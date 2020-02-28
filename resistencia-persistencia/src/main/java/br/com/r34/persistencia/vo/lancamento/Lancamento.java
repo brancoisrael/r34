@@ -86,7 +86,7 @@ public class Lancamento implements ValueObject, Cloneable{
 	private ProdutoVenda produtoVenda;
 	
 	@ManyToMany
-	@JoinTable(name = "tb_lancamento_promocao", 
+	@JoinTable(name = "core.tb_lancamento_promocao", 
 			  joinColumns = @JoinColumn(name = "id_lancamento"), 
 			  inverseJoinColumns = @JoinColumn(name = "id_promocao"))
 	private List<Promocao> promocoes;

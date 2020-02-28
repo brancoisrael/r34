@@ -2,12 +2,13 @@ package br.com.r34.persistencia.vo.acesso;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -34,7 +35,13 @@ public class Endpoint implements ValueObject{
 	@Column(name="url",length=255,nullable=false,unique=true)
 	private String url;
 	
-	@ManyToMany(mappedBy="endpoints",cascade=CascadeType.PERSIST)
+	@Column(name="left_menu")
+	private boolean menuLateral;
+	
+	@ManyToMany(targetEntity = Endpoint.class)
+	@JoinTable(name="core.tb_endpoint_regra_acesso",
+	joinColumns={@JoinColumn(name="id_endpoint")},
+	inverseJoinColumns={@JoinColumn(name="id_regra_acesso")})
 	private Set<RegraAcesso> regrasAcesso;
 	
 	public long getId() {
@@ -67,6 +74,14 @@ public class Endpoint implements ValueObject{
 
 	public void setRegrasAcesso(Set<RegraAcesso> regrasAcesso) {
 		this.regrasAcesso = regrasAcesso;
+	}
+
+	public boolean isMenuLateral() {
+		return menuLateral;
+	}
+
+	public void setMenuLateral(boolean menuLateral) {
+		this.menuLateral = menuLateral;
 	}
 	
 	

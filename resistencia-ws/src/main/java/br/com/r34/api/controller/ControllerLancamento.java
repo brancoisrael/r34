@@ -93,7 +93,6 @@ public class ControllerLancamento {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public ResponseEntity<List<Lancamento>> pesquisarMembro() {
-		System.out.println(request.getHeader("authorization"));
 		List<Lancamento> lancamentos = serviceLancamentoImpl.pesquisarPorMembro(JWT.recuperarLogin(request.getHeader("authorization")));		
 		return new ResponseEntity<List<Lancamento>>(lancamentos,HttpStatus.OK);
 	}

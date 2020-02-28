@@ -1,5 +1,6 @@
 package br.com.r34.service.acesso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -7,6 +8,7 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import br.com.r34.persistencia.dto.acesso.EndPointDTO;
 import br.com.r34.persistencia.repository.acesso.EndPointDAO;
@@ -86,6 +88,18 @@ public class ServiceEndPointImpl {
 	
 	public List<Endpoint> pesquisarDescricao(String descricao) {
 		return endPointDAO.findByDescricaoContainingIgnoreCase(descricao);
+	}
+	
+	public List<EndPointDTO> buscarMenuMembro(String email) {
+		List<String> l = endPointDAO.findByMembro(email);
+		List<EndPointDTO> ret = new ArrayList<>();
+		
+		if(!CollectionUtils.isEmpty(l)) {
+			for(String ed : l)
+				ret.add(new EndPointDTO(ed));
+		}
+		
+		return  ret;
 	}
 
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SideBarService } from './sidebar.service';
+import { EndPointDTO } from 'app/shared/dto/endpont.dto';
+import { map } from 'rxjs-compat/operator/map';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -29,10 +32,26 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  constructor() { }
+  constructor(private sideBarService: SideBarService) { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    
+    this.menuItems = []
+    
+    if(window.sessionStorage.getItem('token')===null || window.sessionStorage.getItem('token')==='null')
+      return;
+
+    this.sideBarService.buscarMenuMembro()
+    .subscribe((response:EndPointDTO[])=>{
+      for(let dto of response){
+        for(let r of ROUTES)
+          if(dto.url === r.path)
+            this.menuItems.push(r)
+      }
+    })
+
+    //this.menuItems = ROUTES.filter(menuItem => menuItem);
+    console.log(this.menuItems)
   }
   isMobileMenu() {
       if ($(window).width() > 991) {
