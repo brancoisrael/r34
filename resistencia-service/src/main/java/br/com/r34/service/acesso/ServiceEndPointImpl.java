@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import br.com.r34.persistencia.dto.acesso.EndPointDTO;
 import br.com.r34.persistencia.repository.acesso.EndPointDAO;
@@ -38,7 +39,6 @@ public class ServiceEndPointImpl {
 		
 		return endPointDTO;
 	}
-
 	
 	public EndPointDTO deletar(long id) {
 		EndPointDTO endPointDTO = new EndPointDTO();
@@ -59,7 +59,6 @@ public class ServiceEndPointImpl {
 
 		return endPointDTO;
 	}
-
 	
 	public EndPointDTO atualizar(Endpoint endpoint) {
 		EndPointDTO endPointDTO = new EndPointDTO();
@@ -79,12 +78,10 @@ public class ServiceEndPointImpl {
 
 		return endPointDTO;
 	}
-
 	
 	public List<Endpoint> pesquisarTodos() {
 		return endPointDAO.findAll();
 	}
-
 	
 	public List<Endpoint> pesquisarDescricao(String descricao) {
 		return endPointDAO.findByDescricaoContainingIgnoreCase(descricao);
@@ -100,6 +97,10 @@ public class ServiceEndPointImpl {
 		}
 		
 		return  ret;
+	}
+
+	public boolean buscarUrlMembro(String email, String url) {
+		return StringUtils.isEmpty(endPointDAO.findByUrlMembro(email, url))?false:true;
 	}
 
 }

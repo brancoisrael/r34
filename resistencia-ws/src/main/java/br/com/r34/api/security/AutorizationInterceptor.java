@@ -3,13 +3,16 @@ package br.com.r34.api.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import br.com.r34.service.acesso.ServiceEndPointImpl;
 import br.com.r34.service.util.JWT;
 
 public class AutorizationInterceptor extends HandlerInterceptorAdapter{
 
-	
+	@Autowired
+	private ServiceEndPointImpl serviceEndPointImpl; 
 	
 	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -24,13 +27,12 @@ public class AutorizationInterceptor extends HandlerInterceptorAdapter{
         }	
 		
 	   String token = request.getHeader("authorization");
-       /*System.out.println(request.getHeader("authorization"));
-       System.out.println(request.getRequestURL().toString());*/
-       if(request.getRequestURL().toString().contains("/acesso/login"))   
+	   
+       if(request.getRequestURL().toString().contains("/acesso/login") || request.getRequestURL().toString().contains("/membros/salvar"))
         return super.preHandle(request, response, handler);
        
-      
-     
+       String url = request.getRequestURI();
+       
        if(JWT.validarToken(token)) {
     	   //Validar a autorização
     	   return super.preHandle(request, response, handler);

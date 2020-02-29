@@ -61,8 +61,10 @@ export class MembroNovoComponent implements OnInit {
       id:this.formBuilder.control('') ,
     })
 
+    this.orderForm.get('situacaoMembro').setValue('DESLIGADO')
+
     if(this.route.snapshot.params.id)
-    this.prepararEditar(this.route.snapshot.params.id) 
+      this.prepararEditar(this.route.snapshot.params.id)       
   }
 
   changePatente(event){
