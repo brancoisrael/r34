@@ -32,9 +32,9 @@ public class Produto implements ValueObject{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Size(min=5,max=200,message="Máximo 200 caracteres")
+	@Size(min=5,max=200,message="Máximo 255 caracteres")
 	@NotNull(message="Informe a descricao do produto")
-	@Column(name="descricao",nullable=false, length=200)
+	@Column(name="descricao",nullable=false, length=255)
 	private String descricao;
 
 	@Column(name="habilitar_compra",nullable=false)

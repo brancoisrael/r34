@@ -57,12 +57,12 @@ public class Membro implements ValueObject {
 	
 	@NotNull(message="Informe o e-mail")
 	@Size(min=2,max=50,message="No mínimo 2 e no máximo 50 caracteres")
-	@Column(name="email",length=255,nullable=false,unique=true)
+	@Column(name="email",length=50,nullable=false,unique=true)
 	private String email;
 	
 	@NotNull(message="Informe a senha")
-	@Size(min=2,max=30,message="No mínimo 2 e no máximo 30 caracteres")
-	@Column(name="senha",length=255,nullable=false)
+	@Size(min=8,max=30,message="No mínimo 8 e no máximo 30 caracteres")
+	@Column(name="senha",length=30,nullable=false)
 	private String senha;
 	
 	@NotNull(message="Informe a situação do membro")
