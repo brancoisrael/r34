@@ -75,7 +75,7 @@ create table core.tb_produto(
  constraint fk_tipo_produto foreign key (id_tipo_produto) references core.tb_tipo_produto (id) on delete no action
 );
 
-create table core_tb_produto_venda(
+create table core.tb_produto_venda(
  id serial primary key,
  preco decimal(10,2) not null,
  inicio_vigencia date not null,
@@ -113,15 +113,6 @@ create table core.tb_promocao(
  fim_vigencia date not null,
  id_produto integer not null,
  constraint fk_produto foreign key (id_produto) references core.tb_produto (id) on delete no action
-);
-
-create table core.tb_produto_venda(
- id serial primary key,
- preco money not null,
- inicio_vigencia date not null,
- fim_vigencia date,
- id_produto integer not null,
- constraint fk_produto foreign key (id_produto) references core.tb_produto (id) on delete cascade
 );
 
 create table core.tb_lancamento(
