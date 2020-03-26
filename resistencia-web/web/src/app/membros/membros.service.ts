@@ -24,6 +24,8 @@ export class MembroService{
     }
 
     salvarMembro(membro:MembroModel):Observable<MembroDTO>{       
+        this.addHeaderrequest()
+        
         return this.http.post(`${R34_API}/membros/salvar`
         ,JSON.stringify(membro)
         ,new RequestOptions({headers:this.headers}))

@@ -61,7 +61,7 @@ export class MembroNovoComponent implements OnInit {
       id:this.formBuilder.control('') ,
     })
 
-    this.orderForm.get('situacaoMembro').setValue('DESLIGADO')
+    this.orderForm.get('situacaoMembro').setValue('INATIVO')
 
     if(this.route.snapshot.params.id)
       this.prepararEditar(this.route.snapshot.params.id)       
@@ -119,7 +119,7 @@ export class MembroNovoComponent implements OnInit {
   }
 
   salvarMembro(membro:MembroModel){
-    membro.situacaoMembro='DESLIGADO';
+    membro.situacaoMembro='INATIVO';
     membro.status=false;
 
     this.membroService.salvarMembro(membro)

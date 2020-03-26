@@ -37,7 +37,8 @@ export const PATENTES: SelectOptions[]=[
     {label:'Selecione',value:null},
     {value:'ATIVO', label:'Ativo'},
     {value:'LICENCA',label:'Em licencao'},
-    {value:'DESLIGADO', label:'Desligado'}
+    {value:'DESLIGADO', label:'Desligado'},
+    {value:'INATIVO', label:'Inativo'}
   ]
 
   export const CARGOS:SelectOptions[]=[

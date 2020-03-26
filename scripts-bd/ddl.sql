@@ -87,7 +87,7 @@ create table core.tb_produto_venda(
 create table core.tb_saldo_membro(
  id serial primary key,
  saldo money not null,
- ultima_atualizacoa date not null,
+ ultima_atualizacao date not null,
  id_membro integer not null,
  constraint fk_membro foreign key (id_membro) references core.tb_membro (id) on delete cascade
 );
